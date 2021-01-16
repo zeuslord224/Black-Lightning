@@ -50,8 +50,8 @@ FUCK_OFF_WARN = f"**Blocked You As You Spammed {LIGHTNINGUSER}'s DM\n\n **IDC**"
 
 OVER_POWER_WARN = (
     f"**Hello Sir Im Here To Protect {LIGHTNINGUSER} Dont Under Estimate Me 😂😂  **\n\n"
-    f"`My Master {LIGHTNINGUSER} is Busy Right Now !` \n"
-    f"{LIGHTNINGUSER} Is Very Busy Why Came Please Lemme Know Choose Your Deasired Reason"
+    f"\n\n**My Master {LIGHTNINGUSER} is Busy Right Now !** \n"
+    f"\n\n**{LIGHTNINGUSER} Is Very Busy Why Came Please Lemme Know**"
     f"**Btw Dont Spam Or Get Banned** 😂😂 \n\n"
     f"**{CUSTOM_LIGHTNING_PM_PIC}**\n"
 )
