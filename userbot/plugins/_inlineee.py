@@ -692,9 +692,15 @@ async def chill(lightning):
     light_pulu_name = lightning.data_match.group(1).decode("UTF-8")
     try:
              if light_pulu_name in CMD_HELP:
-                   lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
-                   for light_pulu_name in CMD_HELP[light_pulu_name]:
-                        lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n {CMD_HELP[light_pulu_name]}\n**Any Help?**\n\n**Ask ngsupport"
+                    lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
+                    
+                    lightning_help_strin += f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_HELP[light_pulu_name]}"
+                    lightning_help_strin += "\n    " + light_pulu_name
+                    lightning_help_strin += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
+                    lightning_help_strin += "\n"
+                    lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
+                    for light_pulu_name in CMD_HELP[light_pulu_name]:
+                        lightning_help_strin  += f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n {CMD_HELP[light_pulu_name]}\n**Any Help?**\n\n**Ask ngsupport"
                         lightning_help_strin += "\n    " + light_pulu_name
                         lightning_help_strin += "\n"   
                         await lightning.edit("`Saving Command`")
@@ -715,26 +721,38 @@ async def chill(lightning):
                 ],
          )
              else:
-                   for light_pulu_name in CMD_HELP[light_pulu_name]:
-                       lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_HELP[light_pulu_name]}\n`**Any Help?**\n\n**Ask ngsupport"
-                       lightning_help_strin += "\n    " + light_pulu_name
-                       lightning_help_strin += "\n"
-                       await lightning.edit(
-                   message=lightning_help_strin,
-                   buttons=[
+                        lightning_help_strin = bot.session.save()
+
+                        light_pulu_name = lightning.data_match.group(1).decode("UTF-8")
+                           
+                        lightning_help_strin  += f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n {CMD_HELP[light_pulu_name]}\n**Any Help?**\n\n**Ask ngsupport"
+                        lightning_help_strin += "\n    " + light_pulu_name
+                        lightning_help_strin += "\n"   
+                        await lightning.edit("`Saving Command`")
+                        await asyncio.sleep(2)
+                        await lightning.edit("`Check You Saved Message....`")
+
+                        await bot.send_message("me", lightning_help_strin)
+                   
+		          
+          
+                        await lightning.edit(
+                    f"`Check Your Save`",
+                    link_preview=False,
+                    buttons=[
                 
-                [custom.Button.inline("нσмє 💢", data="lghtback22")],
+                [custom.Button.inline("Ⴆαƈƙ 💢", data="lghtback")],
                 
                 ],
          )
     except KeyError:
-              if light_pulu_name in CMD_HELP:
-                   lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
-                   for light_pulu_name in CMD_HELP[light_pulu_name]:
-                        lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n {CMD_HELP[light_pulu_name]}\n**Any Help?**\n\n**Ask ngsupport"
+            if light_pulu_name in CMD_HELP:
+                lightning_help_strin 
+
+                for light_pulu_name in CMD_HELP[light_pulu_name]:
+                        lightning_help_strin  += f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n {CMD_HELP[light_pulu_name]}\n**Any Help?**\n\n**Ask ngsupport"
                         lightning_help_strin += "\n    " + light_pulu_name
                         lightning_help_strin += "\n"   
-                   if len(lightning_help_strin) >= 2:
                         await lightning.edit("`Saving Command`")
                         await asyncio.sleep(2)
                         await lightning.edit("`Check You Saved Message....`")
@@ -748,24 +766,36 @@ async def chill(lightning):
                     link_preview=False,
                     buttons=[
                 
-                [custom.Button.inline("нσмє 💢", data="lghtback22")],
+                [custom.Button.inline("Ⴆαƈƙ 💢", data="lghtback")],
                 
                 ],
          )
-                   else:
-                      for light_pulu_name in CMD_HELP[light_pulu_name]:
-                       lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_HELP[light_pulu_name]}\n`**Any Help?**\n\n**Ask ngsupport"
-                       lightning_help_strin += "\n    " + light_pulu_name
-                       lightning_help_strin += "\n"
-                       await lightning.edit(
-                   message=lightning_help_strin,
-                   buttons=[
-                
-                [custom.Button.inline("нσмє 💢", data="lghtback22")],
-                
-                ],
-         )
+            else: 
 
+                        lightning_help_strin = bot.session.save()
+
+                        light_pulu_name = lightning.data_match.group(1).decode("UTF-8")
+                           
+                        lightning_help_strin  += f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n {CMD_HELP[light_pulu_name]}\n**Any Help?**\n\n**Ask ngsupport"
+                        lightning_help_strin += "\n    " + light_pulu_name
+                        lightning_help_strin += "\n"   
+                        await lightning.edit("`Saving Command`")
+                        await asyncio.sleep(2)
+                        await lightning.edit("`Check You Saved Message....`")
+
+                        await bot.send_message("me", lightning_help_strin)
+                   
+		          
+          
+                        await lightning.edit(
+                    f"`Check Your Save`",
+                    link_preview=False,
+                    buttons=[
+                
+                [custom.Button.inline("Ⴆαƈƙ 💢", data="lghtback")],
+                
+                ],
+         )
 
 # Thanks To Friday Userbot and @Midhun_xD For This idea
 
