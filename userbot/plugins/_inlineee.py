@@ -14,7 +14,7 @@
 
 
 
-"""Created By @krish1303y and
+"""Created By @keinshin and
 If You Are Goin To kang Give Credits and My Copyright
 
 Kang with credits....
