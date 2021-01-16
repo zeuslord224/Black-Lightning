@@ -14,16 +14,17 @@
 
 
 
-"""Thanks To 
+"""Created By @krish1303y and
+If You Are Goin To kang Give Credits and My Copyright
+
+Kang with credits....
+
+Special Credits For Helping Out:
 @Midhun_xD
-@keinshin
 @Shivam_Patel
 @NOOBIzBack
 """
 
-
-"""Only friday and DC (Can Use Without Credits) Can Use This Inline WithOut Copyright (Just Give The Credits Pls)
-Thanks"""
 
 
 
@@ -31,17 +32,19 @@ Thanks"""
 import os
 
 import re
-import json
+
 from math import ceil
 from userbot.thunderconfig import Config
 
 from telethon import Button, custom, events, functions
 
+
+import requests
 from userbot import ALIVE_NAME, CMD_HELP, CMD_LIST, DETAIL_CMD_HELP, bot
 
 from var import Var
-
-
+DETAIL_CMD = {}
+FOR_EG = {}
 LIGHT_LOGS = Config.PM_LOGGR_BOT_API_ID 
 lightning_bot = Var.TG_BOT_USER_NAME_BF_HER
 import asyncio
@@ -76,12 +79,12 @@ async def install(lightning):
             )
             if "(" not in downloaded_file_name:
                 path1 = Path(downloaded_file_name)
-                krish_blac = path1.stem
-                load_module(krish_blac.replace(".py", ""))
-                await lightning.edit(f"Wait Installing.... ")
+                filename = path1.stem
+                load_module(filename.replace(".py", ""))
+                await lightning.edit(f"`Wait Installing....` ")
                 await asyncio.sleep(2)
                 await lightning.edit(
-                    "{}SucessFully Installed ....".format(
+                    "`{} SucessFully Installed ....`".format(
                         os.path.basename(downloaded_file_name)
                     )
                 )
@@ -95,35 +98,23 @@ async def install(lightning):
     await lightning.delete()
 
 
-@borg.on(lightning_cmd(pattern=r"unload (?P<krish_blac>\w+)$"))
-async def unload(lightning):
-    if lightning.fwd_from:
-        return
-    krish_blac = lightning.pattern_match["krish_blac"]
-    try:
-        remove_plugin(krish_blac)
-        await lightning.edit(f"Successfully unloaded {krish_blac}")
-    except Exception as e:
-        await lightning.edit(
-            "Successfully unloaded {krish_blac}\n{}".format(krish_blac, str(e))
-        )
 
 
-@borg.on(lightning_cmd(pattern=r"load (?P<krish_blac>\w+)$"))
+@borg.on(lightning_cmd(pattern=r"load (?P<filename>\w+)$"))
 async def load(lightning):
     if lightning.fwd_from:
         return
-    krish_blac = lightning.pattern_match["krish_blac"]
+    filename = lightning.pattern_match["filename"]
     try:
         try:
-            remove_plugin(krish_blac)
+            remove_plugin(filename)
         except BaseException:
             pass
-        load_module(krish_blac)
-        await lightning.edit(f"Successfully loaded {krish_blac}")
+        load_module(filename)
+        await lightning.edit(f"Successfully loaded {filename}")
     except Exception as e:
         await lightning.edit(
-            f"Sorry,{krish_blac} can not be loaded\nbecause of the following error.\n{str(e)}"
+            f"Sorry,{filename} can not be loaded\nbecause of the following error.\n{str(e)}"
         )
 
  # created by @cyper666
@@ -224,8 +215,8 @@ if LIGHTNING_WARN is None:
     WARNING = (
     f"**{BOT_LIT}"
     f"** Im Here To Protect {LIGHTNINGUSER} Dont Under Estimate Me 😂😂  **\n\n"
-    f"**My Master {LIGHTNINGUSER} is Busy Right Now !** \n"
-    f"{LIGHTNINGUSER} Is Very Busy Why Came Please Lemme Know Choose Your Deasired Reason"
+    f"**My Master {LIGHTNINGUSER} is Busy Right Now !** \n\n"
+    f"{LIGHTNINGUSER} Is Very Busy Why Came Please Lemme Know Choose The Reason\n\n"
     f"**Btw Dont Spam Or Get Banned** 😂 \n\n"
     f"**Choose Any Reason Then Get Lost**\n"
 )
@@ -284,7 +275,7 @@ async def inline_handler(lightning):
             file=LIGHTNING_WARNING,
             text=WARNING,
             buttons=[
-                [custom.Button.inline("Wanna Spam Something?😉", data="lightning_is_here_cant_spam")],
+                [custom.Button.inline("Wanna Spam ?😉", data="lightning_is_here_cant_spam")],
                 [
                     custom.Button.inline(
                         "My Friend❤️❤️",
@@ -294,7 +285,7 @@ async def inline_handler(lightning):
                 [custom.Button.inline("Requesting🙏", data="fck_ask")],
                 [
                     custom.Button.inline(
-                        "Lemme In :)", 
+                        "Lemme In", 
                         data="lol_u_think_so",
                         
                     )
@@ -327,6 +318,88 @@ async def lightning_pugins_query_hndlr(lightning):
         await lightning.answer(lightning_is_best, cache_time=0, alert=True)
 
 
+
+
+            # Thanks To Friday For This Deatiled Idea of detail button
+@tgbot.on(
+        events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+            data=re.compile(b"detailed_(.*)")
+   )
+)
+async def detailed(lightning):
+    if not lightning.query.user_id == bot.uid:
+        how = "Not For  Bitch.🖕( ͡❛ ͜ʖ ͡❛)"
+        await lightning.answer(how, cache_time=0, alert=True)
+        return
+    light_pulu_name = lightning.data_match.group(1).decode("UTF-8")
+    try:
+            if light_pulu_name in CMD_HELP:
+                    lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
+                    
+                    lightning_help_strin += f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_HELP[light_pulu_name]}"
+                    lightning_help_strin += "\n    " + i
+                    lightning_help_strin += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
+                    lightning_help_strin += "\n"
+                    await lightning.edit(
+                message=lightning_help_strin,
+                
+                buttons=[
+                        [custom.Button.inline("ѕανє", data="krish".format(light_pulu_name)
+                )],
+                        [custom.Button.inline("нσмє 💢", data="lghtback22")],
+              ],
+        )
+            else:
+               lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_HELP[light_pulu_name]}`"
+               lightning_is_best = lightning_help_strin 
+               lightning_is_best += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
+               lightning_is_best += "\n\n**In Case Any Problem @lightningsupport** ".format(light_pulu_name)
+               await lightning.edit(
+                message=lightning_help_strin,
+                
+                buttons=[
+                        [custom.Button.inline("ѕανє", data="krish".format(light_pulu_name)
+                )],
+                        [custom.Button.inline("нσмє 💢", data="lghtback22")],
+              ],
+        )
+    except KeyError:
+            light_pulu_name = lightning.data_match.group(1).decode("UTF-8")
+
+            if light_pulu_name in CMD_HELP:
+                lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
+                for light_pulu_name in CMD_HELP:
+                    lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_HELP[light_pulu_name]}"
+                    lightning_help_strin += "\n    " + light_pulu_name
+                    lightning_help_strin += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
+                    lightning_help_strin += "\n"
+                    await lightning.edit(
+                message=lightning_help_strin,
+                
+                buttons=[
+                        [custom.Button.inline("ѕανє", data="krish".format(light_pulu_name)
+                )],
+                        [custom.Button.inline("нσмє 💢", data="lghtback22")],
+                ],
+                    )
+        
+            else:
+               lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_HELP[light_pulu_name]}`"
+               lightning_is_best = lightning_help_strin 
+               lightning_is_best += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
+               lightning_is_best += "\n\n**In Case Any Problem @lightningsupport** ".format(light_pulu_name)
+               await lightning.edit(
+                message=lightning_help_strin,
+                
+                buttons=[
+                        [custom.Button.inline("ѕανє", data="krish".format(light_pulu_name)
+                )],
+                        [custom.Button.inline("нσмє 💢", data="lghtback22")],
+              ],
+        )
+    
+ 
+                
 @tgbot.on(
         events.callbackquery.CallbackQuery(  # pylint:disable=E0602
             data=re.compile(b"_lightning_plugins_(.*)")
@@ -338,7 +411,7 @@ async def lightning_pugins_query_hndlr(lightning):
         await lightning.answer(how, cache_time=0, alert=True)
         return
     light_pulu_name = lightning.data_match.group(1).decode("UTF-8")
-   
+    
     try:
         if light_pulu_name in CMD_HELP:
            
@@ -353,23 +426,40 @@ async def lightning_pugins_query_hndlr(lightning):
                 for iter_list in CMD_HELP[i]:
                     lightning_help_strin += "    `" + str(iter_list) + "`"
                     lightning_help_strin += "\n"
+                    lightning_help_strin += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
                     lightning_help_strin += "\n"
-    except BaseException:
-         pass
+    except KeyError:
+     if light_pulu_name in CMD_LIST:
+                lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
+                for i in CMD_LIST[light_pulu_name]:
+                    lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_LIST[light_pulu_name]}\n`Click On That Detail Button for more`"
+                    lightning_help_strin += "\n    " + i
+                    lightning_help_strin += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
+                    lightning_help_strin += "\n"
+    else:
+           lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n`Click On That Detail Button for more`"
+           lightning_is_best = lightning_help_strin 
+           lightning_is_best += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
+           lightning_is_best += "\n\n**In Case Any Problem @lightningsupport** ".format(light_pulu_name)
+    pass
    
     if light_pulu_name in CMD_LIST:
                 lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
                 for i in CMD_LIST[light_pulu_name]:
-                    lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_LIST[light_pulu_name]}\n`**Details**- Not Yet😅😅\n\n**Ask at @lightningsupport"
+                    lightning_help_strin  = f"""**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_LIST[light_pulu_name]}\n`Click On That Detail Button for more`"""
+                    lightning_help_strin += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
                     lightning_help_strin += "\n    " + i
                     lightning_help_strin += "\n"
                 
     else:
-           lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n**Details** - Not Yet😅😅\n\n**Ask at @lightningsupport"
+           lightning_help_strin  = f"""**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n`Click On That Detail Button for more`"""
            lightning_is_best = lightning_help_strin 
+           lightning_is_best += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
            lightning_is_best += "\n\n**In Case Any Problem @lightningsupport** ".format(light_pulu_name)
-    lightning_help_strin = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n**Details** - Not Yet😅😅\n\n**Ask at @lightningsupport"
+
+    lightning_help_strin = f"""**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n`Click On That Detail Button for more`"""
     lightning_is_best = lightning_help_strin 
+    lightning_is_best += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
     lightning_is_best += "\n\n**In Case Any Problem @lightningsupport** ".format(light_pulu_name)    
     if len(lightning_is_best) >= 4096:
           keinshin = "`Wait.( ͡🔥 ͜ʖ ͡🔥)`"
@@ -382,18 +472,20 @@ async def lightning_pugins_query_hndlr(lightning):
                f"Pasted {light_pulu_name} to {lig_url}",
                link_preview=False,
                buttons=[
-                [custom.Button.inline("🇸‌🇵‌🇪‌🇨‌🇮‌🇦‌🇱‌", data="krish")],
-                [custom.Button.inline("Ⴆαƈƙ 💢", data="lghtback")]],
+                [custom.Button.inline("ᗪETᗩIᒪEᗪ", data="detailed_{}".format(light_pulu_name)
+                )],
+                [custom.Button.inline("Ⴆαƈƙ 💢", data="lghtback")],
+            ],
          )
     else:
            await lightning.edit(
             message=lightning_is_best,
             buttons=[
-                [custom.Button.inline("🇸‌🇵‌🇪‌🇨‌🇮‌🇦‌🇱‌", data="krish")],
+                [custom.Button.inline("ᗪETᗩIᒪEᗪ", data="detailed_{}".format(light_pulu_name)
+                )],
                 [custom.Button.inline("Ⴆαƈƙ 💢", data="lghtback")],
             ],
-        )
-
+         )
 
 @tgbot.on(
     events.callbackquery.CallbackQuery(  # pylint:disable=E0602
@@ -591,21 +683,92 @@ async def hmm(lightning):
 
 
 
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"krish")))
-async def hmm(lightning):
-    if lightning.query.user_id == bot.uid:
-        text = ".xnxx\n.picx\n.les\n🙄🙄🙄🙄"
-        await lightning.answer(text, alert=True)
-    else:
-        txt = f"For {LIGHTNINGUSER} Not For You :)"
-        await lightning.answer(txt, alert=True)        
+@tgbot.on(
+        events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+            data=re.compile(b"krish(.*)")
+        )
+    )
+async def chill(lightning):
+    light_pulu_name = lightning.data_match.group(1).decode("UTF-8")
+    try:
+             if light_pulu_name in CMD_HELP:
+                   lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
+                   for light_pulu_name in CMD_HELP[light_pulu_name]:
+                        lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n {CMD_HELP[light_pulu_name]}\n**Any Help?**\n\n**Ask ngsupport"
+                        lightning_help_strin += "\n    " + light_pulu_name
+                        lightning_help_strin += "\n"   
+                        await lightning.edit("`Saving Command`")
+                        await asyncio.sleep(2)
+                        await lightning.edit("`Check You Saved Message....`")
+                        lightning_help_strin = bot.session.save()
+                        await bot.send_message("me", lightning_help_strin)
+                   
+		          
+          
+                        await lightning.edit(
+                    f"`Check Your Save`",
+                    link_preview=False,
+                    buttons=[
+                
+                [custom.Button.inline("Ⴆαƈƙ 💢", data="lghtback")],
+                
+                ],
+         )
+             else:
+                   for light_pulu_name in CMD_HELP[light_pulu_name]:
+                       lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_HELP[light_pulu_name]}\n`**Any Help?**\n\n**Ask ngsupport"
+                       lightning_help_strin += "\n    " + light_pulu_name
+                       lightning_help_strin += "\n"
+                       await lightning.edit(
+                   message=lightning_help_strin,
+                   buttons=[
+                
+                [custom.Button.inline("нσмє 💢", data="lghtback22")],
+                
+                ],
+         )
+    except KeyError:
+              if light_pulu_name in CMD_HELP:
+                   lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
+                   for light_pulu_name in CMD_HELP[light_pulu_name]:
+                        lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n {CMD_HELP[light_pulu_name]}\n**Any Help?**\n\n**Ask ngsupport"
+                        lightning_help_strin += "\n    " + light_pulu_name
+                        lightning_help_strin += "\n"   
+                   if len(lightning_help_strin) >= 2:
+                        await lightning.edit("`Saving Command`")
+                        await asyncio.sleep(2)
+                        await lightning.edit("`Check You Saved Message....`")
+                        lightning_help_strin = bot.session.save()
+                        await bot.send_message("me", lightning_help_strin)
+                   
+		          
+          
+                        await lightning.edit(
+                    f"`Check Your Save`",
+                    link_preview=False,
+                    buttons=[
+                
+                [custom.Button.inline("нσмє 💢", data="lghtback22")],
+                
+                ],
+         )
+                   else:
+                      for light_pulu_name in CMD_HELP[light_pulu_name]:
+                       lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_HELP[light_pulu_name]}\n`**Any Help?**\n\n**Ask ngsupport"
+                       lightning_help_strin += "\n    " + light_pulu_name
+                       lightning_help_strin += "\n"
+                       await lightning.edit(
+                   message=lightning_help_strin,
+                   buttons=[
+                
+                [custom.Button.inline("нσмє 💢", data="lghtback22")],
+                
+                ],
+         )
 
 
-"""
-Thanks To Friday Userbot and @Midhun_xD For This idea
+# Thanks To Friday Userbot and @Midhun_xD For This idea
 
-"""
-import requests
 
 
 
@@ -619,9 +782,25 @@ async def ho(event):
     await event.answer("( ͡🔥 ͜ʖ ͡🔥)", cache_time=0, alert=False)
     # This Is Copy of Above Code. (C) @SpEcHiDe
     buttons = lightnings_menu_for_help(0, CMD_LIST, "helpme")
-    ho = f"""Black Lightning Is Here With Stunning Help !\n
-In Case Any Problem @lightningsupport \nTottal Plugs( ͡🔥 ͜ʖ ͡🔥): {len(CMD_LIST)}"""
+    ho = f"""**Black Lightning Is Here With Stunning Help !\n
+In Case Any Problem @lightningsupport** \n`Tottal Plugs( ͡🔥 ͜ʖ ͡🔥): {len(CMD_LIST)}`"""
     await event.edit(message=ho, buttons=buttons)
+
+
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"lghtback22")))
+async def ho(event):
+    if event.query.user_id != bot.uid:
+        how = "Not For You Idiot 🖕( ͡❛ ͜ʖ ͡❛)."
+        await event.answer(how, cache_time=0, alert=True)
+        return
+    await event.answer("Returned To Home", cache_time=0, alert=False)
+    # This Is Copy of Above Code. (C) @SpEcHiDe
+    buttons = lightnings_menu_for_help(0, CMD_LIST, "helpme")
+    ho = f"""**Black Lightning Is Here With Stunning Help !\n
+In Case Any Problem @lightningsupport** \n`Tottal Plugs( ͡🔥 ͜ʖ ͡🔥): {len(CMD_LIST)}`"""
+    await event.edit(message=ho, buttons=buttons)
+
+
 
 
 
