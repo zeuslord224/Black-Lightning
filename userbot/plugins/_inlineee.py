@@ -377,7 +377,7 @@ async def detailed(lightning):
                 message=lightning_help_strin,
                 
                 buttons=[
-                        [custom.Button.inline("ѕανє", data="krish".format(light_pulu_name)
+                        [custom.Button.inline("ѕανє", data="krish_{}".format(light_pulu_name)
                 )],
                         [custom.Button.inline("нσмє 💢", data="lghtback22")],
                 ],
@@ -392,7 +392,7 @@ async def detailed(lightning):
                 message=lightning_help_strin,
                 
                 buttons=[
-                        [custom.Button.inline("ѕανє", data="krish".format(light_pulu_name)
+                        [custom.Button.inline("ѕανє", data="krish_{}".format(light_pulu_name)
                 )],
                         [custom.Button.inline("нσмє 💢", data="lghtback22")],
               ],
