@@ -14,7 +14,7 @@
 
 
 
-"""Created By @keinshin and
+"""Created By @krish1303y and
 If You Are Goin To kang Give Credits and My Copyright
 
 Kang with credits....
@@ -337,7 +337,7 @@ async def detailed(lightning):
                     lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
                     
                     lightning_help_strin += f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_HELP[light_pulu_name]}"
-                    lightning_help_strin += "\n    " + i
+                    lightning_help_strin += "\n    " + light_pulu_name
                     lightning_help_strin += "\n\n`Tottal Command Found Inside  {}`".format(len(light_pulu_name))
                     lightning_help_strin += "\n"
                     await lightning.edit(
