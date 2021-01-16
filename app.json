@@ -68,6 +68,11 @@
       "description": "create a private channel and then type .get_id add that value here for save messages",
       "value": ""
    },
+   "HELP_LOGER_CHATID": {
+      "description": "Put an Group Id Same As PRIVATE_GROUP_ID Required For logging plugin help.",
+      "value": "",
+      "required": true
+    },
    "PM_PERMIT_GROUP_ID": {
       "description": "Put an Group Id Same As PRIVATE_GROUP_ID Required For Pmpermit plugin.",
       "value": "",
