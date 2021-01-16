@@ -1,4 +1,4 @@
-"""night Plugin for Sensible_userbot
+"""Study Plugin
 Syntax: .study REASON"""
 
 # this is plugin is by @keinshin for Black Lightning
