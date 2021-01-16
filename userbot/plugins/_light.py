@@ -33,9 +33,15 @@ async def cmd_list(event):
         elif input_str:
             if input_str in CMD_LIST:
                 string = "Commands found in {}:\n".format(input_str)
-                for i in CMD_LIST[input_str]:
+                for input_str in CMD_LIST:
                     string += "\n    " + i
                     string += "\n"
+                    await event.edit(string)
+            if input_str in CMD_HELP:
+                string =  "Detaled Help" + input_str
+                for inpur_str in CMD_HELP:
+                    string =  "Detaled Help" + input_str
+                    string += "\n\n@blacklightningot"
                 await event.edit(string)
             else:
                 await event.edit("`Wait Checking..`")
