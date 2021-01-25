@@ -1,33 +1,25 @@
-from userbot.utils import lightning_cmd, load_module, remove_plugin
 
+from telethon import events
 
-@borg.on(lightning_cmd(pattern="load ?(.*)", outgoing=True))
-async def load(event):
-    if event.fwd_from:
-        return
-    shortname = event.pattern_match.group(1)
-    try:
-        try:
-            remove_plugin(shortname)
-        except:
-            pass
-        load_module(shortname)
-        await event.edit(f"Successfully loaded {shortname}")
-    except Exception as e:
-        await event.edit(
-            f"Could not load {shortname} because of the following error.\n{str(e)}"
-        )
-
-
-@borg.on(lightning_cmd(pattern="unload ?(.*)", outgoing=True))
+from telethon import functions, types
+from telethon.tl.types import InputMessagesFilterDocument
+from userbot.utils import command, remove_plugin, load_module
+from pathlib import Path
+from userbot import LOAD_PLUG
+from userbot.utils import admin_cmd, sudo_cmd
+import os
+@bot.on(admin_cmd(pattern=r"unload (?P<shortname>\w+)", outgoing=True))
+@bot.on(sudo_cmd(pattern=r"unload (?P<shortname>\w+)", allow_sudo=True))
 async def unload(event):
     if event.fwd_from:
         return
-    shortname = event.pattern_match.group(1)
+    shortname = event.pattern_match["shortname"]
+    dir_path =f"./userbot/plugins/{shortname}.py"
     try:
         remove_plugin(shortname)
-        await event.edit(f"Unloaded {shortname} successfully")
-    except Exception as e:
-        await event.edit(
-            "Successfully unload {shortname}\n{}".format(shortname, str(e))
-        )
+        os.remove(dir_path)
+        await event.edit(f"`Unloaded {shortname} successfully`")
+    except OSError as e:
+        await event.edit("Error: %s : %s" % (dir_path, e.strerror))
+#BY SHIVAM
+#TEAM DC
