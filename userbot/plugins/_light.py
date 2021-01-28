@@ -1,8 +1,14 @@
-# Rewritten by @keinshin
+# Created by @keinshin
+
+# Kang with Credits lol
 import io
 from  userbot import CMD_LIST, ALIVE_NAME, bot as light
 from userbot import CMD_HELP
 from userbot.utils import lightning_cmd
+
+
+from telethon.errors import TimedOutError
+
 import asyncio
 from var import Var
 
@@ -48,6 +54,7 @@ async def cmd_list(event):
                 await asyncio.sleep(2)
                 await event.edit(input_str + "  ☹️ is not a valid plugin😞😞!")
         else:
+         try:   
             light_help_strin = """**Black Lightning Heres With The Detailed Help For CMDs** 😉😉 !\n If Faced Any Bug Please Give The Feed Back at @lightningsupport:"""
             results = await bot.inline_query(  # pylint:disable=E0602
             lightningusername, light_help_strin
@@ -56,3 +63,5 @@ async def cmd_list(event):
                 event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
             )
             await event.delete()
+         except TimedOutError:
+          await event.edit(f"**Error**\n\n**Bot {lightningusername} Is incorrect or Inline Not enbled**")
