@@ -13,12 +13,13 @@ from userbot import CMD_HNDLR, bot, ALIVE_NAME
 
 from userbot.Config import Var
 from userbot.thunderconfig import Config
-from userbot.utils import load_assistant, load_module, start_assistant
+from userbot.utils import finnalise, load_module, main_loader, pokebot
 
 
 BOTNAME = Var.TG_BOT_USER_NAME_BF_HER
 LOAD_MYBOT = Var.LOAD_MYBOT
 logg = logging.getLogger("Black Lightning")
+assistant_logg = logging.getLogger("Black Lightning")
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Unknown"
 
 
@@ -86,28 +87,31 @@ for name in files:
         load_module(shortname.replace(".py", ""))
 
 logg.info("Setup Sucessfull! ")
+import os
 
 
-path = "userbot/plugins/assistant/*.py"
+path = "userbot/plugins/thunder/poke/*.py"
 files = glob.glob(path)
 for name in files:
     with open(name) as f:
         path1 = Path(f.name)
         shortname = path1.stem
-        start_assistant(shortname.replace(".py", ""))
-
-if Config.ENABLE_ASSISTANTBOT == "ENABLE":
-    path = "userbot/plugins/assistant/*.py"
+        pokebot(shortname.replace(".py", ""))
+        
+        
+THUNDER = os.environ.get("THUNDER", "ON")
+if THUNDER == "ON":
+    path = "userbot/plugins/thunder/*.py"
     files = glob.glob(path)
     for name in files:
         with open(name) as f:
             path1 = Path(f.name)
             shortname = path1.stem
-            load_assistant(shortname.replace(".py", ""))
+            finnalise(shortname.replace(".py", ""))
+            
     logg.info("Black Lightning  Bot Have Been Installed Successfully !")
 else:
-    logg.info("Black Lightning Has Been Installed Sucessfully \n\n.alive to check!")
-    logg.info("You Can Visit @lightningsupport For Any Support Or Doubts")
+    logg.info("Black Lightning Has Been Installed Sucessfully \n\n.alive to check\nYou Can Visit @lightningsupport For Any Support Or Doubts")
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()

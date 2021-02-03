@@ -17,9 +17,11 @@
 
 
 from telethon import TelegramClient, events, custom, Button, events
+from telethon.utils import pack_bot_file_id
 from telethon.events.common import EventBuilder
 from userbot.plugins.thunder import bot, is_owner, get_message, is_users, is_not
 from var import Var
+from userbot.plugins.thunder.users_sql import add_me_in_db, his_userid
 
 
 from PIL import Image, ImageDraw, ImageFont
@@ -106,3 +108,43 @@ async def commands(event):
    commanss = f"Commands For {username} listed Here!\n\n/alive\n/hack\n\id\n/trans\n/yta `music link` ( will download in audio format ) \n\ytv `music link` (will downloa in video format)"
    await bot.send_message(event.chat_id, commanss)
 
+@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
+async def get_message(event):
+    if is_he_added(event.sender_id):
+        return
+    if event.sender_id == bot.uid:
+        return
+    if event.raw_text.startswith("/"):
+        return
+    await event.get_sender()
+    chet = await event.forward_to(bot.uid)
+    add_me_in_db(chet.id, event.sender_id, event.id)
+
+
+@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
+async def _(event):
+    mhg = await event.get_reply_message()
+    if mhg is None:
+        return
+    mhg.id
+    mhg_s = event.raw_text
+    user_id, reply_message_id = his_userid(mhg.id)
+    if event.sender_id != bot.uid:
+        return
+    elif event.raw_text.startswith("/"):
+        return
+    elif event.text is not None and event.media:
+        bot_api_file_id = pack_bot_file_id(event.media) # Thanks To Friday Userbot
+        await tgbot.send_file(
+            user_id,
+            file=bot_api_file_id,
+            caption=event.text,
+            reply_to=reply_message_id,
+        )
+    else:
+        mhg_s = event.raw_text
+        await tgbot.send_message(
+            user_id,
+            mhg_s,
+            reply_to=reply_message_id,
+        )    
