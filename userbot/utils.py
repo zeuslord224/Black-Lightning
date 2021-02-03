@@ -652,3 +652,36 @@ def finnalise(shortname):
         spec.loader.exec_module(mod)
         sys.modules["userbot.plugins.thunder." + shortname] = mod
         assistant_log.info("Imported " + shortname)
+
+
+
+
+
+def pokebot(poke):
+    if poke.startswith("__"):
+            pass
+    elif poke.endswith("_"):
+        import importlib
+        import sys
+        from pathlib import Path
+
+        path = Path(f"userbot/plugins/thunder/pokebot/{poke}.py")
+        name = "userbot.plugins.thunder.pokebot.{}".format(poke)
+        spec = importlib.util.spec_from_file_location(name, path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        assistant_log.info("Imported" + poke)
+
+    else:
+        import importlib
+        import sys
+        from pathlib import Path
+
+        path = Path(f"userbot/plugins/thunder/pokebot/{poke}.py")
+        name = "userbot.plugins.thunder.pokebot.{}".format(poke)
+        spec = importlib.util.spec_from_file_location(name, path)
+        mod = importlib.util.module_from_spec(spec)
+        mod.tgbot = bot.tgbot
+        spec.loader.exec_module(mod)
+        sys.modules["userbot.plugins.thunder." + poke] = mod
+        assistant_log.info("Imported " + poke)
