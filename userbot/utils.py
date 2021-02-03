@@ -10,7 +10,8 @@ from userbot import CMD_LIST, LOAD_PLUG, bot
 from userbot.Config import Var
 from userbot.thunderconfig import Config
 
-sedprint = logging.getLogger("PLUGINS")
+login_print = logging.getLogger("PLUGINS")
+assistant_log = logging.getLogger("ASSISTANT")
 cmdhandler = Config.CMD_HNDLR if Config.CMD_HNDLR else "."
 bothandler = Config.BOT_HANDLER
 sudo_hndlr = Config.SUDO_HNDLR if Config.SUDO_HNDLR else "!"
@@ -168,7 +169,7 @@ def load_module(shortname):
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        sedprint.info("Successfully (re)imported " + shortname)
+        login_print.info("Successfully (re)imported " + shortname)
     else:
         import importlib
 
@@ -198,7 +199,7 @@ def load_module(shortname):
         spec.loader.exec_module(mod)
         # for imports
         sys.modules["userbot.plugins." + shortname] = mod
-        sedprint.info("Successfully imported " + shortname)
+        login_print.info("Successfully imported " + shortname)
         # support for other third-party plugins
         sys.modules["userbot.utils"] = userbot.utils
         sys.modules["userbot"] = userbot
@@ -589,172 +590,9 @@ async def eor(event, text):
     return await event.edit(text)
 
 
-#    Copyright (C) Midhun KM 2020
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-def assistant_cmd(add_cmd, is_args=False):
-    def cmd(func):
-        serena = bot.tgbot
-        if is_args:
-            pattern = bothandler + add_cmd + "(?: |$)(.*)"
-        elif is_args == "stark":
-            pattern = bothandler + add_cmd + " (.*)"
-        elif is_args == "heck":
-            pattern = bothandler + add_cmd
-        elif is_args == "snips":
-            pattern = bothandler + add_cmd + " (\S+)"
-        else:
-            pattern = bothandler + add_cmd + "$"
-        serena.add_event_handler(
-            func, events.NewMessage(incoming=True, pattern=pattern)
-        )
-
-    return cmd
-
-def is_admin():
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(event):
-            serena = bot.tgbot
-            sed = await serena.get_permissions(event.chat_id, event.sender_id)
-            user = event.sender_id
-            kek = bot.uid
-            if sed.is_admin:
-                await func(event)
-            if event.sender_id == kek:
-                pass
-            elif not user:
-                pass
-            if not sed.is_admin:
-                await event.reply("Only Admins Can Use it.")
-
-        return wrapper
-
-    return decorator
-
-
-def is_bot_admin():
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(event):
-            serena = bot.tgbot
-            pep = await serena.get_me()
-            sed = await serena.get_permissions(event.chat_id, pep)
-            if sed.is_admin:
-                await func(event)
-            else:
-                await event.reply("I Must Be Admin To Do This.")
-
-        return wrapper
-
-    return decorator
-
-
-def only_pro():
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(event):
-            kek = list(Config.SUDO_USERS)
-            mm = bot.uid
-            if event.sender_id == mm:
-                await func(event)
-            elif event.sender_id == kek:
-                await func(event)
-            else:
-                await event.reply("Only Owners, Sudo Users Can Use This Command.")
-
-        return wrapper
-
-    return decorator
-
-
-def god_only():
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(event):
-            moms = bot.uid
-            if event.sender_id == moms:
-                await func(event)
-            else:
-                pass
-
-        return wrapper
-
-    return decorator
-
-
-def only_groups():
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(event):
-            if event.is_group:
-                await func(event)
-            else:
-                await event.reply("This Command Only Works On Groups.")
-
-        return wrapper
-
-    return decorator
-
-
-def only_group():
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(event):
-            if event.is_group:
-                await func(event)
-            else:
-                pass
-
-        return wrapper
-
-    return decorator
-
-
-def peru_only():
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(event):
-            kek = list(Config.SUDO_USERS)
-            mm = bot.uid
-            if event.sender_id == mm:
-                await func(event)
-            elif event.sender_id == kek:
-                await func(event)
-            else:
-                pass
-
-        return wrapper
-
-    return decorator
-
-
-def only_pvt():
-    def decorator(func):
-        @functools.wraps(func)
-        async def wrapper(event):
-            if event.is_group:
-                pass
-            else:
-                await func(event)
-
-        return wrapper
-
-    return decorator
-
-
-def start_assistant(shortname):
+def main_loader(shortname):
     if shortname.startswith("__"):
         pass
     elif shortname.endswith("_"):
@@ -762,42 +600,31 @@ def start_assistant(shortname):
         import sys
         from pathlib import Path
 
-        path = Path(f"userbot/plugins/assistant/{shortname}.py")
-        name = "userbot.plugins.assistant.{}".format(shortname)
+        path = Path(f"userbot/plugins/thunder/{shortname}.py")
+        name = "userbot.plugins.thunder.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
-        sedprint.info("Starting Your Assistant Bot.")
-        sedprint.info("Assistant Sucessfully imported " + shortname)
+        load = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(load)
+
+        login_print.info("Imported" + shortname)
     else:
         import importlib
         import sys
         from pathlib import Path
 
-        path = Path(f"userbot/plugins/assistant/{shortname}.py")
+        download_path = Path(f"userbot/plugins/assistant/{shortname}.py")
         name = "userbot.plugins.assistant.{}".format(shortname)
-        spec = importlib.util.spec_from_file_location(name, path)
-        mod = importlib.util.module_from_spec(spec)
-        mod.tgbot = bot.tgbot
-        mod.serena = bot.tgbot
-        mod.assistant_cmd = assistant_cmd
-        mod.god_only = god_only()
-        mod.only_groups = only_groups()
-        mod.only_pro = only_pro()
-        mod.pro_only = only_pro()
-        mod.only_group = only_group()
-        mod.is_bot_admin = is_bot_admin()
-        mod.is_admin = is_admin()
-        mod.peru_only = peru_only()
-        mod.only_pvt = only_pvt()
-        spec.loader.exec_module(mod)
+        spec = importlib.util.spec_from_file_location(name, download_path)
+        load_plugin = importlib.util.module_from_spec(spec)
+        load_plugin.tgbot = bot.tgbot
+        spec.loader.exec_module(load_plugin)
         sys.modules[
             "userbot.plugins.assistant" + "Initialising Lightning" + shortname
-        ] = mod
-        sedprint.info("Lightning Has imported " + shortname)
+        ] = load_plugin
+        login_print.info("Setting Up Assistant  " + shortname)
 
 
-def load_assistant(shortname):
+def finnalise(shortname):
     if shortname.startswith("__"):
         pass
     elif shortname.endswith("_"):
@@ -805,23 +632,23 @@ def load_assistant(shortname):
         import sys
         from pathlib import Path
 
-        path = Path(f"userbot/plugins/assistant/{shortname}.py")
-        name = "userbot.plugins.assistant.{}".format(shortname)
+        path = Path(f"userbot/plugins/thunder/{shortname}.py")
+        name = "userbot.plugins.thunder.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        print("Initialising Lightning.")
-        print("Lightning - Imported " + shortname)
+        assistant_log.info("Imported" + shortname)
+
     else:
         import importlib
         import sys
         from pathlib import Path
 
-        path = Path(f"userbot/plugins/assistant/{shortname}.py")
-        name = "userbot.plugins.assistant.{}".format(shortname)
+        path = Path(f"userbot/plugins/thunder/{shortname}.py")
+        name = "userbot.plugins.thunder.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         mod.tgbot = bot.tgbot
         spec.loader.exec_module(mod)
-        sys.modules["userbot.plugins.assistant." + shortname] = mod
-        print("Lightning Has imported " + shortname)
+        sys.modules["userbot.plugins.thunder." + shortname] = mod
+        assistant_log.info("Imported " + shortname)
