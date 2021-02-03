@@ -90,7 +90,7 @@ logg.info("Setup Sucessfull! ")
 import os
 
 
-path = "userbot/plugins/thunder/*.py"
+path = "userbot/plugins/thunder/pokebot/*.py"
 files = glob.glob(path)
 for name in files:
     with open(name) as f:
@@ -100,7 +100,7 @@ for name in files:
         
         
 THUNDER = os.environ.get("THUNDER", "ON")
-if THUNDER == "ENABLE":
+if THUNDER == "ON":
     path = "userbot/plugins/thunder/*.py"
     files = glob.glob(path)
     for name in files:
