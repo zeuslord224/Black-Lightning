@@ -17,15 +17,15 @@ from sqlalchemy import Column, String
 from . import BASE, SESSION
 
 
-class Moidata(BASE):
-    __tablename__ = "moidata"
+class users2(BASE):
+    __tablename__ = "users2"
     chat_id = Column(String(14), primary_key=True)
 
     def __init__(self, chat_id):
         self.chat_id = chat_id
 
 
-Moidata.__table__.create(checkfirst=True)
+users2.__table__.create(checkfirst=True)
 
 
 def add_usersid_in_db(chat_id: int):
@@ -34,11 +34,10 @@ def add_usersid_in_db(chat_id: int):
     SESSION.commit()
 
 
-def get_all_users():
-    stark = SESSION.query(Moidata).all()
+def users():
+    all_users = SESSION.query(users2).all()
     SESSION.close()
-    return stark
-
+    return all_users
 
 def already_added(chat_id):
     try:
