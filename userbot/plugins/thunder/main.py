@@ -1,0 +1,108 @@
+
+
+#    Copyright (C) 2021 KeinShin
+
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>
+
+
+
+from telethon import TelegramClient, events, custom, Button, events
+from telethon.events.common import EventBuilder
+from userbot.plugins.thunder import bot, is_owner, get_message, is_users, is_not
+from var import Var
+
+
+from PIL import Image, ImageDraw, ImageFont
+from userbot import ALIVE_NAME
+
+import os
+def pic():
+   ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
+   if ASSISTANT_PIC is None:
+       PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
+       bot.download_media()
+       img = Image.open(PIC)
+       img.save("pic.png")
+       Name = ALIVE_NAME
+       ig_font = ImageFont.truetype('.resources/fonts/MakeupPersonalUseRegular-8Vpz.ttf',100)
+       cc = ImageDraw.Draw('pic.png')
+       cc.text(xy=(100, 200), text=f"Asssistant Of\n{Name}", fill=(0, 0, 0), font=ig_font)
+   else:
+       PIC = ASSISTANT_PIC
+    
+@bot.on(events.InlineQuery(pattern='/start'))
+async def send_welcome(event):
+    builder = event.builder
+    img = Image.open(pic)
+    if is_owner(event):
+       owner = str(ALIVE_NAME)
+       cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me"
+       result = builder.photo(
+            file=pic('pic.png'),
+            text=cool,
+            buttons=[
+                [custom.Button.inline("❤️Users❤️", data="users")],
+                [
+                    custom.Button.url(
+                "Help!", "@lightningsupport")
+                ],
+                [
+                    custom.Button.inline(
+                "Commands", data="commands")
+                ]
+                        ])
+       await event.answer[result]
+    else:
+           user = await event.get_user()
+           owner = str(ALIVE_NAME)
+           cool = f"**Hello {user}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**"
+           result = builder.photo(
+                file=pic('pic.png'),
+                text=cool,
+                buttons=[
+                    [custom.Button.inline("Commands", data="commands")],
+                    [
+                        custom.Button.url(
+                    "Help!", "@lightningsupport")
+                    ]
+                            ])
+           await event.answer[result]
+
+
+                            # @tgbot.on(events.NewMessage(pattern="^/alive", func=lambda e: e.sender_id == bot.uid))
+
+import re
+
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"commands")))                            
+async def commands(event):
+  got = await bot.get_me()
+
+
+  if is_not(event):
+    await event.delete()
+    commands = "Hello!\n\nKidnly Add Assitant In Some Group To Access This Feature"
+    await bot.send_message(event.chat_id,
+            message=commands,
+            buttons=[
+                [
+                    Button.url(
+                        "Add", f"t.me/{got.username}?startgroup=true"
+                    )
+                ],
+            ],
+        )
+  else:
+   username = Var.TG_BOT_USER_NAME_BF_HER
+   commanss = f"Commands For {username} listed Here!\n\n/alive\n/hack\n\id\n/trans\n/yta `music link` ( will download in audio format ) \n\ytv `music link` (will downloa in video format)"
+   await bot.send_message(event.chat_id, commanss)
+
