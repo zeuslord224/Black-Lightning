@@ -48,6 +48,7 @@ class Var(object):
     NEWS_CHANNEL_ID = int(os.environ.get("NEWS_CHANNEL_ID", -100))
     SPAMWATCH_API = os.environ.get("SPAMWATCH_API", None)
     ANTISPAM_SYSTEM = os.environ.get("ANTISPAM_SYSTEM", "DISABLE")
+    ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
     LIGHTNING_PRO = os.environ.get("LIGHTNING_PRO", "YES")
     WHITE_CHAT = set(int(x) for x in os.environ.get("WHITE_CHAT", "").split())
 
