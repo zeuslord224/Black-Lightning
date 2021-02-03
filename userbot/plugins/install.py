@@ -103,7 +103,7 @@ async def install(event):
 #     sete = str(secureee.find("borg.me.phone"))
     
 #     sss = str(secureee.find("000webhostapp.com"))
-    if len(secure) == "5" or "4096":
+    if len(secureee) == "4096":
      await event.edit("`Big File might take time to check`")#hehe
      out = hmm
      url = "https://del.dog/documents"
