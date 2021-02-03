@@ -665,8 +665,8 @@ def pokebot(poke):
         import sys
         from pathlib import Path
 
-        path = Path(f"userbot/plugins/thunder/pokebot/{poke}.py")
-        name = "userbot.plugins.thunder.pokebot.{}".format(poke)
+        path = Path(f"userbot/plugins/thunder/poke/{poke}.py")
+        name = "userbot.plugins.thunder.poke.{}".format(poke)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
@@ -677,8 +677,8 @@ def pokebot(poke):
         import sys
         from pathlib import Path
 
-        path = Path(f"userbot/plugins/thunder/pokebot/{poke}.py")
-        name = "userbot.plugins.thunder.pokebot.{}".format(poke)
+        path = Path(f"userbot/plugins/thunder/poke/{poke}.py")
+        name = "userbot.plugins.thunder.poke.{}".format(poke)
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         mod.tgbot = bot.tgbot
