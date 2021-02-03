@@ -612,8 +612,8 @@ def main_loader(shortname):
         import sys
         from pathlib import Path
 
-        download_path = Path(f"userbot/plugins/assistant/{shortname}.py")
-        name = "userbot.plugins.assistant.{}".format(shortname)
+        download_path = Path(f"userbot/plugins/thunder/{shortname}.py")
+        name = "userbot.plugins.thunder.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, download_path)
         load_plugin = importlib.util.module_from_spec(spec)
         load_plugin.tgbot = bot.tgbot
