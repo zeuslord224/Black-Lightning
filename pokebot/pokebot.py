@@ -179,8 +179,3 @@ def appear(message):
     print(curPokemonNum)
     # bot.reply_to(message, curPokemon + " has appeared!")
     bot.send_message(message.chat.id, curPokemon + " has appeared!")
-
-
-# Bot waits for events
-print("Pokebot is running...")
-bot.polling()
