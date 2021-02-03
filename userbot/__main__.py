@@ -90,7 +90,7 @@ logg.info("Setup Sucessfull! ")
 import os
 
 
-path = "userbot/plugins/thunder/poke/*.py"
+path = "userbot/plugins/thunder/poke_ub/*.py"
 files = glob.glob(path)
 for name in files:
     with open(name) as f:
