@@ -5,16 +5,25 @@ from sys import argv
 
 import telethon.utils
 from telethon import TelegramClient
+from telethon.tl.functions.messages import AddChatUserRequest
 
-from userbot import CMD_HNDLR, bot
+from telethon import functions
+
+from userbot import CMD_HNDLR, bot, ALIVE_NAME
+
 from userbot.Config import Var
 from userbot.thunderconfig import Config
 from userbot.utils import load_assistant, load_module, start_assistant
 
-TELE = Var.PRIVATE_GROUP_ID
+
 BOTNAME = Var.TG_BOT_USER_NAME_BF_HER
 LOAD_MYBOT = Var.LOAD_MYBOT
-sed = logging.getLogger("Black Lightning")
+logg = logging.getLogger("Black Lightning")
+DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Unknown"
+
+
+# It's the user you want to add (``user_id=user_to_add``).
+
 
 
 async def add_bot(bot_token):
@@ -25,12 +34,30 @@ async def add_bot(bot_token):
 
 async def startup_log_all_done():
     try:
-        await bot.send_message(
-            TELE,
-            f"**Black Lightning has been deployed.\nSend** `{CMD_HNDLR}alive` **to see if the bot is working.\n\nAdd** @{BOTNAME} **to this group and make it admin for enabling all the features of userbot**",
-        )
+        logg.info("Sucessfully Installed Everything")
     except BaseException:
-        print("Either PRIVATE_GROUP_ID is wrong or you have left the group.")
+        logg.warning("You Left The Group!\n\nSystem Failure")
+
+async def cant(event):
+    if event.query.user_id not in bot:
+        logg.warning("**Can Access Me\n\nYou Are Not ")
+    return
+
+
+async def yo(event):
+    hmm = f"{DEFAULTUSER}"
+    idd = Var.PRIVATE_GROUP_ID 
+    wel = event.query.user_id
+    if bot not in idd:
+     logg.info("You Left The Group\n\nAdding You Back")
+    await bot(
+              functions.messages.AddChatUserRequest(
+                              chat_id=idd, user_id=wel, fwd_limit=1000000
+                        )
+                     )
+    return
+
+
 
 
 if len(argv) not in (1, 3, 4):
@@ -43,10 +70,10 @@ else:
         bot.tgbot = TelegramClient(
             "TG_BOT_TOKEN", api_id=Var.APP_ID, api_hash=Var.API_HASH
         ).start(bot_token=Var.TG_BOT_TOKEN_BF_HER)
-        print("Initialisation finished, no errors")
-        print("Starting Userbot")
+        logg.info("Initialisation finished, no errors")
+        logg.info("Starting Black Lightning")
         bot.loop.run_until_complete(add_bot(Var.TG_BOT_USER_NAME_BF_HER))
-        print("Startup Completed")
+        logg.info("Completed")
     else:
         bot.start()
 
@@ -58,9 +85,9 @@ for name in files:
         shortname = path1.stem
         load_module(shortname.replace(".py", ""))
 
-print("Lightning has been deployed! ")
+logg.info("Setup Sucessfull! ")
 
-print("Setting up Lightning")
+
 path = "userbot/plugins/assistant/*.py"
 files = glob.glob(path)
 for name in files:
@@ -77,10 +104,10 @@ if Config.ENABLE_ASSISTANTBOT == "ENABLE":
             path1 = Path(f.name)
             shortname = path1.stem
             load_assistant(shortname.replace(".py", ""))
-    sed.info("Black Lightning  Bot Have Been Installed Successfully !")
+    logg.info("Black Lightning  Bot Have Been Installed Successfully !")
 else:
-    sed.info("Black Lightning Has Been Installed Sucessfully !")
-    sed.info("You Can Visit @lightningsupport For Any Support Or Doubts")
+    logg.info("Black Lightning Has Been Installed Sucessfully \n\n.alive to check!")
+    logg.info("You Can Visit @lightningsupport For Any Support Or Doubts")
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
