@@ -13,7 +13,7 @@ from userbot import CMD_HNDLR, bot, ALIVE_NAME
 
 from userbot.Config import Var
 from userbot.thunderconfig import Config
-from userbot.utils import finnalise, load_module, main_loader, pokebot
+from userbot.utils import finnalise, load_module, main_loader
 
 
 BOTNAME = Var.TG_BOT_USER_NAME_BF_HER
@@ -88,17 +88,7 @@ for name in files:
 
 logg.info("Setup Sucessfull! ")
 import os
-
-
-path = "userbot/plugins/thunder/poke_ub/*.py"
-files = glob.glob(path)
-for name in files:
-    with open(name) as f:
-        path1 = Path(f.name)
-        shortname = path1.stem
-        pokebot(shortname.replace(".py", ""))
-        
-        
+      
 THUNDER = os.environ.get("THUNDER", "ON")
 if THUNDER == "ON":
     path = "userbot/plugins/thunder/*.py"
