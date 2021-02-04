@@ -7,7 +7,7 @@ from array import array
 from collections import OrderedDict
 
 # own file for pprinting pokedex
-import utility
+from utility import user_pokedex
 
 class TinyDbInterface:
     # Static variables
