@@ -59,8 +59,9 @@ TWO_STEPS_VERI = (" Semms That You Have Two Steps Verifcation Input Password")
 loggingd = logging.getLogger("STRING BOT ")
 
 
-from userbot.plugins.upcomings.thunder import userb_bot as cleine
+from userbot.plugins.thunder import userb_bot as cleine
 
+from userbot import bot
 
 
 @cleine.on(events.NewMessage(pattern="^/string"))
@@ -79,7 +80,7 @@ async def string(event):
                 [Button.url("Api Hash Bot", "@UseTGXBot")],
             ],
         )
-    else:
+    elif event.query.user_id == bot.uid:
         await userb_bot.send_message(
             event.chat_id,
             message=f"Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}",
@@ -93,7 +94,20 @@ async def string(event):
                 [Button.url("Api Hash Bot", "@UseTGXBot")],
             ],
         )
-
+    else:     
+           await userb_bot.send_message(
+            event.chat_id,
+            message=f"Press Start For Making String ",
+            buttons=[
+                [
+                    custom.Button.inline(
+                        "Start ",
+                        data="start",
+                    )
+                ],
+                [Button.url("Api Hash Bot", "@UseTGXBot")],
+            ],
+        )
 @cleine.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
 async def ass_string(event):   
     global assitant_client
@@ -148,7 +162,7 @@ async def ass_string(event):
         session_string = current_client.session.save()
         await conv.send_message(f"`{session_string}`")
         assitant_client = await current_client.get_me()
-        # Thanks To Spechdie
+
     try:    
         await cleine.send_message(sender, f"Thanksk For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
         striing=current_client.session.save()
