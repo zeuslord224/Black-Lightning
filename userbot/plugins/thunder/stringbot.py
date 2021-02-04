@@ -21,7 +21,7 @@ import re
 
 
 from var import Var
-from telethon import events, Button, custom
+from telethon import client, events, Button, custom
 from telethon import TelegramClient as assitant_client
 from telethon.sessions import StringSession as assistant_string
 from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
@@ -53,7 +53,7 @@ TWO_STEPS_VERI = (" Semms That You Have Two Steps Verifcation Input Password")
 loggingd = logging.getLogger("STRING BOT ")
 
 
-from userbot.plugins.thunder import userb_bot 
+from userbot.plugins.thunder import userb_bot as oo
 from userbot.plugins.thunder import bot  as cleine
 
 from userbot import bot as lol
@@ -61,8 +61,8 @@ bgusername = Var.TG_BOT_USER_NAME_BF_HER
 
 @cleine.on(events.NewMessage(pattern="^/string"))
 async def string(event):    
-    if not await userb_bot.is_user_authorized():
-        await userb_bot.send_message(
+    if not await cleine.is_user_authorized():
+        await cleine.send_message(
             event.chat_id,
             message=f"Press Start For Making String ",
             buttons=[
@@ -76,7 +76,7 @@ async def string(event):
             ],
         )
     elif event.query.user_id == lol.uid:
-        await userb_bot.send_message(
+        await cleine.send_message(
             event.chat_id,
             message=f"Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}",
             buttons=[
@@ -90,7 +90,7 @@ async def string(event):
             ],
         )
     else:     
-           await userb_bot.send_message(
+           await cleine.send_message(
             event.chat_id,
             message=f"Press Start For Making String ",
             buttons=[
@@ -115,9 +115,9 @@ async def ass_string(event):
     code = cleine.get_entity('Enter The Code: Something Like 1 9 6 8 ')
     code_tf = None
     code = "".join(code.split(" "))
+    token = Var.TG_BOT_TOKEN_BF_HER
 
-
-
+    userb_bot = assitant_client('bot', api, f'{hash}').start(bot_token=token) 
 
     client = userb_bot
 
