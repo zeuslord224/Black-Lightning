@@ -10,7 +10,7 @@ hash = Var.API_HASH
 
 
 token = str(Var.TG_BOT_TOKEN_BF_HER)
-bot = TelegramClient('bot', api, f'{hash}').start(bot_token=token)
+userb_bot = TelegramClient('bot', api, f'{hash}').start(bot_token=token)
 
 
 def is_owner(event):
