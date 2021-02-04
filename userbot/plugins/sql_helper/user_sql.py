@@ -34,3 +34,12 @@ def present_in_userbase(chat_id):
         return None
     finally:
         SESSION.close()
+
+        
+def his_userid(message_id: int):
+    """ get the user_id from the message_id """
+    try:
+        s__ = SESSION.query(userbase).get(str(message_id))
+        return int(s__.chat_id), s__.um_id
+    finally:
+        SESSION.close()
