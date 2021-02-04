@@ -22,7 +22,7 @@ from telethon.events.common import EventBuilder
 from userbot.plugins.thunder import is_owner, get_message, is_users, is_not
 from var import Var
 from userbot.plugins.sql_helper.user_sql import *
-
+from userbot import
 
 from PIL import Image, ImageDraw, ImageFont
 from userbot import ALIVE_NAME
@@ -46,7 +46,7 @@ def pic():
 async def send_welcome(event):
     builder = event.builder
     img = Image.open(pic)
-    if is_owner(event):
+    if event.sender_id == cool.uid:
        owner = str(ALIVE_NAME)
        cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me"
        result = builder.photo(
