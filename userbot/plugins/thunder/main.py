@@ -1,3 +1,5 @@
+
+
 #    Copyright (C) 2021 KeinShin
 
 #    This program is free software: you can redistribute it and/or modify
@@ -10,174 +12,139 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 
-import asyncio
-import logging
 
-import random
-import re
-
-
+from telethon import TelegramClient, events, custom, Button, events
+from telethon.utils import pack_bot_file_id
+from telethon.events.common import EventBuilder
+from userbot.plugins.thunder import userb_bot, is_owner, get_message, is_users, is_not
 from var import Var
-from telethon import client, events, Button, custom
-from telethon import TelegramClient as assitant_client
-from telethon.sessions import StringSession as assistant_string
-from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
+from userbot.plugins.thunder.users_sql import add_me_in_db, his_userid
 
 
+from PIL import Image, ImageDraw, ImageFont
 from userbot import ALIVE_NAME
 
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "вℓα¢к ℓιgнтηιηg"
-
-TEXT = """Hi, {}.
-This is Your Assitant Now As a String Session Generator Bot. I will generate String Session of your Telegram Account.
-Now send your `API_ID` same as `APP_ID` to Start Generating Session."""
-
-
-NOT_VAILD = "Do /string This Not Vaild"
-PHONE_NUMBER = (
-    "Now send your Telegram account's Phone number in Indian Format. \n"
-    "Including Country code. Example: **+91 XXXXX XXXXX**\n\n"
-    "Press /cancel to Cancel Task."
-)
-NUMBER_ERROR = (
-    f"{DEFAULTUSER} Seems This Number Is Already Registered"
-)
-
-TWO_STEPS_VERI = (" Semms That You Have Two Steps Verifcation Input Password")
-
-
-
-loggingd = logging.getLogger("STRING BOT ")
-
-
-
-
-from userbot import bot as lol
-bgusername = Var.TG_BOT_USER_NAME_BF_HER
-
-@tgbot.on(events.NewMessage(pattern="^/string"))
-async def string(event):    
-    if not await tgbot.is_user_authorized():
-        await tgbot.send_message(
-            event.chat_id,
-            message=f"Press Start For Making String ",
-            buttons=[
-                [
-                    custom.Button.inline(
-                        "Start ",
-                        data="start",
-                    )
-                ],
-                [Button.url("Api Hash Bot", "@UseTGXBot")],
-            ],
-        )
-    elif event.query.user_id == lol.uid:
-        await tgbot.send_message(
-            event.chat_id,
-            message=f"Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}",
-            buttons=[
-                [
-                    custom.Button.inline(
-                        "Start ",
-                        data="start",
-                    )
-                ],
-                [Button.url("Api Hash Bot", "@UseTGXBot")],
-            ],
-        )
-    else:     
-           await tgbot.send_message(
-            event.chat_id,
-            message=f"Press Start For Making String ",
-            buttons=[
-                [
-                    custom.Button.inline(
-                        "Start ",
-                        data="start",
-                    )
-                ],
-                [Button.url("Api Hash Bot", "@UseTGXBot")],
-            ],
-        )
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
-async def ass_string(event):   
-    global assitant_client
-
-
-
-    with tgbot.conversation(event.chat_id) as conv:
-        
-        response = conv.wait_event(events.NewMessage(
-            chats=event.chat_id
-        ))
-    sender = await event.get_input_sender()
-    conv.send_message('Send Your APP_ID')
-    api = await conv.get_response()
-    while not any(int() for x in api):
-          api = await conv.get_response()
-          conv.send_message("Invaild APP_ID"
-     )
-          api = await conv.get_response()
-    token = Var.TG_BOT_TOKEN_BF_HER
-
-    userb_bot = assitant_client('bot', api_id=api, api_hash=hash).start(bot_token=token)
-
-    conv.send_message("Now Tell You APi_HASH")
-    hash = conv.get_response()
-    conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
-    contact = conv.get_response()
-    conv.send_code_request(contact)
-    conv.send_message("Send The Code Something Like 1 6 8 9")
+import os
+def pic():
+   ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
+   if ASSISTANT_PIC is None:
+       PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
+       userb_bot.download_media()
+       img = Image.open(PIC)
+       img.save("pic.png")
+       Name = ALIVE_NAME
+       ig_font = ImageFont.truetype('.resources/fonts/MakeupPersonalUseRegular-8Vpz.ttf',100)
+       cc = ImageDraw.Draw('pic.png')
+       cc.text(xy=(100, 200), text=f"Asssistant Of\n{Name}", fill=(0, 0, 0), font=ig_font)
+   else:
+       PIC = ASSISTANT_PIC
     
+@userb_bot.on(events.InlineQuery(pattern='/start'))
+async def send_welcome(event):
+    builder = event.builder
+    img = Image.open(pic)
+    if is_owner(event):
+       owner = str(ALIVE_NAME)
+       cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me"
+       result = builder.photo(
+            file=pic('pic.png'),
+            text=cool,
+            buttons=[
+                [custom.Button.inline("❤️Users❤️", data="users")],
+                [
+                    custom.Button.url(
+                "Help!", "@lightningsupport")
+                ],
+                [
+                    custom.Button.inline(
+                "Commands", data="commands")
+                ]
+                        ])
+       await event.answer[result]
+    else:
+           user = await event.get_user()
+           owner = str(ALIVE_NAME)
+           cool = f"**Hello {user}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**"
+           result = builder.photo(
+                file=pic('pic.png'),
+                text=cool,
+                buttons=[
+                    [custom.Button.inline("Commands", data="commands")],
+                    [
+                        custom.Button.url(
+                    "Help!", "@lightningsupport")
+                    ]
+                            ])
+           await event.answer[result]
 
-    code = tgbot.get_response()
-    code_tf = None
-    code = "".join(code.split(" "))
-    token = Var.TG_BOT_TOKEN_BF_HER
-    client = userb_bot    
-    user = await client.get_me()
-    response = await response
-   
-    await client.sign_in(contact, code)
-    loggingd.info(response)
-    phone = response.message.message.strip()
-    current_client = userb_bot
-    await current_client.connect()
-    try:
-        await client.sign_in(contact, code)
-    except PhoneCodeInvalidError:
-        await conv.send_message(NOT_VAILD)
+
+                            # @tgbot.on(events.NewMessage(pattern="^/alive", func=lambda e: e.sender_id == bot.uid))
+
+import re
+
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"commands")))                            
+async def commands(event):
+  got = await bot.get_me()
+
+
+  if is_not(event):
+    await event.delete()
+    commands = "Hello!\n\nKidnly Add Assitant In Some Group To Access This Feature"
+    await userb_bot.send_message(event.chat_id,
+            message=commands,
+            buttons=[
+                [
+                    Button.url(
+                        "Add", f"t.me/{got.username}?startgroup=true"
+                    )
+                ],
+            ],
+        )
+  else:
+   username = Var.TG_BOT_USER_NAME_BF_HER
+   commanss = f"Commands For {username} listed Here!\n\n/alive\n/hack\n\id\n/trans\n/yta `music link` ( will download in audio format ) \n\ytv `music link` (will downloa in video format)"
+   await userb_bot.send_message(event.chat_id, commanss)
+
+@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
+async def get_message(event):
+    if is_he_added(event.sender_id):
         return
-    except Exception as e:
-        loggingd.info(str(e))
-        conv.send_message("Looks Like You have Two Step Verification Enter Password")
-        code_tf = response.message.message.strip()
-        passw = conv.get_response()
-        await client.sign_in(contact, code, password=code_tf)
-        await current_client.sign_in(password=code_tf),
-        assitant_client = await current_client.get_me()
-        loggingd.info(assitant_client.stringify())
-    session_string = current_client.session.save()
-    await conv.send_message(f"`{session_string}`")
-    assitant_client = await current_client.get_me()
-    try:    
-        await tgbot.send_message(sender, f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
-        striing=current_client.session.save()
-        await userb_bot.send_message("me", f'{striing}')
-    except Exception:
-        await conv.send_message("Number Not Vaild /string To Restart")
+    if event.sender_id == bot.uid:
+        return
+    if event.raw_text.startswith("/"):
+        return
+    await event.get_sender()
+    chet = await event.forward_to(bot.uid)
+    add_me_in_db(chet.id, event.sender_id, event.id)
 
 
-
-
-
-
-
-
-def Api_Hash_Id(APP_IDS, API_HASHS):
-    id = len(APP_IDS)
-    indexs = random.randint(0, len(id) - 1)
-    return APP_IDS[indexs], API_HASHS[indexs]
+@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
+async def _(event):
+    mhg = await event.get_reply_message()
+    if mhg is None:
+        return
+    mhg.id
+    mhg_s = event.raw_text
+    user_id, reply_message_id = his_userid(mhg.id)
+    if event.sender_id != bot.uid:
+        return
+    elif event.raw_text.startswith("/"):
+        return
+    elif event.text is not None and event.media:
+        bot_api_file_id = pack_bot_file_id(event.media) # Thanks To Friday Userbot
+        await tgbot.send_file(
+            user_id,
+            file=bot_api_file_id,
+            caption=event.text,
+            reply_to=reply_message_id,
+        )
+    else:
+        mhg_s = event.raw_text
+        await tgbot.send_message(
+            user_id,
+            mhg_s,
+            reply_to=reply_message_id,
+        )    
