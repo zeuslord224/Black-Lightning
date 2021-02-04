@@ -74,7 +74,7 @@ async def string(event):
                 [Button.url("Api Hash Bot", "@UseTGXBot")],
             ],
         )
-    elif event.query.user_id == lol.uid:
+    elif event.sender_id == lol.uid:
         await tgbot.send_message(
             event.chat_id,
             message=f"Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}",
