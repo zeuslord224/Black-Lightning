@@ -21,7 +21,7 @@ from telethon.utils import pack_bot_file_id
 from telethon.events.common import EventBuilder
 from userbot.plugins.thunder import is_owner, get_message, is_users, is_not
 from var import Var
-from userbot.plugins.thunder.users_sql import add_me_in_db, his_userid
+from userbot.plugins.sql_helper.user_sql import *
 
 
 from PIL import Image, ImageDraw, ImageFont
@@ -110,7 +110,7 @@ async def commands(event):
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def get_message(event):
-    if is_he_added(event.sender_id):
+    if present_in_userbase(event.sender_id):
         return
     if event.sender_id == bot.uid:
         return
@@ -118,7 +118,7 @@ async def get_message(event):
         return
     await event.get_sender()
     chet = await event.forward_to(bot.uid)
-    add_me_in_db(chet.id, event.sender_id, event.id)
+    add_to_userbase(chet.id, event.sender_id, event.id)
 
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
