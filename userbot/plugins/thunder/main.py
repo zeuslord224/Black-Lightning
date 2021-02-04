@@ -69,7 +69,7 @@ async def send_welcome(event):
            owner = str(ALIVE_NAME)
            cool = f"**Hello {user}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**"
            result = builder.photo(
-                file=pic('pic.png'),
+                file=pic(),
                 text=cool,
                 buttons=[
                     [custom.Button.inline("Commands", data="commands")],
