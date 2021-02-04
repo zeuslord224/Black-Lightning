@@ -26,9 +26,7 @@ from telethon import TelegramClient as assitant_client
 from telethon.sessions import StringSession as assistant_string
 from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
 
-bgusername = Var.TG_BOT_USER_NAME_BF_HER
-token = str(Var.TG_BOT_TOKEN_BF_HER)
-userb_bot = assitant_client('bot', api, f'{hash}').start(bot_token=token)
+
 from userbot import ALIVE_NAME
 
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "вℓα¢к ℓιgнтηιηg"
@@ -55,10 +53,11 @@ TWO_STEPS_VERI = (" Semms That You Have Two Steps Verifcation Input Password")
 loggingd = logging.getLogger("STRING BOT ")
 
 
-from userbot.plugins.thunder import userb_bot as cleine
+from userbot.plugins.thunder import userb_bot 
+from userbot.plugins.thunder import bot  as cleine
 
-from userbot import bot
-
+from userbot import bot as lol
+bgusername = Var.TG_BOT_USER_NAME_BF_HER
 
 @cleine.on(events.NewMessage(pattern="^/string"))
 async def string(event):    
@@ -76,7 +75,7 @@ async def string(event):
                 [Button.url("Api Hash Bot", "@UseTGXBot")],
             ],
         )
-    elif event.query.user_id == bot.uid:
+    elif event.query.user_id == lol.uid:
         await userb_bot.send_message(
             event.chat_id,
             message=f"Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}",
@@ -118,7 +117,7 @@ async def ass_string(event):
     code = "".join(code.split(" "))
 
 
-    userb_bot = assitant_client('bot', api, f'{hash}').start(bot_token=token) 
+
 
     client = userb_bot
 
