@@ -1,7 +1,17 @@
-# Thanks To @Errored_Bachha
+#    Copyright (C) 2021 KeinShin
 
-# Created by @keinshin
-# Ported To Assitant By @keinshin
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 import asyncio
 import logging
@@ -9,14 +19,16 @@ import logging
 import random
 import re
 
-# Thanks To Uniborg 
-# Help Taken From Uniborg
 
+from var import Var
 from telethon import events, Button, custom
 from telethon import TelegramClient as assitant_client
 from telethon.sessions import StringSession as assistant_string
 from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
 
+bgusername = Var.TG_BOT_USER_NAME_BF_HER
+token = str(Var.TG_BOT_TOKEN_BF_HER)
+userb_bot = assitant_client('bot', api, f'{hash}').start(bot_token=token)
 from userbot import ALIVE_NAME
 
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "вℓα¢к ℓιgнтηιηg"
@@ -42,21 +54,20 @@ NUMBER_ERROR = (
 
 TWO_STEPS_VERI = (" Semms That You Have Two Steps Verifcation Input Password")
 
-# Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-from var import Var
 
 
+loggingd = logging.getLogger("STRING BOT ")
 
 
-@tgbot.on(events.NewMessage(pattern="^/string"))
+from userbot.plugins.upcomings.thunder import userb_bot as cleine
+
+
+
+@cleine.on(events.NewMessage(pattern="^/string"))
 async def string(event):    
-    vent = event.chat_id
-    if event.sender_id == bot.uid:
-        await tgbot.send_message(
-            vent,
+    if not await userb_bot.is_user_authorized():
+        await userb_bot.send_message(
+            event.chat_id,
             message=f"Press Start For Making String ",
             buttons=[
                 [
@@ -68,100 +79,91 @@ async def string(event):
                 [Button.url("Api Hash Bot", "@UseTGXBot")],
             ],
         )
-
-
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
-async def ass_string():    
-    # We have to manually call "start" if we want an explicit bot token
-    client = await assitant_client("Assitant", Var.APP_ID[0], Var.API_HASH[0]
-    ).start(bot_token=Var.TG_BOT_TOKEN_BF_HER)
-    async with client:
-        # Getting information about yourself
-        me = await client.get_me()
-        # "me" is an User object. You can pretty-print
-        # any Telegram object with the "stringify" method:
-        logging.info(me.stringify())
-        @client.on(events.NewMessage())
-        async def handler(event):
-            # logging.info(event.stringify())
-            APP_ID, API_HASH = Api_Hash_Id(
-                Var.APP_ID,
-                Var.API_HASH
-            )
-            async with event.client.conversation(event.chat_id) as conv:
-                await conv.send_message(PHONE_NUMBER)
-                response = conv.wait_event(events.NewMessage(
-                    chats=event.chat_id
-                ))
-                response = await response
-                logging.info(response)
-                phone = response.message.message.strip()
-                current_client = assitant_client(
-                    assistant_string(),
-                    api_id=APP_ID, api_hash=API_HASH, device_model= Var.TG_BOT_USER_NAME_BF_HER, system_version= "assitant", assis_stri="9.6.9",
-                )
-                await current_client.connect()
-                sent = await current_client.send_code_request(phone)
-                logging.info(sent)
-                if sent.phone_registered:
-                    await conv.send_message(NUMBER_ERROR)
-                    response = conv.wait_event(events.NewMessage(
-                        chats=event.chat_id
-                    ))
-                    response = await response
-                    logging.info(response)
-                    received_code = response.message.message.strip()
-                    received_tfa_code = None
-                    received_code = "".join(received_code.split(" "))
-                    try:
-                        await current_client.sign_in(phone, code=received_code, password=received_tfa_code)
-                    except PhoneCodeInvalidError:
-                        await conv.send_message(NOT_VAILD)
-                        return
-                    except Exception as e:
-                        logging.info(str(e))
-                        await conv.send_message(
-                            TWO_STEPS_VERI,
-
-                        )
-                        response = conv.wait_event(events.NewMessage(
-                            chats=event.chat_id
-                        ))
-                        response = await response
-                        logging.info(response)
-                        received_tfa_code = response.message.message.strip()
-                        await current_client.sign_in(password=received_tfa_code),
-                        assitant_client = await current_client.get_me()
-                        logging.info(assitant_client.stringify())
-                    session_string = current_client.session.save()
-                    await conv.send_message(f"`{session_string}`")
-                    assitant_client = await current_client.get_me()
-                    #
-                    await event.client.send_message(  entity=Var.PM_PERMIT_GROUP_ID, message=LOGGING.format( C=event.chat_id, L=assitant_client.id,
-                            APP_ID=APP_ID,
-                            API_HASH=API_HASH
-                        ),
-                        reply_to=4,
-                        parse_mode="md",
-                        link_preview=False,
-                        silent=True
+    else:
+        await userb_bot.send_message(
+            event.chat_id,
+            message=f"Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}",
+            buttons=[
+                [
+                    custom.Button.inline(
+                        "Start ",
+                        data="start",
                     )
-                else:
-                    NOT_REGISTERED_PHONE = "Number Not Vaild /string To Restart"
-                    await conv.send_message(NOT_REGISTERED_PHONE)
-                    return
-        await client.run_until_disconnected()
+                ],
+                [Button.url("Api Hash Bot", "@UseTGXBot")],
+            ],
+        )
+
+@cleine.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
+async def ass_string(event):   
+    global assitant_client
+    sender = await event.get_input_sender()
+    api = await cleine.get_entity(sender, 'Enter You API ID')
+    hash = await cleine.get_entity(sender, 'Enter You API HASH')
+    contact = await cleine.get_entity(sender, '+91 xxxxxxxxx if Indian Else You Country Format')
+    await cleine.send_code_request(contact)
+    
+    code = cleine.get_entity('Enter The Code: Something Like 1 9 6 8 ')
+    code_tf = None
+    code = "".join(code.split(" "))
 
 
-if __name__ == '__main__':
-    # Then we need a loop to work with
-    loop = asyncio.get_event_loop()
-    # Then, we need to run the loop with a task
-    loop.run_until_complete(ass_string())
+    userb_bot = assitant_client('bot', api, f'{hash}').start(bot_token=token) 
+
+    client = userb_bot
+
+    me = await client.get_me()
+
+
+    async with event.client.conversation(event.chat_id) as conv:
+        await conv.send_message(PHONE_NUMBER)
+        response = conv.wait_event(events.NewMessage(
+            chats=event.chat_id
+        ))
+        response = await response
+        loggingd.info(response)
+        phone = response.message.message.strip()
+        current_client = userb_bot
+        await current_client.connect()
+
+        try:
+            await current_client.sign_in(phone, code=code, password=code_tf)
+        except PhoneCodeInvalidError:
+            await conv.send_message(NOT_VAILD)
+            return
+        except Exception as e:
+            loggingd.info(str(e))
+            await conv.send_message(
+                TWO_STEPS_VERI,
+            )
+            response = conv.wait_event(events.NewMessage(
+                chats=event.chat_id
+            ))
+            response = await response
+            loggingd.info(response)
+            code_tf = response.message.message.strip()
+            await current_client.sign_in(password=code_tf),
+            assitant_client = await current_client.get_me()
+            loggingd.info(assitant_client.stringify())
+        session_string = current_client.session.save()
+        await conv.send_message(f"`{session_string}`")
+        assitant_client = await current_client.get_me()
+        # Thanks To Spechdie
+    try:    
+        await cleine.send_message(sender, f"Thanksk For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
+        striing=current_client.session.save()
+        await userb_bot.send_message("me", f'{striing}')
+    except Exception:
+        await conv.send_message("Number Not Vaild /string To Restart")
+
+
+
+
+
 
 
 
 def Api_Hash_Id(APP_IDS, API_HASHS):
-    total_ids = len(APP_IDS)
-    random_index = random.randint(0, len(total_ids) - 1)
-    return APP_IDS[random_index], API_HASHS[random_index]
+    id = len(APP_IDS)
+    indexs = random.randint(0, len(id) - 1)
+    return APP_IDS[indexs], API_HASHS[indexs]
