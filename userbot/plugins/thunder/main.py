@@ -19,7 +19,7 @@
 from telethon import TelegramClient, events, custom, Button, events
 from telethon.utils import pack_bot_file_id
 from telethon.events.common import EventBuilder
-from userbot.plugins.thunder import userb_bot, is_owner, get_message, is_users, is_not
+from userbot.plugins.thunder import is_owner, get_message, is_users, is_not
 from var import Var
 from userbot.plugins.thunder.users_sql import add_me_in_db, his_userid
 
@@ -32,7 +32,7 @@ def pic():
    ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
    if ASSISTANT_PIC is None:
        PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
-       userb_bot.download_media()
+       tgbot.download_media()
        img = Image.open(PIC)
        img.save("pic.png")
        Name = ALIVE_NAME
@@ -42,7 +42,7 @@ def pic():
    else:
        PIC = ASSISTANT_PIC
     
-@userb_bot.on(events.InlineQuery(pattern='/start'))
+@tgbot.on(events.InlineQuery(pattern='/start'))
 async def send_welcome(event):
     builder = event.builder
     img = Image.open(pic)
@@ -93,7 +93,7 @@ async def commands(event):
   if is_not(event):
     await event.delete()
     commands = "Hello!\n\nKidnly Add Assitant In Some Group To Access This Feature"
-    await userb_bot.send_message(event.chat_id,
+    await tgbot.send_message(event.chat_id,
             message=commands,
             buttons=[
                 [
@@ -106,7 +106,7 @@ async def commands(event):
   else:
    username = Var.TG_BOT_USER_NAME_BF_HER
    commanss = f"Commands For {username} listed Here!\n\n/alive\n/hack\n\id\n/trans\n/yta `music link` ( will download in audio format ) \n\ytv `music link` (will downloa in video format)"
-   await userb_bot.send_message(event.chat_id, commanss)
+   await tgbot.send_message(event.chat_id, commanss)
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def get_message(event):
