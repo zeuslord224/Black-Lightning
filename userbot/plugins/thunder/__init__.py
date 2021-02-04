@@ -1,9 +1,8 @@
 from telethon import TelegramClient, events
 from var import Var
-from userbot import bot as cool
-from sqlalchemy import Column, String
 
-from . import BASE, SESSION
+
+
 api = Var.APP_ID
 hash = Var.API_HASH
 
@@ -30,8 +29,8 @@ def is_not(user):
 
 
 
-@bot.on(events.NewMessage)
-async def get_message(event):
-    await event.reply(event.text)        
+
+def get_message(event):
+    return event.reply(event.text)        
 
 
