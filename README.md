@@ -20,11 +20,6 @@
 <br>
 
 
-# Credits 
-
-**This Is Telegram Black Lightning User Bot Mix Of Every Userbot Credits To Thier Owners** 
-Thx To  Friday And Dark Cobra Bot :") And Big Big Thx To 🔱╚»★𝙍𝘿𝙓★«╝⫸MONSTER🔱 ⁪⁬⁮⁮⁮⁮『⟁⃤ ₮Ɇ₳₥ { #𝙀𝙓𝙏𝙍𝙀𝙈𝙀 𝙁𝙄𝙂𝙃𝙏™}🔥𐌷𐌴ࠋࠋ𐌱𐍈𐌸 𐌾𐌰 and @CipherX1-ops, @Hellboi-Danish Sir     **This Is Mix Of Friday and Cobra**
-
 
 # Full Credits 
 
