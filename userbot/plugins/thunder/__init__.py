@@ -1,7 +1,7 @@
 from telethon import TelegramClient, events
 from var import Var
 
-
+from userbot import bot
 
 api = Var.APP_ID
 hash = Var.API_HASH
@@ -9,8 +9,7 @@ hash = Var.API_HASH
 
 
 token = str(Var.TG_BOT_TOKEN_BF_HER)
-userb_bot = TelegramClient('bot', api, f'{hash}').start(bot_token=token)
-bot = TelegramClient('bot', api, f'{hash}').start(bot_token=token)
+
 
 
 def is_owner(event):
