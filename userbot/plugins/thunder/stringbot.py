@@ -106,60 +106,66 @@ async def string(event):
 @cleine.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
 async def ass_string(event):   
     global assitant_client
-    sender = await event.get_input_sender()
-    api = await cleine.get_entity(sender, 'Enter You API ID')
-    hash = await cleine.get_entity(sender, 'Enter You API HASH')
-    contact = await cleine.get_entity(sender, '+91 xxxxxxxxx if Indian Else You Country Format')
-    await cleine.send_code_request(contact)
-    
-    code = cleine.get_entity('Enter The Code: Something Like 1 9 6 8 ')
-    code_tf = None
-    code = "".join(code.split(" "))
-    token = Var.TG_BOT_TOKEN_BF_HER
-
-    userb_bot = assitant_client('bot', api, f'{hash}').start(bot_token=token) 
-
-    client = userb_bot
-
-    me = await client.get_me()
 
 
-    async with event.client.conversation(event.chat_id) as conv:
-        await conv.send_message(PHONE_NUMBER)
+
+    with cleine.conversation(event.chat_id) as conv:
+        
         response = conv.wait_event(events.NewMessage(
             chats=event.chat_id
         ))
-        response = await response
-        loggingd.info(response)
-        phone = response.message.message.strip()
-        current_client = userb_bot
-        await current_client.connect()
+    sender = await event.get_input_sender()
+    conv.send_message('Send Your APP_ID')
+    api = await conv.get_response()
+    while not any(int() for x in api):
+          api = await conv.get_response()
+          conv.send_message("Invaild APP_ID"
+     )
+          api = await conv.get_response()
+    token = Var.TG_BOT_TOKEN_BF_HER
 
-        try:
-            await current_client.sign_in(phone, code=code, password=code_tf)
-        except PhoneCodeInvalidError:
-            await conv.send_message(NOT_VAILD)
-            return
-        except Exception as e:
-            loggingd.info(str(e))
-            await conv.send_message(
-                TWO_STEPS_VERI,
-            )
-            response = conv.wait_event(events.NewMessage(
-                chats=event.chat_id
-            ))
-            response = await response
-            loggingd.info(response)
-            code_tf = response.message.message.strip()
-            await current_client.sign_in(password=code_tf),
-            assitant_client = await current_client.get_me()
-            loggingd.info(assitant_client.stringify())
-        session_string = current_client.session.save()
-        await conv.send_message(f"`{session_string}`")
+    userb_bot = assitant_client('bot', api_id=api, api_hash=hash).start(bot_token=token)
+
+    conv.send_message("Now Tell You APi_HASH")
+    hash = conv.get_response()
+    conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
+    contact = conv.get_response()
+    conv.send_code_request(contact)
+    conv.send_message("Send The Code Something Like 1 6 8 9")
+    
+
+    code = cleine.get_response()
+    code_tf = None
+    code = "".join(code.split(" "))
+    token = Var.TG_BOT_TOKEN_BF_HER
+    client = userb_bot    
+    user = await client.get_me()
+    response = await response
+   
+    await client.sign_in(contact, code)
+    loggingd.info(response)
+    phone = response.message.message.strip()
+    current_client = userb_bot
+    await current_client.connect()
+    try:
+        await client.sign_in(contact, code)
+    except PhoneCodeInvalidError:
+        await conv.send_message(NOT_VAILD)
+        return
+    except Exception as e:
+        loggingd.info(str(e))
+        conv.send_message("Looks Like You have Two Step Verification Enter Password")
+        code_tf = response.message.message.strip()
+        passw = conv.get_response()
+        await client.sign_in(contact, code, password=code_tf)
+        await current_client.sign_in(password=code_tf),
         assitant_client = await current_client.get_me()
-        # Thanks To Spechdie
+        loggingd.info(assitant_client.stringify())
+    session_string = current_client.session.save()
+    await conv.send_message(f"`{session_string}`")
+    assitant_client = await current_client.get_me()
     try:    
-        await cleine.send_message(sender, f"Thanksk For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
+        await cleine.send_message(sender, f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
         striing=current_client.session.save()
         await userb_bot.send_message("me", f'{striing}')
     except Exception:
