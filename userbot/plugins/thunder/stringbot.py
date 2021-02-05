@@ -132,7 +132,7 @@ async def ass_string(event):
 
      await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
      contact = conv.get_response()
-     await conv.send_code_request(contact)
+     await bhok.send_code_request(contact)
      
      await conv.send_message("Send The Code Something Like 1 6 8 9")
      
@@ -143,7 +143,7 @@ async def ass_string(event):
      token = Var.TG_BOT_TOKEN_BF_HER
      client = bhok   
      user = await client.get_me()
-
+   
      await client.sign_in(contact, code)
 
      current_client = bhok
