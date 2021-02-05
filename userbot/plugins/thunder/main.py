@@ -41,7 +41,7 @@ from userbot import bot as cool
 async def send_welcome(event):
     global cool
     pis = PIC
-    if event.sender_id == cool.uid:
+    if event.sender_id == cool.me.id:
        owner = str(ALIVE_NAME)
        cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me"
     #    pis = pic()
@@ -88,7 +88,7 @@ async def commands(event):
   got = await tgbot.get_me()
 
 
-  if not event.send_id == cool.uid:
+  if not event.send_id == cool.me.id:
     await event.delete()
     commands = "Hello!\n\nKidnly Add Assitant In Some Group To Access This Feature"
     await tgbot.send_message(event.chat_id,
