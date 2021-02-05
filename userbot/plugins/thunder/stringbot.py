@@ -69,7 +69,7 @@ Do Not Touch This                                                               
 api_id = 2542398                                                                  #
 api_hash = 'fd14f082a108af90513d7689a60ba71f'                                     # 
 ###################################################################################
-tgbot = assitant_client('bot', api_id, api_hash).start(bot_token=token)
+
 @tgbot.on(events.NewMessage(pattern="^/string"))
 async def string(event):    
 
