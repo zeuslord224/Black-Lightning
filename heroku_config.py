@@ -8,6 +8,7 @@ class Var(object):
     STRING_SESSION = os.environ.get("STRING_SESSION", None)
     STRING_BOT_API = os.environ.get("STRING_BOT_API", None)
     DB_URI = os.environ.get("DATABASE_URL", None)
+    DEFAULT_USER_ID = os.environ.get("DEFAULT_USER_ID", None)
     TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TEMP_DOWNLOAD_DIRECTORY", None)
     LOGGER = True
     GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
