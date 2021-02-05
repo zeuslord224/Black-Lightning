@@ -28,22 +28,11 @@ from userbot import ALIVE_NAME
 import os
 temp = Var.TEMP_DOWNLOAD_DIRECTORY 
 from userbot.plugins.thunder.stringbot import tgbot
-def pic():
-   ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
-   if ASSISTANT_PIC is None:
-       PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
-       a = tgbot.download_media(PIC, './pics/')
-       img = Image.open(a)
-       img.save("pic.png")
-       Name = ALIVE_NAME
-       ig_font = ImageFont.truetype('.resources/fonts/MakeupPersonalUseRegular-8Vpz.ttf',100)
-       cc = ImageDraw.Draw('pic.png')
-       cc.text(xy=(100, 200), text=f"Asssistant Of\n{Name}", fill=(0, 0, 0), font=ig_font)
-       hihn = os.path.join(temp, "'pic'.png")  
-       return hihn
-   
-   else:
-       PIC = ASSISTANT_PIC
+ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
+if ASSISTANT_PIC is None:
+    PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
+else:
+    PIC = ASSISTANT_PIC
 
 
 from userbot import bot as cool
@@ -51,7 +40,7 @@ from userbot import bot as cool
 @tgbot.on(events.NewMessage(pattern="^/start"))
 async def send_welcome(event):
     global cool
-    pis = pic()
+    pis = PIC
     if event.sender_id == cool.uid:
        owner = str(ALIVE_NAME)
        cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me"
