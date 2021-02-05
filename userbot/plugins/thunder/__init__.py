@@ -5,7 +5,7 @@ from userbot import bot
 
 api = Var.APP_ID
 hash = Var.API_HASH
-tgbot = assitant_client('bot', api_id, api_hash).start(bot_token=token)
+tgbot = TelegramClient('bot', api_id, api_hash).start(bot_token=token)
 
 
 token = str(Var.TG_BOT_TOKEN_BF_HER)
