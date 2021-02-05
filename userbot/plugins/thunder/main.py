@@ -36,12 +36,12 @@ else:
 
 
 from userbot import bot as cool
-
+co = cool.get_me()
 @tgbot.on(events.NewMessage(pattern="^/start"))
 async def send_welcome(event):
     global cool
     pis = PIC
-    if event.sender_id == cool.me.id:
+    if event.sender_id == co.id:
        owner = str(ALIVE_NAME)
        cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me"
     #    pis = pic()
@@ -88,7 +88,7 @@ async def commands(event):
   got = await tgbot.get_me()
 
 
-  if not event.send_id == cool.me.id:
+  if not event.send_id == co.id:
     await event.delete()
     commands = "Hello!\n\nKidnly Add Assitant In Some Group To Access This Feature"
     await tgbot.send_message(event.chat_id,
@@ -110,12 +110,12 @@ async def commands(event):
 async def get_message(event):
     if present_in_userbase(event.sender_id):
         return
-    if event.sender_id == cool.me.id:
+    if event.sender_id == co.id:
         return
     if event.raw_text.startswith("/"):
         return
     await event.get_sender()
-    chet = await event.forward_to(cool.me.id)
+    chet = await event.forward_to(co.id)
     add_to_userbase(chet.id, event.sender_id, event.id)
 
 
@@ -127,7 +127,7 @@ async def _(event):
     mhg.id
     mhg_s = event.raw_text
     user_id, reply_message_id = his_userid(mhg.id)
-    if event.sender_id != cool.me.id:
+    if event.sender_id != co.id:
         return
     elif event.raw_text.startswith("/"):
         return
