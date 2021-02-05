@@ -6,7 +6,7 @@ from sys import argv
 import telethon.utils
 from telethon import TelegramClient
 from telethon.tl.functions.messages import AddChatUserRequest
-
+from userbot.plugins.thunder import bhok
 
 
 
@@ -85,15 +85,31 @@ else:
 
 path = "userbot/plugins/*.py"
 files = glob.glob(path)
-for name in files:
-    with open(name) as f:
-        path1 = Path(f.name)
-        shortname = path1.stem
-        load_module(shortname.replace(".py", ""))
+path = "userbot/plugins/thunder/*.py"
+files = glob.glob(path)
+if bot.disconnected():
+    for name in files:
+        with open(name) as f:
+            path1 = Path(f.name)
+            shortname = path1.stem
+            finnalise(shortname.replace(".py", ""))
+            logg.info(f"Disconnected From {DEFAULTUSER} Connecting To Assistant")
+        bhok.run_until_disconnected()
+else:
+    for name in files:
+        with open(name) as f:
+           path1 = Path(f.name)
+           shortname = path1.stem
+           load_module(shortname.replace(".py", ""))
 
 logg.info("Setup Sucessfull! ")
 import os
       
+def disconnected():
+     a = bot.disconnected()
+     return a
+
+
 THUNDER = os.environ.get("THUNDER", "ON")
 if THUNDER == "ON":
     path = "userbot/plugins/thunder/*.py"
@@ -106,9 +122,14 @@ if THUNDER == "ON":
             
     logg.info("Black Lightning  Bot Have Been Installed Successfully !")
 else:
-    logg.info("Black Lightning Has Been Installed Sucessfully \n\n.alive to check\nYou Can Visit @lightningsupport For Any Support Or Doubts")
+   
+    logg.info("Sucessfully Connected To Telegram!")
+    logg.info("Black Lightning Installed\n\n.alive and @lightningsupport For Any Kind Of Help")
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
+    logg.info(f"Disconnected From {DEFAULTUSER}")
+
 else:
     bot.run_until_disconnected()
+
