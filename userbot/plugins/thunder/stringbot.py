@@ -22,6 +22,7 @@ import re
 
 from var import Var
 from telethon import client, events, Button, custom
+from userbot import bot as hn
 from telethon import TelegramClient as assitant_client
 from telethon.sessions import StringSession as assistant_string
 from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
@@ -57,10 +58,25 @@ loggingd = logging.getLogger("STRING BOT ")
 
 from userbot import bot as lol
 bgusername = Var.TG_BOT_USER_NAME_BF_HER
+token = Var.TG_BOT_TOKEN_BF_HER
 
+###################################################################################
+"""                                                                               #
+                                                                                  #
+Do Not Touch This                                                                 #
+                                                                                  #
+ """                                                                              #
+api_id = 2542398                                                                  #
+api_hash = 'fd14f082a108af90513d7689a60ba71f'                                     # 
+###################################################################################
+tgbot = assitant_client('bot', api_id, api_hash).start(bot_token=token)
 @tgbot.on(events.NewMessage(pattern="^/string"))
 async def string(event):    
-    if not await tgbot.is_user_authorized():
+
+
+    if not await hn.is_user_authorized():
+    
+
         await tgbot.send_message(
             event.chat_id,
             message=f"Press Start For Making String ",
@@ -125,7 +141,7 @@ async def ass_string(event):
 
     await conv.send_message("Now Tell You APi_HASH")
     hash = await conv.get_response()
-    userb_bot = assitant_client('bot', api_id=api, api_hash=hash).start(bot_token=token)
+
     await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
     contact = conv.get_response()
     await conv.send_code_request(contact)
@@ -133,18 +149,18 @@ async def ass_string(event):
     await conv.send_message("Send The Code Something Like 1 6 8 9")
     
 
-    code = await tgbot.get_response()
+    code = await conv.get_response()
     code_tf = None
     code = "".join(code.split(" "))
     token = Var.TG_BOT_TOKEN_BF_HER
-    client = userb_bot    
+    client = conv    
     user = await client.get_me()
     response = await response
    
     await client.sign_in(contact, code)
     loggingd.info(response)
     phone = response.message.message.strip()
-    current_client = userb_bot
+    current_client = conv
     await current_client.connect()
     try:
         await client.sign_in(contact, code)
@@ -164,9 +180,9 @@ async def ass_string(event):
     await conv.send_message(f"`{session_string}`")
     assitant_client = await current_client.get_me()
     try:    
-        await tgbot.send_message(sender, f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
+        await conv.send_message(sender, f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
         striing=current_client.session.save()
-        await userb_bot.send_message("me", f'{striing}')
+        await tgbot.send_message("me", f'{striing}')
     except Exception:
         await conv.send_message("Number Not Vaild /string To Restart")
 
