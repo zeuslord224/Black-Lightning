@@ -18,9 +18,9 @@ jobs:
 
         with:
 
-          find: "@krish1303y"
+          find: "tgbot"
 
-          replace: "@keinshin"
+          replace: "black"
 
       - name: Create Pull Request
 
@@ -28,7 +28,7 @@ jobs:
 
         with:
 
-          commit_message: 'Replaced New Username'
+          commit_message: 'Tgbot To Userbot'
 
           commit_options: '--no-verify'
 
