@@ -23,7 +23,7 @@ import re
 from var import Var
 from telethon import client, events, Button, custom
 from userbot import bot as hn
-from userbot.plugins.thunder import tgbot
+from userbot.plugins.thunder import bhok
 from telethon import TelegramClient as assitant_client
 from telethon.sessions import StringSession as assistant_string
 from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
@@ -61,14 +61,14 @@ from userbot import bot as lol
 bgusername = Var.TG_BOT_USER_NAME_BF_HER
 token = Var.TG_BOT_TOKEN_BF_HER
 
-@tgbot.on(events.NewMessage(pattern="^/string"))
+@bhok.on(events.NewMessage(pattern="^/string"))
 async def string(event):    
 
 
     if not await hn.is_user_authorized():
     
 
-        await tgbot.send_message(
+        await bhok.send_message(
             event.chat_id,
             message=f"Press Start For Making String ",
             buttons=[
@@ -82,40 +82,40 @@ async def string(event):
             ],
         )
     elif event.sender_id == lol.uid:
-        await tgbot.send_message(
+        await bhok.send_message(
             event.chat_id,
             message=f"**Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}**",
             buttons=[
                 [
                     custom.Button.inline(
                         "Start ",
-                        data="start",
+                        data="start"
                     )
                 ],
                 [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
             ],
         )
     else:     
-           await tgbot.send_message(
+           await bhok.send_message(
             event.chat_id,
             message=f"**Press Start For Making String**",
             buttons=[
                 [
                     custom.Button.inline(
                         "Start ",
-                        data="start",
+                        data="start"
                     )
                 ],
                 [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
             ],
         )
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
+@bhok.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
 async def ass_string(event):   
     global assitant_client
 
 
 
-    async with tgbot.conversation(event.chat_id) as conv:
+    async with bhok.conversation(event.chat_id) as conv:
         
         response = conv.wait_event(events.NewMessage(
             chats=event.chat_id
@@ -172,7 +172,7 @@ async def ass_string(event):
     try:    
         await conv.send_message(sender, f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
         striing=current_client.session.save()
-        await tgbot.send_message("me", f'{striing}')
+        await bhok.send_message("me", f'{striing}')
     except Exception:
         await conv.send_message(event.chat_id, "Number Not Vaild /string To Restart")
 
