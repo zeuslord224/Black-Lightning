@@ -7,6 +7,10 @@ import telethon.utils
 from telethon import TelegramClient
 from telethon.tl.functions.messages import AddChatUserRequest
 
+from alchemysession import AlchemySessionContainer
+
+
+
 from telethon import functions
 
 from userbot import CMD_HNDLR, bot, ALIVE_NAME
@@ -65,12 +69,15 @@ if len(argv) not in (1, 3, 4):
     bot.disconnect()
 else:
     bot.tgbot = None
+    api_id = 2542398                                                                  #
+    api_hash = 'fd14f082a108af90513d7689a60ba71f'
     if Var.TG_BOT_USER_NAME_BF_HER is not None:
         print("Initiating Inline Bot")
         # ForTheGreatrerGood of beautification
         bot.tgbot = TelegramClient(
-            "TG_BOT_TOKEN", api_id=Var.APP_ID, api_hash=Var.API_HASH
+            "TG_BOT_TOKEN", api_id=api_id, api_hash=api_hash
         ).start(bot_token=Var.TG_BOT_TOKEN_BF_HER)
+
         logg.info("Initialisation finished, no errors")
         logg.info("Starting Black Lightning")
         bot.loop.run_until_complete(add_bot(Var.TG_BOT_USER_NAME_BF_HER))
