@@ -127,6 +127,7 @@ async def ass_string(event):
 
     conv.send_message("Now Tell You APi_HASH")
     hash = conv.get_response()
+    userb_bot = assitant_client('bot', api_id=api, api_hash=hash).start(bot_token=token)
     conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
     contact = conv.get_response()
     conv.send_code_request(contact)
