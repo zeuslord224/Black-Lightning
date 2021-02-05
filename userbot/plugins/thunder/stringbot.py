@@ -123,8 +123,6 @@ async def ass_string(event):
           api = await conv.get_response()
     token = Var.TG_BOT_TOKEN_BF_HER
 
-    userb_bot = assitant_client('bot', api_id=api, api_hash=hash).start(bot_token=token)
-
     conv.send_message("Now Tell You APi_HASH")
     hash = conv.get_response()
     userb_bot = assitant_client('bot', api_id=api, api_hash=hash).start(bot_token=token)
