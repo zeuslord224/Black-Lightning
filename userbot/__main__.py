@@ -44,7 +44,7 @@ async def startup_log_all_done():
 
 async def cant(event):
     if event.query.user_id not in bot:
-        logg.warning("**Can Access Me\n\nYou Are Not ")
+        logg.warning("Can't Access Me\n\nDisconnecting! ")
     return
 
 
