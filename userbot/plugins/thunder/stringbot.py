@@ -93,7 +93,7 @@ async def string(event):
     elif event.sender_id == lol.uid:
         await tgbot.send_message(
             event.chat_id,
-            message=f"Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}",
+            message=f"**Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}**",
             buttons=[
                 [
                     custom.Button.inline(
@@ -107,7 +107,7 @@ async def string(event):
     else:     
            await tgbot.send_message(
             event.chat_id,
-            message=f"Press Start For Making String ",
+            message=f"**Press Start For Making String**",
             buttons=[
                 [
                     custom.Button.inline(
@@ -132,12 +132,11 @@ async def ass_string(event):
     sender = await event.get_input_sender()
     await conv.send_message('Send Your APP_ID')
     api = await conv.get_response()
-    while not any(int() for x in api):
+    if api is not int:
+          await conv.send_message("Invalid APP_ID Try Again")
           api = await conv.get_response()
-          await conv.send_message("Invaild APP_ID"
-     )
-          api = await conv.get_response()
-    token = Var.TG_BOT_TOKEN_BF_HER
+    pass
+
 
     await conv.send_message("Now Tell You APi_HASH")
     hash = await conv.get_response()
