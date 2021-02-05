@@ -85,7 +85,7 @@ async def string(event):
                         data="start",
                     )
                 ],
-                [Button.url("Api Hash Bot", "@UseTGXBot")],
+                [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
             ],
         )
     else:     
@@ -99,7 +99,7 @@ async def string(event):
                         data="start",
                     )
                 ],
-                [Button.url("Api Hash Bot", "@UseTGXBot")],
+                [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
             ],
         )
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
