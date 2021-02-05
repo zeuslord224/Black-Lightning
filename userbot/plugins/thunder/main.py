@@ -26,12 +26,13 @@ from PIL import Image, ImageDraw, ImageFont
 from userbot import ALIVE_NAME
 
 import os
+from userbot.plugins.thunder.string_bot import tgbot
 def pic():
    ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
    if ASSISTANT_PIC is None:
        PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
-    #    tgbot.download_media()
-       img = Image.open(PIC)
+       a = tgbot.download_media(PIC, './pics/')
+       img = Image.open(a)
        img.save("pic.png")
        Name = ALIVE_NAME
        ig_font = ImageFont.truetype('.resources/fonts/MakeupPersonalUseRegular-8Vpz.ttf',100)
