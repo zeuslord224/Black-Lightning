@@ -23,7 +23,7 @@ import re
 from var import Var
 from telethon import client, events, Button, custom
 from userbot import bot as hn
-
+from userbot.plugins.thunder import tgbot
 from telethon import TelegramClient as assitant_client
 from telethon.sessions import StringSession as assistant_string
 from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
