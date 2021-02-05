@@ -26,7 +26,7 @@ from PIL import Image, ImageDraw, ImageFont
 from userbot import ALIVE_NAME
 
 import os
-from userbot.plugins.thunder.string_bot import tgbot
+from userbot.plugins.thunder.stringbot import tgbot
 def pic():
    ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
    if ASSISTANT_PIC is None:
