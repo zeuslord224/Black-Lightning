@@ -75,7 +75,7 @@ async def string(event):
                 [
                     custom.Button.inline(
                         "Start ",
-                        data="start",
+                        data="start00"
                     )
                 ],
                 [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
@@ -89,7 +89,7 @@ async def string(event):
                 [
                     custom.Button.inline(
                         "Start ",
-                        data="start"
+                        data="start00"
                     )
                 ],
                 [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
@@ -103,13 +103,14 @@ async def string(event):
                 [
                     custom.Button.inline(
                         "Start ",
-                        data="start"
+                        data="start00"
                     )
                 ],
                 [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
             ],
         )
-@bhok.on(events.callbackquery.CallbackQuery(data=re.compile(b"start")))
+@bhok.on(events.callbackquery.CallbackQuery(data=re.compile(b"start00")))
+
 async def ass_string(event):   
     global assitant_client
 
