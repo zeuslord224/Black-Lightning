@@ -26,6 +26,7 @@ from PIL import Image, ImageDraw, ImageFont
 from userbot import ALIVE_NAME
 
 import os
+temp = Var.TEMP_DOWNLOAD_DIRECTORY 
 from userbot.plugins.thunder.stringbot import tgbot
 def pic():
    ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
@@ -38,7 +39,9 @@ def pic():
        ig_font = ImageFont.truetype('.resources/fonts/MakeupPersonalUseRegular-8Vpz.ttf',100)
        cc = ImageDraw.Draw('pic.png')
        cc.text(xy=(100, 200), text=f"Asssistant Of\n{Name}", fill=(0, 0, 0), font=ig_font)
-       
+       hihn = os.path.join(temp, "'pic'.png")  
+       return hihn
+   
    else:
        PIC = ASSISTANT_PIC
 
@@ -48,12 +51,14 @@ from userbot import bot as cool
 @tgbot.on(events.NewMessage(pattern="^/start"))
 async def send_welcome(event):
     global cool
+    pis = pic()
     if event.sender_id == cool.uid:
        owner = str(ALIVE_NAME)
        cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me"
-       result = tgbot.send_file(
+    #    pis = pic()
+       await tgbot.send_file(
             event.chat_id,
-            pic(),
+            pis,
             text=cool,
             buttons=[
                 [custom.Button.inline("❤️Users❤️", data="users")],
@@ -66,14 +71,14 @@ async def send_welcome(event):
                 "Commands", data="commands")
                 ]
                         ])
-       await result
+
     else:
            user = await event.get_user()
            owner = str(ALIVE_NAME)
            cool = f"**Hello {user}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**"
-           result = tgbot.send_file(
+           await tgbot.send_file(
                 event.chat_id,
-                pic(),
+                pis,
                 caption=cool,
                 buttons=[
                     [custom.Button.inline("Commands", data="commands")],
@@ -82,7 +87,7 @@ async def send_welcome(event):
                     "Help!", "@lightningsupport")
                     ]
                             ])
-           await result
+           
 
 
                             # @tgbot.on(events.NewMessage(pattern="^/alive", func=lambda e: e.sender_id == bot.uid))
