@@ -9,7 +9,6 @@ from userbot import bot
 
 
 
-
 def is_owner(event):
     if event.query.user_id == cool.uid:
         pass
