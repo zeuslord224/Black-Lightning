@@ -61,7 +61,7 @@ from userbot import bot as lol
 bgusername = Var.TG_BOT_USER_NAME_BF_HER
 token = Var.TG_BOT_TOKEN_BF_HER
 
-@bhok.on(events.NewMessage(pattern="^/string"))
+@bhok.on(events.NewMessage(pattern="^/start"))
 async def string(event):    
 
 
@@ -114,7 +114,7 @@ async def string(event):
 async def ass_string(event):   
     global assitant_client
 
-
+    await event.delete()
 
     async with bhok.conversation(event.chat_id) as conv:
 
@@ -141,12 +141,12 @@ async def ass_string(event):
      code_tf = None
      code = "".join(code.split(" "))
      token = Var.TG_BOT_TOKEN_BF_HER
-     client = conv    
+     client = bhok   
      user = await client.get_me()
 
      await client.sign_in(contact, code)
 
-     current_client = conv
+     current_client = bhok
      await current_client.connect()
      try:
          await client.sign_in(contact, code)
