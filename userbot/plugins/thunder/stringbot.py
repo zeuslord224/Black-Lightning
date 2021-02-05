@@ -71,7 +71,7 @@ async def string(event):
                         data="start",
                     )
                 ],
-                [Button.url("Api Hash Bot", "@UseTGXBot")],
+                [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
             ],
         )
     elif event.sender_id == lol.uid:
