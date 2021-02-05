@@ -110,12 +110,12 @@ async def commands(event):
 async def get_message(event):
     if present_in_userbase(event.sender_id):
         return
-    if event.sender_id == cool.uid:
+    if event.sender_id == cool.me.id:
         return
     if event.raw_text.startswith("/"):
         return
     await event.get_sender()
-    chet = await event.forward_to(cool.uid)
+    chet = await event.forward_to(cool.me.id)
     add_to_userbase(chet.id, event.sender_id, event.id)
 
 
@@ -127,7 +127,7 @@ async def _(event):
     mhg.id
     mhg_s = event.raw_text
     user_id, reply_message_id = his_userid(mhg.id)
-    if event.sender_id != cool.uid:
+    if event.sender_id != cool.me.id:
         return
     elif event.raw_text.startswith("/"):
         return
