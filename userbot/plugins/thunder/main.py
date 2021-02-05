@@ -47,13 +47,13 @@ from userbot import bot as cool
 @tgbot.on(events.NewMessage(pattern="^/start"))
 async def send_welcome(event):
     global cool
-    builder = event.builder
     img = Image.open(pic)
     if event.sender_id == cool.uid:
        owner = str(ALIVE_NAME)
        cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me"
        result = tgbot.send_file(
-            file=pic('pic.png'),
+            event.chat_id,
+            pic(),
             text=cool,
             buttons=[
                 [custom.Button.inline("❤️Users❤️", data="users")],
