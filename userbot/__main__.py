@@ -7,7 +7,6 @@ import telethon.utils
 from telethon import TelegramClient
 from telethon.tl.functions.messages import AddChatUserRequest
 
-from alchemysession import AlchemySessionContainer
 
 
 
