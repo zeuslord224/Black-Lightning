@@ -23,6 +23,7 @@ import re
 from var import Var
 from telethon import client, events, Button, custom
 from userbot import bot as hn
+from userbot.plugins.thunder import tgbot
 from telethon import TelegramClient as assitant_client
 from telethon.sessions import StringSession as assistant_string
 from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
@@ -59,16 +60,6 @@ loggingd = logging.getLogger("STRING BOT ")
 from userbot import bot as lol
 bgusername = Var.TG_BOT_USER_NAME_BF_HER
 token = Var.TG_BOT_TOKEN_BF_HER
-
-###################################################################################
-"""                                                                               #
-                                                                                  #
-Do Not Touch This                                                                 #
-                                                                                  #
- """                                                                              #
-api_id = 2542398                                                                  #
-api_hash = 'fd14f082a108af90513d7689a60ba71f'                                     # 
-###################################################################################
 
 @tgbot.on(events.NewMessage(pattern="^/string"))
 async def string(event):    
