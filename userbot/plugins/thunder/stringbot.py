@@ -131,7 +131,7 @@ async def ass_string(event):
 
      sender = await event.get_input_sender()
      await conv.send_message('Send Your APP_ID')
-     api = int(await conv.get_response())
+     api = int(await conv.get_response().text)
 
      await conv.send_message("Now Tell You API_HASH")
      hash = await conv.get_response()
@@ -190,6 +190,9 @@ async def ass_string(event):
 
 
 
+# if __name__ == "__main__":
+#     loop = asyncio.get_event_loop()
+#     loop.run_until_complete(ass_string())
 
 
 
