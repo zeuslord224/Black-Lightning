@@ -102,7 +102,14 @@ else:
 
 
 
-   
+logg.info(f"Disconnected From {DEFAULTUSER} Connecting To Assistant")
+path2 = "userbot/plugins/thunder/*.py"
+files = glob.glob(path2)
+for name in files:
+    with open(name) as f:
+        path1 = Path(f.name)
+        shortname = path1.stem
+        finnalise(shortname.replace(".py", ""))
    
 try:
     path3 = "userbot/plugins/*.p"
@@ -114,39 +121,18 @@ try:
            load_module(shortname.replace(".py", ""))
            logg.info(f"Disconnected From {DEFAULTUSER} Connecting To Assistant")
 except Exception:
-    logg.info(f"Disconnected From {DEFAULTUSER} Connecting To Assistant")
-    path2 = "userbot/plugins/thunder/*.py"
-    files = glob.glob(path2)
-    for name in files:
-        with open(name) as f:
-            path1 = Path(f.name)
-            shortname = path1.stem
-            finnalise(shortname.replace(".py", ""))
-pass
+ pass
+ 
 
 
 
-logg.info(f"Disconnected From {DEFAULTUSER} Connecting To Assistant")
-path2 = "userbot/plugins/thunder/*.py"
-files = glob.glob(path2)
-for name in files:
-    with open(name) as f:
-        path1 = Path(f.name)
-        shortname = path1.stem
-        finnalise(shortname.replace(".py", ""))
+
 
 
 try:
     bot.run_until_disconnected()
 except Exception:
-    logg.info(f"Disconnected From {DEFAULTUSER} Connecting To Assistant")
-    path2 = "userbot/plugins/thunder/*.py"
-    files = glob.glob(path2)
-    for name in files:
-        with open(name) as f:
-            path1 = Path(f.name)
-            shortname = path1.stem
-            finnalise(shortname.replace(".py", ""))
+ pass
 
 
 if len(argv) not in (1, 3, 4):
