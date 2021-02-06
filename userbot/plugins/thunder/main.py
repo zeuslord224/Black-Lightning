@@ -73,8 +73,9 @@ async def send_welcome(event):
                  [custom.Button.inline("❤️Users❤️", data="users")],
                  [
                      custom.Button.url(
-                 "Help!", "@lightningsupport")
+                 "Help!", "t.me/lightningsupport")
                  ],
+                 [custom.Button.inline("Chat Bot", data="chat_bot")],
                  [
                      custom.Button.inline(
                  "Commands", data="commands")
@@ -91,10 +92,9 @@ async def send_welcome(event):
                   caption=kok,
                   buttons=[
                       [custom.Button.inline("Commands", data="commands")],
-                      [custom.Button.inline("Chat Bot", data="chat_bot")]
                       [
                           custom.Button.url(
-                      "Help!", "@lightningsupport")
+                      "Help!", "t.me/lightningsupport")
                       ]
                               ])
            
