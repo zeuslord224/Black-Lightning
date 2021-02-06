@@ -22,6 +22,7 @@ import re
 
 from var import Var
 from telethon import client, events, Button, custom
+import os
 from userbot import bot as hn
 from userbot.plugins.thunder import bhok
 from telethon import TelegramClient as assitant_client
@@ -61,6 +62,12 @@ from userbot import bot as lol
 bgusername = Var.TG_BOT_USER_NAME_BF_HER
 token = Var.TG_BOT_TOKEN_BF_HER
 
+STRING_BOT_PIC = os.environ.get("STRING_BOT_PIC", None)
+if STRING_BOT_PIC is None:
+    STRINGER_PIC = "https://telegra.ph/file/597b5ac659cda77b66198.jpg"
+else:
+    STRINGER_PIC = STRING_BOT_PIC
+
 @bhok.on(events.NewMessage(pattern="^/start"))
 async def string(event):    
 
@@ -70,6 +77,7 @@ async def string(event):
 
         await bhok.send_message(
             event.chat_id,
+            STRINGER_PIC,
             message=f"Press Start For Making String ",
             buttons=[
                 [
@@ -84,6 +92,7 @@ async def string(event):
     elif event.sender_id == lol.uid:
         await bhok.send_message(
             event.chat_id,
+            STRINGER_PIC,
             message=f"**Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}**",
             buttons=[
                 [
@@ -98,6 +107,7 @@ async def string(event):
     else:     
            await bhok.send_message(
             event.chat_id,
+            STRINGER_PIC,
             message=f"**Press Start For Making String**",
             buttons=[
                 [
