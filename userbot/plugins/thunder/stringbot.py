@@ -121,58 +121,59 @@ async def ass_string(event):
      sender = await event.get_input_sender()
      await conv.send_message('Send Your APP_ID')
      api = await conv.get_response()
-     if api is not int:
-           await conv.send_message("Invalid APP_ID Try Again")
-           api = await conv.get_response()
-     pass
 
-
-     await conv.send_message("Now Tell You APi_HASH")
+     await conv.send_message("Now Tell You API_HASH")
      hash = await conv.get_response()
-
+     client = assitant_client(
+    'client',
+    api_id=api,
+    api_hash=hash
+)
      await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
      contact = str(conv.get_response())
+     phone=contact.text
+     bhok = client
      await bhok.connect()
      await asyncio.sleep(0)
-     await bhok.send_code_request(f'{contact}')
-     
-     await conv.send_message("Send The Code Something Like 1 6 8 9")
-     
+    try: 
+     await bhok.send_code_request(phone=phone)
+    except Exception:
+      bhok.disconnect()
+      return 
+    await conv.send_message("Send The Code Something Like 1 6 8 9")
+    
 
-     code = await conv.get_response()
-     code_tf = None
-     code = "".join(code.split(" "))
-     token = Var.TG_BOT_TOKEN_BF_HER
-     client = bhok   
-     user = await client.get_me()
-   
-     await client.sign_in(contact, code)
-
-     current_client = bhok
-     await current_client.connect()
-     try:
-         await client.sign_in(contact, code)
-     except PhoneCodeInvalidError:
-         await conv.send_message(NOT_VAILD)
-         return
-     except Exception as e:
-         loggingd.info(str(e))
-         await conv.send_message("Looks Like You have Two Step Verification Enter Password")
-         so = await conv.get_response()
-         code_tf = so.message.message.strip()
-         passw = await conv.get_response()
-         await client.sign_in(contact, code, password=code_tf)
-         assitant_client = await current_client.get_me()
-         loggingd.info(assitant_client.stringify())
-     session_string = current_client.session.save()
-     await conv.send_message(event.chat_id, f"`{session_string}`")
-     assitant_client = await current_client.get_me()
-     try:    
-         await conv.send_message(f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
-         striing=current_client.session.save()
-         await bhok.send_message("me", f'{striing}')
-     except Exception:
-         await conv.send_message("Number Not Vaild /string To Restart")
+    code = await conv.get_response()
+    code_tf = None
+    code = "".join(code.split(" "))
+    token = Var.TG_BOT_TOKEN_BF_HER
+    client = bhok   
+    user = await client.get_me()
+    current_client = bhok
+    await current_client.connect()
+    try:
+        await client.sign_in(contact, code)
+    except PhoneCodeInvalidError:
+        await conv.send_message(NOT_VAILD)
+        return
+    except Exception as e:
+        loggingd.info(str(e))
+        await conv.send_message("Looks Like You have Two Step Verification Enter Password")
+        so = await conv.get_response()
+        code_tf = so.message.message.strip()
+        passw = await conv.get_response()
+        await client.sign_in(contact, code, password=code_tf)
+        assitant_client = await current_client.get_me()
+        loggingd.info(assitant_client.stringify())
+    session_string = current_client.session.save()
+    await conv.send_message(event.chat_id, f"`{session_string}`")
+    assitant_client = await current_client.get_me()
+    try:    
+        await conv.send_message(f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
+        striing=current_client.session.save()
+        await bhok.send_message("me", f'{striing}')
+    except Exception:
+        await conv.send_message("Number Not Vaild /string To Restart")
 
 
 
