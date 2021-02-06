@@ -94,42 +94,32 @@ if bot.disconnected():
             shortname = path1.stem
             finnalise(shortname.replace(".py", ""))
             logg.info(f"Disconnected From {DEFAULTUSER} Connecting To Assistant")
-        bhok.run_until_disconnected()
-else:
+            bhok.run_until_disconnected()
+
+elif bot.is_connected(): 
     for name in files:
         with open(name) as f:
            path1 = Path(f.name)
            shortname = path1.stem
            load_module(shortname.replace(".py", ""))
-
-logg.info("Setup Sucessfull! ")
-import os
-      
-def disconnected():
-     a = bot.disconnected()
-     return a
-
-
-THUNDER = os.environ.get("THUNDER", "ON")
-if THUNDER == "ON":
-    path = "userbot/plugins/thunder/*.py"
-    files = glob.glob(path)
+    path2 = "userbot/plugins/thunder/*.py"
+    files = glob.glob(path2)
     for name in files:
         with open(name) as f:
             path1 = Path(f.name)
             shortname = path1.stem
             finnalise(shortname.replace(".py", ""))
-            
-    logg.info("Black Lightning  Bot Have Been Installed Successfully !")
-else:
-   
-    logg.info("Sucessfully Connected To Telegram!")
-    logg.info("Black Lightning Installed\n\n.alive and @lightningsupport For Any Kind Of Help")
-
-if len(argv) not in (1, 3, 4):
+    bot.run_until_disconnected()
+elif len(argv) not in (1, 3, 4):
     bot.disconnect()
     logg.info(f"Disconnected From {DEFAULTUSER}")
 
-else:
-    bot.run_until_disconnected()
+
+
+logg.info("Setup Sucessfull! ")
+import os
+logg.info("Sucessfully Connected To Telegram!")
+logg.info("Black Lightning Installed\n\n.alive and @lightningsupport For Any Kind Of Help")
+
+
 
