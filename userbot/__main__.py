@@ -83,8 +83,8 @@ else:
     else:
         bot.start()
 
-path = "userbot/plugins/*.py"
-files = glob.glob(path)
+path2 = "userbot/plugins/*.py"
+files = glob.glob(path2)
 path = "userbot/plugins/thunder/*.py"
 files = glob.glob(path)
 if bot.disconnected:
@@ -97,11 +97,13 @@ if bot.disconnected:
         bhok.run_until_disconnected()
 
 else:
-    for name in files:
-        with open(name) as f:
-           path1 = Path(f.name)
-           shortname = path1.stem
-           load_module(shortname.replace(".py", ""))
+ path3 = "userbot/plugins/*.py"
+ files = glob.glob(path3)
+ for name in files:
+    with open(name) as f:
+        path1 = Path(f.name)
+        shortname = path1.stem
+        load_module(shortname.replace(".py", ""))
     path2 = "userbot/plugins/thunder/*.py"
     files = glob.glob(path2)
     for name in files:
