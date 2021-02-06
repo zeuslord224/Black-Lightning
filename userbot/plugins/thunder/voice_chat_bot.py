@@ -30,8 +30,7 @@ if ASSISTANT_MUSIC is not None:
     session_name = str(ASSISTANT_MUSIC)
     player = TelegramClient(StringSession(session_name), Var.APP_ID, Var.API_HASH)
 else:
-    session_name = "startup"
-    player = TelegramClient(session_name, Var.APP_ID, Var.API_HASH)
+    player = None
 
 # def generate_sample(file):
     
