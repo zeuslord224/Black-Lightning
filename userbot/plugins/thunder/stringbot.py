@@ -124,10 +124,11 @@ async def ass_string(event):
 
      await conv.send_message("Now Tell You API_HASH")
      hash = await conv.get_response()
+     hash_api=hash.text
      client = assitant_client(
     'client',
     api_id=api,
-    api_hash=hash
+    api_hash=hash_api
 )
      await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
      contact = str(conv.get_response())
