@@ -74,8 +74,12 @@ else:
 
         logg.info("Initialisation finished, no errors")
         logg.info("Starting Black Lightning")
+    try:
+   
         bot.loop.run_until_complete(main_basE_ot(Var.TG_BOT_USER_NAME_BF_HER))
         logg.info("Completed")
+    except Exception:
+        pass
     else:
         bot.start()
 
