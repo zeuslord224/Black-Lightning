@@ -7,7 +7,7 @@ import telethon.utils
 from telethon import TelegramClient
 from telethon.tl.functions.messages import AddChatUserRequest
 from userbot.plugins.thunder import bhok
-from userbot.plugins.thunder.voice_chat_bot import player
+
 
 
 
@@ -42,15 +42,6 @@ async def assustnat_player(player):
 
 
 
-
-def music():
-    try:
-            player_op = None
-            player.start()
-            player.loop.run_until_complete(assustnat_player(player))
-    except Exception:
-            player_op = True  # https://github.com/DevsExpo/FridayUserbot/blob/master/fridaybot/__main__.py#L41
-            logg.info("Client 2 Failed To Load. Check Your String.")
 
 async def startup_log_all_done():
     try:
@@ -102,7 +93,7 @@ else:
 
 
 
-logg.info(f"Disconnected From {DEFAULTUSER} Connecting To Assistant")
+
 path2 = "userbot/plugins/thunder/*.py"
 files = glob.glob(path2)
 for name in files:
@@ -121,7 +112,7 @@ try:
            load_module(shortname.replace(".py", ""))
            
 except Exception:
- logg.info(f"Disconnected From {DEFAULTUSER}\nTrying Connection To Assistant")
+ logg.info(f"Disconnected From {DEFAULTUSER}\n Connected To Assistant")
  
 
 
@@ -137,8 +128,9 @@ except Exception:
 
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
+    logg.info(f"Disconnected From {DEFAULTUSER}")
 else:
-  logg.info(f"Disconnected From {DEFAULTUSER}")
+
   logg.info("Setup Sucessfull! ")
   import os
   logg.info("Sucessfully Connected To Telegram!")
