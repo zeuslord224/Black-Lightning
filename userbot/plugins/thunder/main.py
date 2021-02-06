@@ -1,5 +1,3 @@
-
-
 #    Copyright (C) 2021 KeinShin
 
 #    This program is free software: you can redistribute it and/or modify
@@ -12,197 +10,183 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 import asyncio
-from telethon import TelegramClient, events, custom, Button, events
-from telethon.utils import pack_bot_file_id
-from telethon.events.common import EventBuilder
-from userbot.plugins.thunder import is_owner, get_message, is_users, is_not
-from var import Var
-from userbot.plugins.sql_helper.user_sql import *
-import coffeehouse
+import logging
 
-from coffeehouse.lydia import LydiaAI
-
-
-from PIL import Image, ImageDraw, ImageFont
-from userbot import ALIVE_NAME
-
-
-
-LYDIA_AP = {}
-SESSION_ID = {}
-
-import os
-temp = Var.TEMP_DOWNLOAD_DIRECTORY 
-
-ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
-if ASSISTANT_PIC is None:
-    PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
-else:
-    PIC = ASSISTANT_PIC
-
-CHAT_BOT_API = os.environ.get("CHAT_BOT_API", None)
-if CHAT_BOT_API is None:
-    C_API = "e20daaf7e63f680cb1ba4d004a85981873f75ba260f2253e57ded815add3c2bab3388c085c8ad5469faf798bd1bfc2000edc6876566ae584d7db07623a9b7328"
-else:
-    C_API = CHAT_BOT_API
-
-
-
-    lydia_ley = C_API
-    client = coffeehouse.API(lydia_ley)
-    Lydia = LydiaAI(client)
-
-
-@tgbot.on(events.NewMessage(pattern="^/start"))
-async def send_welcome(event):
-      from userbot import bot
-      pis = PIC
-      co = await bot.get_me()
-      if event.sender_id == co.id:
-        owner = str(ALIVE_NAME)
-        bot = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me\n\nI'll Get users messages to you\n\nFeatured by [Black Lightning Userbot]"
-     #    pis = pic()
-        await tgbot.send_file(
-             event.chat_id,
-             pis,
-             text=bot,
-             buttons=[
-                 [custom.Button.inline("❤️Users❤️", data="users")],
-                 [
-                     custom.Button.url(
-                 "Help!", "t.me/lightningsupport")
-                 ],
-                 [custom.Button.inline("Chat Bot", data="chat_bot")],
-                 [
-                     custom.Button.inline(
-                 "Commands", data="commands")
-                 ]
-                         ])
-
-      else:
-             user = await event.get_user()
-             owner = str(ALIVE_NAME)
-             kok = f"**Hello {user}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**"
-             await tgbot.send_file(
-                  event.chat_id,
-                  pis,
-                  caption=kok,
-                  buttons=[
-                      [custom.Button.inline("Commands", data="commands")],
-                      [
-                          custom.Button.url(
-                      "Help!", "t.me/lightningsupport")
-                      ]
-                              ])
-           
-
-
-                            # @tgbot.on(events.NewMessage(pattern="^/alive", func=lambda e: e.sender_id == bot.uid))
-
+import random
 import re
 
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"commands")))                            
-async def commands(event):
-   from userbot import bot
-   co = await bot.get_me()
-   username = Var.TG_BOT_USER_NAME_BF_HER
-   commanss = f"Commands For {username} listed Here!\n\n/alive\n/hack\n\id\n/trans\n/yta `music link` ( will download in audio format ) \n\ytv `music link` (will downloa in video format)"
-   await tgbot.send_message(event.chat_id, commanss)
 
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"chat_bot")))    
-async def remcf(event):
-    if event.fwd_from:
-        return
-    from userbot import bot
-    me = await bot.get_me()
-    if event.sender_id == me:
-     await event.send_message("Chat Bot Activated")
-    else:
-     async with tgbot.conversation(event.chat_id) as conv:
+from var import Var
+from telethon import client, events, Button, custom
+from userbot import bot as hn
+from userbot.plugins.thunder import bhok
+from telethon import TelegramClient as assitant_client
+from telethon.sessions import StringSession as assistant_string
+from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
 
-      
-      id = await event.sender_id
-      session = Lydia.create_session()
-      session_id = session.id
-      LYDIA_AP.update({str(event.chat_id) + " " + str(id.from_id): session})
-      SESSION_ID.update(
-            {str(event.chat_id) + " " + str(id.from_id): session_id}
+
+from userbot import ALIVE_NAME
+
+DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "вℓα¢к ℓιgнтηιηg"
+
+TEXT = """Hi, {}.
+This is Your Assitant Now As a String Session Generator Bot. I will generate String Session of your Telegram Account.
+Now send your `API_ID` same as `APP_ID` to Start Generating Session."""
+
+
+NOT_VAILD = "Do /string This Not Vaild"
+PHONE_NUMBER = (
+    "Now send your Telegram account's Phone number in Indian Format. \n"
+    "Including Country code. Example: **+91 XXXXX XXXXX**\n\n"
+    "Press /cancel to Cancel Task."
+)
+NUMBER_ERROR = (
+    f"{DEFAULTUSER} Seems This Number Is Already Registered"
+)
+
+TWO_STEPS_VERI = (" Semms That You Have Two Steps Verifcation Input Password")
+
+
+
+loggingd = logging.getLogger("STRING BOT ")
+
+
+
+
+from userbot import bot as lol
+bgusername = Var.TG_BOT_USER_NAME_BF_HER
+token = Var.TG_BOT_TOKEN_BF_HER
+
+@bhok.on(events.NewMessage(pattern="^/start"))
+async def string(event):    
+
+
+    if not await hn.is_user_authorized():
+    
+
+        await bhok.send_message(
+            event.chat_id,
+            message=f"Press Start For Making String ",
+            buttons=[
+                [
+                    custom.Button.inline(
+                        "Start ",
+                        data="start00"
+                    )
+                ],
+                [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
+            ],
         )
+    elif event.sender_id == lol.uid:
+        await bhok.send_message(
+            event.chat_id,
+            message=f"**Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}**",
+            buttons=[
+                [
+                    custom.Button.inline(
+                        "Start ",
+                        data="start00"
+                    )
+                ],
+                [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
+            ],
+        )
+    else:     
+           await bhok.send_message(
+            event.chat_id,
+            message=f"**Press Start For Making String**",
+            buttons=[
+                [
+                    custom.Button.inline(
+                        "Start ",
+                        data="start00"
+                    )
+                ],
+                [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
+            ],
+        )
+@bhok.on(events.callbackquery.CallbackQuery(data=re.compile(b"start00")))
 
+async def ass_string(event):   
+    global assitant_client
 
-@tgbot.on(events.NewMessage(incoming=True))
-async def user(ai):
-    ai.text
+    await event.delete()
+    from userbot.plugins.thunder import bhok
+
+    async with bhok.conversation(event.chat_id) as conv:
+
+     sender = await event.get_input_sender()
+     await conv.send_message('Send Your APP_ID')
+     api = await conv.get_response()
+
+     await conv.send_message("Now Tell You API_HASH")
+     hash = await conv.get_response()
+     hash_api=hash.text
+     client = assitant_client(
+    'client',
+    api_id=api,
+    api_hash=hash_api
+)
+     await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
+     contact = str(conv.get_response())
+     phone=contact.text
+     bhok = client
+     await bhok.connect()
+     await asyncio.sleep(0)
+    try: 
+     await bhok.send_code_request(phone=phone)
+    except Exception:
+      bhok.disconnect()
+      return 
+    await conv.send_message("Send The Code Something Like 1 6 8 9")
+    
+
+    code = await conv.get_response()
+    code_tf = None
+    code = "".join(code.split(" "))
+    token = Var.TG_BOT_TOKEN_BF_HER
+    client = bhok   
+    user = await client.get_me()
+    current_client = bhok
+    await current_client.connect()
     try:
-        session = LYDIA_AP[str(ai.chat_id) + " " + str(ai.from_id)]
-        session_id = SESSION_ID[str(ai.chat_id) + " " + str(ai.from_id)]
-        messages = ai.text
-        async with ai.client.action(ai.chat_id, "Typing"):
-            text = session.think_thought((session_id, messages))
-            wait_time = 0
-            for i in range(len(text)):
-                wait_time = wait_time + 0.1
-            await asyncio.sleep(wait_time)
-            await ai.reply(text)
-    except KeyError:
+        await client.sign_in(contact, code)
+    except PhoneCodeInvalidError:
+        await conv.send_message(NOT_VAILD)
         return
+    except Exception as e:
+        loggingd.info(str(e))
+        await conv.send_message("Looks Like You have Two Step Verification Enter Password")
+        so = await conv.get_response()
+        code_tf = so.message.message.strip()
+        passw = await conv.get_response()
+        await client.sign_in(contact, code, password=code_tf)
+        assitant_client = await current_client.get_me()
+        loggingd.info(assitant_client.stringify())
+    session_string = current_client.session.save()
+    await conv.send_message(event.chat_id, f"`{session_string}`")
+    assitant_client = await current_client.get_me()
+    try:    
+        await conv.send_message(f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
+        striing=current_client.session.save()
+        await bhok.send_message("me", f'{striing}')
+    except Exception:
+        await conv.send_message("Number Not Vaild /string To Restart")
 
 
-@tgbot.on(events.NewMessage(pattern="^Hi"))
-async def send_welcome(event):
-
-    await tgbot.send_message("**Hi! How Can I Help?**\n\n**Kindly Leave The Message**")
 
 
-
-@tgbot.on(events.NewMessage(pattern="^Help"))
-async def send_welcome(event):
-    await tgbot.send_message("**Kindly Leave The Message**")
-
-@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
-async def get_message(event):
-    from userbot import bot
-    co = await bot.get_me()
-    if present_in_userbase(event.sender_id):
-        return
-    if event.sender_id == co.id:
-        return
-    if event.raw_text.startswith("/"):
-        return
-    await event.get_sender()
-    chet = await event.forward_to(co.id)
-    add_to_userbase(chet.id, event.sender_id, event.id)
+# if __name__ == "__main__":
+#     loop = asyncio.get_event_loop()
+#     loop.run_until_complete(ass_string())
 
 
-@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
-async def _(event):
-    from userbot import bot
-    mhg = await event.get_reply_message()
-    co = await bot.get_me()
-    if mhg is None:
-        return
-    mhg.id
-    mhg_s = event.raw_text
-    user_id, reply_message_id = his_userid(mhg.id)
-    if event.sender_id == co.id:
-        return
-    elif event.raw_text.startswith("/"):
-        return
-    elif event.text is not None and event.media:
-        bot_api_file_id = pack_bot_file_id(event.media) # Thanks To Friday Userbot
-        await tgbot.send_file(
-            user_id,
-            file=bot_api_file_id,
-            caption=event.text,
-            reply_to=reply_message_id,
-        )
-    else:
-        mhg_s = event.raw_text
-        await tgbot.send_message(
-            user_id,
-            mhg_s,
-            reply_to=reply_message_id,
-        )    
+
+def Api_Hash_Id(APP_IDS, API_HASHS):
+    id = len(APP_IDS)
+    indexs = random.randint(0, len(id) - 1)
+    return APP_IDS[indexs], API_HASHS[indexs]
