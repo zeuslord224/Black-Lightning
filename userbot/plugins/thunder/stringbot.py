@@ -115,6 +115,7 @@ async def ass_string(event):
     global assitant_client
 
     await event.delete()
+    from userbot.plugins.thunder import bhok
 
     async with bhok.conversation(event.chat_id) as conv:
 
