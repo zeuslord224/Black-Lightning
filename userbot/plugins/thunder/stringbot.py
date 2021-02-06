@@ -133,7 +133,7 @@ async def ass_string(event):
      await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
      contact = conv.get_response()
      await bhok.connect()
-     await bhok.send_code_request(contact)
+     await bhok.send_code_request(f'{contact}')
      
      await conv.send_message("Send The Code Something Like 1 6 8 9")
      
