@@ -27,7 +27,8 @@ from coffeehouse.lydia import LydiaAI
 
 
 from PIL import Image, ImageDraw, ImageFont
-from userbot import ALIVE_NAME, bot
+from userbot import ALIVE_NAME
+
 
 
 LYDIA_AP = {}
@@ -57,6 +58,7 @@ else:
 
 @tgbot.on(events.NewMessage(pattern="^/start"))
 async def send_welcome(event):
+      from userbot import bot
       pis = PIC
       co = await bot.get_me()
       if event.sender_id == co.id:
@@ -104,6 +106,7 @@ import re
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"commands")))                            
 async def commands(event):
+   from userbot import bot
    co = await bot.get_me()
    username = Var.TG_BOT_USER_NAME_BF_HER
    commanss = f"Commands For {username} listed Here!\n\n/alive\n/hack\n\id\n/trans\n/yta `music link` ( will download in audio format ) \n\ytv `music link` (will downloa in video format)"
@@ -113,6 +116,7 @@ async def commands(event):
 async def remcf(event):
     if event.fwd_from:
         return
+    from userbot import bot
     me = await bot.get_me()
     if event.sender_id == me:
      await event.send_message("Chat Bot Activated")
@@ -160,6 +164,7 @@ async def send_welcome(event):
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def get_message(event):
+    from userbot import bot
     co = await bot.get_me()
     if present_in_userbase(event.sender_id):
         return
@@ -174,6 +179,7 @@ async def get_message(event):
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def _(event):
+    from userbot import bot
     mhg = await event.get_reply_message()
     co = await bot.get_me()
     if mhg is None:
