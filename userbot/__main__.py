@@ -31,7 +31,7 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Unknown"
 
 
 
-async def add_bot(bot_token):
+async def main_basE_ot(bot_token):
     await bot.start(bot_token)
     bot.me = await bot.get_me()
     bot.uid = telethon.utils.get_peer_id(bot.me)
@@ -49,24 +49,13 @@ async def startup_log_all_done():
     except BaseException:
         logg.warning("You Left The Group!\n\nSystem Failure")
 
-async def cant(event):
-    if event.query.user_id not in bot:
+async def cant():
+    if bot.uid not in bot.uid:
         logg.warning("Can't Access Me\n\nDisconnecting! ")
     return
 
 
-async def yo(event):
-    hmm = f"{DEFAULTUSER}"
-    idd = Var.PRIVATE_GROUP_ID 
-    wel = event.query.user_id
-    if bot not in idd:
-     logg.info("You Left The Group\n\nAdding You Back")
-    await bot(
-              functions.messages.AddChatUserRequest(
-                              chat_id=idd, user_id=wel, fwd_limit=1000000
-                        )
-                     )
-    return
+
 
 
 
@@ -85,7 +74,7 @@ else:
 
         logg.info("Initialisation finished, no errors")
         logg.info("Starting Black Lightning")
-        bot.loop.run_until_complete(add_bot(Var.TG_BOT_USER_NAME_BF_HER))
+        bot.loop.run_until_complete(main_basE_ot(Var.TG_BOT_USER_NAME_BF_HER))
         logg.info("Completed")
     else:
         bot.start()
