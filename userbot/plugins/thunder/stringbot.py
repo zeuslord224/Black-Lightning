@@ -90,10 +90,10 @@ async def string(event):
             ],
         )
     elif event.sender_id == lol.uid:
-        await bhok.send_message(
+        await bhok.send_file(
             event.chat_id,
             STRINGER_PIC,
-            message=f"**Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}**",
+            text=f"**Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}**",
             buttons=[
                 [
                     custom.Button.inline(
@@ -105,10 +105,10 @@ async def string(event):
             ],
         )
     else:     
-           await bhok.send_message(
+           await bhok.send_file(
             event.chat_id,
             STRINGER_PIC,
-            message=f"**Press Start For Making String**",
+            text=f"**Press Start For Making String**",
             buttons=[
                 [
                     custom.Button.inline(
@@ -190,9 +190,6 @@ async def ass_string(event):
 
 
 
-# if __name__ == "__main__":
-#     loop = asyncio.get_event_loop()
-#     loop.run_until_complete(ass_string())
 
 
 
