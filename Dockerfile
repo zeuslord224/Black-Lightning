@@ -1,8 +1,8 @@
 FROM kalilinux/kali-rolling
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TERM xterm-256color
-RUN apt-get update && apt upgrade -y && apt-get install sudo -y
-RUN apt-get install portaudio19-dev python-pyaudio
+RUN apt-get update && apt upgrade -y && apt-get install sudo -y 
+
 
 RUN apt-get install -y\
     coreutils \
@@ -54,6 +54,7 @@ RUN apt-get autoremove --purge
 RUN apt-get install imagemagick
 RUN pip3 install --upgrade pip setuptools 
 RUN pip3 install --upgrade pip
+RUN apt-get install portaudio19-dev python3-pyaudio
 RUN pip3 install PyAudio
 RUN if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi 
 RUN if [ ! -e /usr/bin/python ]; then ln -sf /usr/bin/python3 /usr/bin/python; fi 
