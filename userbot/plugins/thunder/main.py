@@ -133,7 +133,7 @@ async def chatboot(event):
     async with tgbot.conversation(event.chat_id) as conv:
 
      
-     id = await event.sender_id
+     id = event.sender_id
      session = Lydia.create_session()
      session_id = session.id
      LYDIA_AP.update({str(event.chat_id) + " " + str(id.from_id): session})
