@@ -63,5 +63,5 @@ async def cmd_list(event):
                 event.chat_id, reply_to=event.reply_to_msg_id, hide_via=True
             )
             await event.delete()
-         except TimedOutError:
-          await event.edit(f"**Error**\n\n**Bot {lightningusername} Is incorrect or Inline Not enbled**")
+         except Exception:
+          await event.edit(f"**Error**\n\n**Bot {lightningusername} Is incorrect or Inline not enabled**")
