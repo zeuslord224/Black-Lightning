@@ -101,7 +101,9 @@ for name in files:
         path1 = Path(f.name)
         shortname = path1.stem
         finnalise(shortname.replace(".py", ""))
-   
+
+
+
 try:
     path3 = "userbot/plugins/*.p"
     files = glob.glob(path3)
@@ -112,7 +114,7 @@ try:
            load_module(shortname.replace(".py", ""))
            
 except Exception:
- logg.info(f"Disconnected From {DEFAULTUSER}\n Connected To Assistant")
+ pass
  
 
 
