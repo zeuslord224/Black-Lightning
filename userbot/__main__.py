@@ -87,7 +87,7 @@ else:
 try:
  
     
-    path3 = "userbot/plugins/*.p"
+    path3 = "userbot/plugins/*.py"
     files = glob.glob(path3)
     for name in files:
        with open(name) as f:
