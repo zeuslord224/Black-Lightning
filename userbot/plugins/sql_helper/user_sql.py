@@ -14,8 +14,9 @@ class userbase(BASE):
 userbase.__table__.create(checkfirst=True)
 
 
-def add_to_userbase(chat_id: int):
-    __user = userbase(str(chat_id))
+def add_to_userbase(message_id: int, chat_id: int, um_id: int):
+    """ add the message to the table """
+    __user = Users(message_id, str(chat_id), um_id)
     SESSION.add(__user)
     SESSION.commit()
 
