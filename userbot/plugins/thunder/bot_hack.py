@@ -13,7 +13,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 2
-    animation_ttl = range(0, 11)
+    animation_ttl = range(0, 10)
     await event.edit("Starting Servers")
     animation_chars = [
                 "`Connecting To T-800 At 149.154.167.51 - IPV4 - TELEGRAM // DC-2`",
@@ -29,7 +29,7 @@ async def _(event):
     ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
-        await event.edit(animation_chars[i % 11])
+        await event.edit(animation_chars[i % 10])
 
 
 
