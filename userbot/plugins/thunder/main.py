@@ -186,7 +186,7 @@ async def get_message(event):
     add_to_userbase(chet.id, event.sender_id, event.id)
 
 
-@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"users")))    
 async def _(event):
     from userbot import bot
     mhg = await event.get_reply_message()
