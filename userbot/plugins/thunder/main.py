@@ -114,8 +114,6 @@ async def commands(event):
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"chat_bot")))    
 async def remcf(event):
-    if event.fwd_from:
-        return
     from userbot import bot
     me = await bot.get_me()
     if event.sender_id == me:
