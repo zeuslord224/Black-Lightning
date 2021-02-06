@@ -1,12 +1,20 @@
 from  userbot.plugins.thunder import bhok
-
+import pyaudio
+import wave
+import sys
 from userbot.utils import admin_cmd, sudo_cmd
 from var import Var
 
 import asyncio
+from playsound import playsound
 
 import pyglet
+
+from telethon.sessions import StringSession
 import os
+
+
+from userbot import bot
 
 import wget
 from youtubesearchpython import SearchVideos
@@ -17,7 +25,36 @@ from telethon import *
 CHAT_ID =  os.environ.get("CHAT_ID", -1001291663564)
 OWNER_IDS =  os.environ.get("OWNER_IDS", 1311769691)
 
-@bhok.on(events.NewMessage(pattern="ytmusic ?(.*)", 
+ASSISTANT_MUSIC = os.environ.get("ASSISTANT_MUSIC", None)
+if ASSISTANT_MUSIC is not None:
+    session_name = str(ASSISTANT_MUSIC)
+    player = TelegramClient(StringSession(session_name), Var.APP_ID, Var.API_HASH)
+else:
+    session_name = "startup"
+    player = TelegramClient(session_name, Var.APP_ID, Var.API_HASH)
+
+# def generate_sample(file):
+    
+#     CHUNK = 1024
+#     FORMAT = pyaudio.paInt16
+#     CHANNELS  = 2
+#     RATE = 44100
+#     RECORD_SECONDS=5
+#     p = pyaudio.PyAudio()
+#     stream = p.open(format=FORMAT,
+#     channels=CHANNELS,
+#     rate=RATE,
+#     input=True,
+#     frames_per_buffer=CHUNK)
+#     frames = []
+#     for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+#       data = stream.read(CHUNK)
+#       frames.append(data)
+
+#     stream.stop_stream()
+
+
+@player.on(events.NewMessage(pattern="ytmusic ?(.*)", 
                                from_users=CHAT_ID))
 
 async def _(event):
@@ -49,9 +86,9 @@ async def _(event):
     if os.path.exists(cong):
         await event.edit("`Song Downloaded Sucessfully. Playing")
     else:
-        await event.edit("`SomeThing Went Wrong. Try Again After Sometime..`")
+        await event.edit("`Error Try Again.`")
     capy = f"**Song Name ➠** `{thumails}` \n**Requested For ➠** `{url}` \n**Channel ➠** `{thumailss}` \n**Requested By ➠** `[User]({lol})`"
-    await bhok.send_file(
+    await player.send_file(
         event.chat_id,
         cong,
         force_document=False,
@@ -62,13 +99,8 @@ async def _(event):
         buttons=[custom.Button.inline("End", data="region_lol")],
         supports_streaming=True,
     )
-    sed_nub = await asyncio.create_subprocess_shell(
-        f"mpv {url} --no-video",
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,
-    )
-    await sed_nub.wait()
-    await event.delete()
+    await player(playsound(f'{thumails}.mp3'))
+    
     
     
     
