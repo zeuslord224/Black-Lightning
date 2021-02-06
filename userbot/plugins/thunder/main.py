@@ -85,7 +85,7 @@ async def send_welcome(event):
       else:
              user = await event.get_sender()
              owner = str(ALIVE_NAME)
-             kok = f"**Hello {user.username}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**"
+             kok = f"**Hello {user.username}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**\nAssitance By [ʙʟᴀᴄᴋ ʟɪɢʜᴛɴɪɴɢ](https://github.com/KeinShin/Black-Lightning)"
              await tgbot.send_file(
                   event.chat_id,
                   pis,
