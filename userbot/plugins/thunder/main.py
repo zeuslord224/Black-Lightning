@@ -27,7 +27,7 @@ from coffeehouse.lydia import LydiaAI
 
 
 from PIL import Image, ImageDraw, ImageFont
-from userbot import ALIVE_NAME
+from userbot import ALIVE_NAME, bot
 
 
 LYDIA_AP = {}
@@ -53,49 +53,48 @@ else:
     lydia_ley = C_API
     client = coffeehouse.API(lydia_ley)
     Lydia = LydiaAI(client)
-from userbot import bot as cool
+
 
 @tgbot.on(events.NewMessage(pattern="^/start"))
 async def send_welcome(event):
-    global cool
-    pis = PIC
-    co = await cool.get_me()
-    if event.sender_id == co.id:
-       owner = str(ALIVE_NAME)
-       cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me\n\nI'll Get users messages to you\n\nFeatured by [Black Lightning Userbot]"
-    #    pis = pic()
-       await tgbot.send_file(
-            event.chat_id,
-            pis,
-            text=cool,
-            buttons=[
-                [custom.Button.inline("❤️Users❤️", data="users")],
-                [
-                    custom.Button.url(
-                "Help!", "@lightningsupport")
-                ],
-                [
-                    custom.Button.inline(
-                "Commands", data="commands")
-                ]
-                        ])
+      pis = PIC
+      co = await bot.get_me()
+      if event.sender_id == co.id:
+        owner = str(ALIVE_NAME)
+        bot = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me\n\nI'll Get users messages to you\n\nFeatured by [Black Lightning Userbot]"
+     #    pis = pic()
+        await tgbot.send_file(
+             event.chat_id,
+             pis,
+             text=bot,
+             buttons=[
+                 [custom.Button.inline("❤️Users❤️", data="users")],
+                 [
+                     custom.Button.url(
+                 "Help!", "@lightningsupport")
+                 ],
+                 [
+                     custom.Button.inline(
+                 "Commands", data="commands")
+                 ]
+                         ])
 
-    else:
-           user = await event.get_user()
-           owner = str(ALIVE_NAME)
-           cool = f"**Hello {user}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**"
-           await tgbot.send_file(
-                event.chat_id,
-                pis,
-                caption=cool,
-                buttons=[
-                    [custom.Button.inline("Commands", data="commands")],
-                    [custom.Button.inline("Chat Bot", data="chat_bot")]
-                    [
-                        custom.Button.url(
-                    "Help!", "@lightningsupport")
-                    ]
-                            ])
+      else:
+             user = await event.get_user()
+             owner = str(ALIVE_NAME)
+             kok = f"**Hello {user}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**"
+             await tgbot.send_file(
+                  event.chat_id,
+                  pis,
+                  caption=kok,
+                  buttons=[
+                      [custom.Button.inline("Commands", data="commands")],
+                      [custom.Button.inline("Chat Bot", data="chat_bot")]
+                      [
+                          custom.Button.url(
+                      "Help!", "@lightningsupport")
+                      ]
+                              ])
            
 
 
@@ -105,7 +104,7 @@ import re
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"commands")))                            
 async def commands(event):
-   co = await cool.get_me()
+   co = await bot.get_me()
    username = Var.TG_BOT_USER_NAME_BF_HER
    commanss = f"Commands For {username} listed Here!\n\n/alive\n/hack\n\id\n/trans\n/yta `music link` ( will download in audio format ) \n\ytv `music link` (will downloa in video format)"
    await tgbot.send_message(event.chat_id, commanss)
@@ -114,7 +113,7 @@ async def commands(event):
 async def remcf(event):
     if event.fwd_from:
         return
-    me = await cool.get_me()
+    me = await bot.get_me()
     if event.sender_id == me:
      await event.send_message("Chat Bot Activated")
     else:
@@ -150,6 +149,7 @@ async def user(ai):
 
 @tgbot.on(events.NewMessage(pattern="^Hi"))
 async def send_welcome(event):
+
     await tgbot.send_message("**Hi! How Can I Help?**\n\n**Kindly Leave The Message**")
 
 
@@ -160,7 +160,7 @@ async def send_welcome(event):
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def get_message(event):
-    co = await cool.get_me()
+    co = await bot.get_me()
     if present_in_userbase(event.sender_id):
         return
     if event.sender_id == co.id:
@@ -175,7 +175,7 @@ async def get_message(event):
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def _(event):
     mhg = await event.get_reply_message()
-    co = await cool.get_me()
+    co = await bot.get_me()
     if mhg is None:
         return
     mhg.id
