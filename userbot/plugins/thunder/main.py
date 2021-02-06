@@ -129,7 +129,7 @@ async def chatboot(event):
     from userbot import bot
     me = await bot.get_me()
     if event.sender_id == me.id:
-     await tgbot.send_message("Chat Bot Activated")
+     await tgbot.send_message(event.chat_id, "Chat Bot Activated")
     async with tgbot.conversation(event.chat_id) as conv:
 
      
@@ -189,7 +189,7 @@ async def get_message(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"users")))    
 async def _(event):
     from userbot import bot
-    mhg = await event.get_reply_message()
+    mhg = event.sender_id
     co = await bot.get_me()
     if mhg is None:
         return
