@@ -112,21 +112,31 @@ async def commands(event):
    commanss = f"Commands For {username} listed Here!\n\n/alive\n/hack\n/id\n/trans\n/yta `music link` ( will download in audio format ) \n\ytv `music link` (will downloa in video format)"
    await tgbot.send_message(event.chat_id, commanss)
 
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"chat_bot")))    
-async def remcf(event):
+
+
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"chat_bot")))                            
+async def commands(event):
+   from userbot import bot
+   co = await bot.get_me()
+   username = Var.TG_BOT_USER_NAME_BF_HER
+   commanss = f"**What Chat Bot Do?**\n\n**Answer - Chatbot Will Activate Artificial intelligence Of Your Bot\nIn Short Bot Will Chat With The User Like a Human**"
+   await tgbot.send_message(event.chat_id,  kok,
+   buttons=[custom.Button.inline('🙎Activate🙎', data='activate')])
+
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"activate")))    
+async def chatboot(event):
     from userbot import bot
     me = await bot.get_me()
-    if event.sender_id == me:
+    if event.sender_id == me.id:
      await event.send_message("Chat Bot Activated")
-    else:
-     async with tgbot.conversation(event.chat_id) as conv:
+    async with tgbot.conversation(event.chat_id) as conv:
 
-      
-      id = await event.sender_id
-      session = Lydia.create_session()
-      session_id = session.id
-      LYDIA_AP.update({str(event.chat_id) + " " + str(id.from_id): session})
-      SESSION_ID.update(
+     
+     id = await event.sender_id
+     session = Lydia.create_session()
+     session_id = session.id
+     LYDIA_AP.update({str(event.chat_id) + " " + str(id.from_id): session})
+     SESSION_ID.update(
             {str(event.chat_id) + " " + str(id.from_id): session_id}
         )
 
@@ -144,20 +154,21 @@ async def user(ai):
             for i in range(len(text)):
                 wait_time = wait_time + 0.1
             await asyncio.sleep(wait_time)
-            await ai.reply(text)
+            await tgbot.reply(text)
     except KeyError:
         return
 
 
 @tgbot.on(events.NewMessage(pattern="^Hi"))
 async def send_welcome(event):
-      await tgbot.send_message(event.chat_id, "**Hi! How Can I Help?**\n\n**Kindly Leave The Message**")
+      await tgbot.send_message(event.chat_id, "**Hi! How Can I Help?**\n\n**Kindly Leave The Message**\n\n**You Can Chat With Me :)**")
 
 
 
 @tgbot.on(events.NewMessage(pattern="^Help"))
 async def send_welcome(event):
-    await tgbot.send_message(event.chat_id, "**Kindly Leave The Message**")
+    user =str(ALIVE_NAME)
+    await tgbot.send_message(event.chat_id, f"**Kindly Leave The Message**\n\n**I Will Pass It To {user}**")
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def get_message(event):
