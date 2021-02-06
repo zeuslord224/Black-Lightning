@@ -79,6 +79,7 @@ else:
         bot.loop.run_until_complete(main_basE_ot(Var.TG_BOT_USER_NAME_BF_HER))
         logg.info("Completed")
     except Exception:
+        bot.disconnect()
         pass
     else:
         bot.start()
@@ -101,7 +102,7 @@ try:
            
 except Exception:
  logg.info(f"Disconnected From {DEFAULTUSER}\n Connected To Assistant")
- pass
+ bot.disconnect()
 finally:
     path2 = "userbot/plugins/thunder/*.py"
     files = glob.glob(path2)
@@ -131,8 +132,8 @@ else:
 
   logg.info("Setup Sucessfull! ")
   import os
-  logg.info("Sucessfully Connected To Telegram!")
-  logg.info("Black Lightning Installed\n\n.alive and @lightningsupport For Any Kind Of Help")
+  logg.info("Sucessfully Connected To Telegram\n And Your Assistant!")
+
 
 
 
