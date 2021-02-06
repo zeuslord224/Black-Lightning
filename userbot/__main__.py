@@ -87,7 +87,7 @@ path = "userbot/plugins/*.py"
 files = glob.glob(path)
 path = "userbot/plugins/thunder/*.py"
 files = glob.glob(path)
-if bot.disconnected():
+if bot.disconnected:
     for name in files:
         with open(name) as f:
             path1 = Path(f.name)
