@@ -119,9 +119,9 @@ try:
            path1 = Path(f.name)
            shortname = path1.stem
            load_module(shortname.replace(".py", ""))
-           logg.info(f"Disconnected From {DEFAULTUSER} Connecting To Assistant")
+           
 except Exception:
- pass
+ logg.info(f"Disconnected From {DEFAULTUSER}\nTrying Connection To Assistant")
  
 
 
@@ -132,7 +132,7 @@ except Exception:
 try:
     bot.run_until_disconnected()
 except Exception:
- pass
+ logg.info(f"Disconnected From {DEFAULTUSER}\nTrying Connection To Assistant")
 
 
 if len(argv) not in (1, 3, 4):
