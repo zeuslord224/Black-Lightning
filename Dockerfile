@@ -54,7 +54,7 @@ RUN apt-get autoremove --purge
 RUN apt-get install imagemagick
 RUN pip3 install --upgrade pip setuptools 
 RUN pip3 install --upgrade pip
-RUN apt-get install portaudio19-dev python3-pyaudio
+RUN apt-get install portaudio19-dev python3-pyaudio -y
 RUN pip3 install PyAudio
 RUN if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi 
 RUN if [ ! -e /usr/bin/python ]; then ln -sf /usr/bin/python3 /usr/bin/python; fi 
