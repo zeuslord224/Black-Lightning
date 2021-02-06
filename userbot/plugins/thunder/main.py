@@ -155,7 +155,7 @@ async def user(ai):
             for i in range(len(text)):
                 wait_time = wait_time + 0.1
             await asyncio.sleep(wait_time)
-            await tgbot.reply(text)
+            await ai.reply(text)
     except KeyError:
         return
 
