@@ -131,8 +131,9 @@ async def ass_string(event):
      hash = await conv.get_response()
 
      await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
-     contact = conv.get_response()
+     contact = str(conv.get_response())
      await bhok.connect()
+     await asyncio.sleep(0)
      await bhok.send_code_request(f'{contact}')
      
      await conv.send_message("Send The Code Something Like 1 6 8 9")
@@ -176,7 +177,9 @@ async def ass_string(event):
 
 
 
-
+# if __name__ == "__main__":
+#     loop = asyncio.get_event_loop()
+#     loop.run_until_complete(ass_string())
 
 
 
