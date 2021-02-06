@@ -119,8 +119,9 @@ async def commands(event):
    from userbot import bot
    co = await bot.get_me()
    username = Var.TG_BOT_USER_NAME_BF_HER
-   commanss = f"**What Chat Bot Do?**\n\n**Answer - Chatbot Will Activate Artificial intelligence Of Your Bot\nIn Short Bot Will Chat With The User Like a Human**"
-   await tgbot.send_message(event.chat_id,  kok,
+   kok = f"**What Chat Bot Do?**\n\n**Answer - Chatbot Will Activate Artificial intelligence Of Your Bot\nIn Short Bot Will Chat With The User Like a Human**"
+   await tgbot.send_message(event.chat_id,  
+   kok,
    buttons=[custom.Button.inline('🙎Activate🙎', data='activate')])
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"activate")))    
