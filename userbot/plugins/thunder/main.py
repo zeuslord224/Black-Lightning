@@ -63,7 +63,7 @@ async def send_welcome(event):
       co = await bot.get_me()
       if event.sender_id == co.id:
         owner = str(ALIVE_NAME)
-        bot = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me\n\nI'll Get users messages to you\n\nFeatured by [Black Lightning Userbot]"
+        bot = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me\n\nI'll Get users messages to you\n\n[ʙʟᴀᴄᴋ ʟɪɢʜᴛɴɪɴɢ ᴜsᴇʀʙᴏᴛ](https://github.com/KeinShin/Black-Lightning)"
      #    pis = pic()
         await tgbot.send_file(
              event.chat_id,
@@ -85,7 +85,7 @@ async def send_welcome(event):
       else:
              user = await event.get_sender()
              owner = str(ALIVE_NAME)
-             kok = f"**Hello {user.username}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**\nAssitance By [ʙʟᴀᴄᴋ ʟɪɢʜᴛɴɪɴɢ](https://github.com/KeinShin/Black-Lightning)"
+             kok = f"**Hello {user.username}!\n\n Thanks for Contacting {owner}\n\nI'm assistant of {owner} Kindly Leave Your Message**\n\nFeatured By [ʙʟᴀᴄᴋ ʟɪɢʜᴛɴɪɴɢ ᴜsᴇʀʙᴏᴛ](https://github.com/KeinShin/Black-Lightning)"
              await tgbot.send_file(
                   event.chat_id,
                   pis,
