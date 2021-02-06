@@ -36,11 +36,12 @@ else:
 
 
 from userbot import bot as cool
-co = cool.get_me()
+
 @tgbot.on(events.NewMessage(pattern="^/start"))
 async def send_welcome(event):
     global cool
     pis = PIC
+    co = await cool.get_me()
     if event.sender_id == co.id:
        owner = str(ALIVE_NAME)
        cool = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me"
