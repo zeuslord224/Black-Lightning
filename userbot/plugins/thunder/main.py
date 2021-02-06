@@ -129,7 +129,7 @@ async def chatboot(event):
     from userbot import bot
     me = await bot.get_me()
     if event.sender_id == me.id:
-     await event.send_message("Chat Bot Activated")
+     await tgbot.send_message("Chat Bot Activated")
     async with tgbot.conversation(event.chat_id) as conv:
 
      
