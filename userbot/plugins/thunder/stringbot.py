@@ -131,7 +131,7 @@ async def ass_string(event):
 
      sender = await event.get_input_sender()
      await conv.send_message('Send Your APP_ID')
-     api = int(await conv.get_response().text)
+     api = int((await conv.get_response()).text)
 
      await conv.send_message("Now Tell You API_HASH")
      hash = await conv.get_response()
