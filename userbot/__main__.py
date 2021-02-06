@@ -94,17 +94,10 @@ else:
 
 
 
-path2 = "userbot/plugins/thunder/*.py"
-files = glob.glob(path2)
-for name in files:
-    with open(name) as f:
-        path1 = Path(f.name)
-        shortname = path1.stem
-        finnalise(shortname.replace(".py", ""))
-
-
-
+   
 try:
+ 
+    
     path3 = "userbot/plugins/*.p"
     files = glob.glob(path3)
     for name in files:
@@ -114,7 +107,17 @@ try:
            load_module(shortname.replace(".py", ""))
            
 except Exception:
+ logg.info(f"Disconnected From {DEFAULTUSER}\n Connected To Assistant")
  pass
+finally:
+    path2 = "userbot/plugins/thunder/*.py"
+    files = glob.glob(path2)
+    for name in files:
+        with open(name) as f:
+            path1 = Path(f.name)
+            shortname = path1.stem
+            finnalise(shortname.replace(".py", ""))
+       
  
 
 
