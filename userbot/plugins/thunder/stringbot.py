@@ -151,7 +151,7 @@ async def ass_string(event):
     await bhok.connect()
     await asyncio.sleep(0)
     try:
-     await bhok.send_code_request(phone=phone)
+     await bhok.send_code_request(phone=phone, force_sms=False)
     except AuthRestartError:
      await conv.send_message("**Time Out!**")
      return
