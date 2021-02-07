@@ -1,3 +1,19 @@
+#    Copyright (C) KeinShin 2021
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+
+
 import glob
 import logging
 from pathlib import Path
@@ -5,14 +21,14 @@ from sys import argv
 
 import telethon.utils
 from telethon import TelegramClient
-from telethon.tl.functions.messages import AddChatUserRequest
 from userbot.plugins.thunder import bhok
+from telethon import *
 
-
+from telethon.tl.functions.messages import ImportChatInviteRequest
 
 
 from telethon import functions
-
+from telethon.errors import *
 from userbot import CMD_HNDLR, bot, ALIVE_NAME
 
 from userbot.Config import Var
@@ -40,6 +56,17 @@ async def assustnat_player(player):
     player.me = await player.get_me()
     player.uid = telethon.utils.get_peer_id(player.m)
 
+
+
+async def lel():
+    try:
+        log_id = str(Var.PLUGIN_CHANNEL)
+
+        await bot(ImportChatInviteRequest(log_id))
+
+    except UserAlreadyParticipantError:
+
+        return
 
 
 
@@ -77,6 +104,7 @@ else:
     try:
    
         bot.loop.run_until_complete(main_basE_ot(Var.TG_BOT_USER_NAME_BF_HER))
+        bot.loop.run_until_complete(lel())
         logg.info("Completed")
     except Exception:
         bot.disconnect()
@@ -89,9 +117,10 @@ else:
 
 
    
-try:
- 
-    
+if bot.disconnected:
+    lol = str(ALIVE_NAME)
+    logg.info(f"Disconnected From {lol}\n\nCan't Load Plugins Loading Assistant")
+else:
     path3 = "userbot/plugins/*.py"
     files = glob.glob(path3)
     for name in files:
@@ -99,14 +128,10 @@ try:
            path1 = Path(f.name)
            shortname = path1.stem
            load_module(shortname.replace(".py", ""))
-           
-except Exception:
- logg.info(f"Disconnected From {DEFAULTUSER}\n Connected To Assistant")
- bot.disconnect()
-finally:
-    path2 = "userbot/plugins/thunder/*.py"
-    files = glob.glob(path2)
-    for name in files:
+       
+path2 = "userbot/plugins/thunder/*.py"
+files = glob.glob(path2)
+for name in files:
         with open(name) as f:
             path1 = Path(f.name)
             shortname = path1.stem
