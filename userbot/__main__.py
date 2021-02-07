@@ -108,7 +108,7 @@ else:
         logg.info("Completed")
     except Exception:
         bot.disconnect()
-        pass
+
     else:
         bot.start()
 
