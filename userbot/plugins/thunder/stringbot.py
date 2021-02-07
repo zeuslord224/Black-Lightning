@@ -27,7 +27,7 @@ from userbot import bot as hn
 from userbot.plugins.thunder import bhok
 from telethon import TelegramClient as assitant_client
 from telethon.sessions import StringSession as assistant_string
-from telethon.errors.rpcerrorlist import  PhoneCodeInvalidError
+from telethon.errors.rpcerrorlist import  *
 
 
 from userbot import ALIVE_NAME
@@ -131,29 +131,38 @@ async def ass_string(event):
 
      sender = await event.get_input_sender()
      await conv.send_message('Send Your APP_ID')
+    try:
      api = int((await conv.get_response()).text)
-
-     await conv.send_message("Now Tell You API_HASH")
-     hash = await conv.get_response()
-     hash_api=hash.text
-     client = assitant_client(
-    'client',
-    api_id=int(api),
-    api_hash=hash_api
-)
-     await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
-     phone = int((await conv.get_response()).text)
-
-     bhok = client
-     await bhok.connect()
-     await asyncio.sleep(0)
-    try: 
-     await bhok.send_code_request(phone=phone)
     except Exception:
-      bhok.disconnect()
-      return 
-    await conv.send_message("Send The Code Something Like 1 6 8 9")
+     await conv.send_message("**Invalid APP_ID Send Again**")
+     return
+    await conv.send_message("Now Tell You API_HASH")
+    hash = await conv.get_response()
+    hash_api=hash.text
+    client = assitant_client(
+   'client',
+   api_id=int(api),
+   api_hash=hash_api
+)
+    await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
+    phone = str((await conv.get_response()).text)
+
+    bhok = client
+    await bhok.connect()
+    await asyncio.sleep(0)
+    try:
+     await bhok.send_code_request(phone=phone)
+    except AuthRestartError:
+     await conv.send_message("**Time Out!**")
+     return
+    except PhoneNumberBannedError:
+     await conv.send_message("**Banned Telegram Number!**")
+     return
     
+
+    
+    await conv.send_message("Send The Code Something Like 1 6 8 9")
+     
 
     code = await conv.get_response()
     code_tf = None
@@ -164,17 +173,16 @@ async def ass_string(event):
     current_client = bhok
     await current_client.connect()
     try:
-        await client.sign_in(contact, code)
+        await client.sign_in(phone, code)
     except PhoneCodeInvalidError:
         await conv.send_message(NOT_VAILD)
         return
-    except Exception as e:
-        loggingd.info(str(e))
+    except PhonePasswordProtectedError:
         await conv.send_message("Looks Like You have Two Step Verification Enter Password")
         so = await conv.get_response()
         code_tf = so.message.message.strip()
         passw = await conv.get_response()
-        await client.sign_in(contact, code, password=code_tf)
+        await client.sign_in(phone, code, password=code_tf)
         assitant_client = await current_client.get_me()
         loggingd.info(assitant_client.stringify())
     session_string = current_client.session.save()
@@ -190,9 +198,6 @@ async def ass_string(event):
 
 
 
-# if __name__ == "__main__":
-#     loop = asyncio.get_event_loop()
-#     loop.run_until_complete(ass_string())
 
 
 
