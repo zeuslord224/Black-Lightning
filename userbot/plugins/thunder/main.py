@@ -182,7 +182,13 @@ async def send_welcome(event):
 @tgbot.on(events.NewMessage(pattern="^Help"))
 async def send_welcome(event):
     user =str(ALIVE_NAME)
-    await tgbot.send_message(event.chat_id, f"**Kindly Leave The Message**\n\n**I Will Pass It To {user}**")
+    ssendr = event.sender_id
+    from userbot import bot
+    
+    if ssendr == bot.uid:
+       await tgbot.send_message(event.chat_id, "**Hi! Master If You Want That I Talk!**\n\n**Kindly Enable Chatbot**\n\n**You Can Chat With Me :)**")
+    else:
+       await tgbot.send_message(event.chat_id, f"**Kindly Leave The Message**\n\n**I Will Pass It To {user}**")
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def get_message(event):
