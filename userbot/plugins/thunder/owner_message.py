@@ -1,6 +1,6 @@
 from userbot.plugins.sql_helper.user_sql import *
 from telethon.utils import pack_bot_file_id
-
+from telethon import events
 
 
 @tgbot.on(events.NewMessage(func=lambda e: e.is_private))
