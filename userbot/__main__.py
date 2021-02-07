@@ -118,20 +118,21 @@ else:
 
 
 
-   
-if  not  bot.is_connected():
     lol = str(ALIVE_NAME)
-    logg.info(f"Disconnected From {lol}\n\nCan't Load Plugins Loading Assistant")
-else:
+    logg.info(f"Disconnected From {lol} Can't Load Plugins\nLoading Assistant")
+
     path3 = "userbot/plugins/*.py"
     files = glob.glob(path3)
     for name in files:
        with open(name) as f:
            path1 = Path(f.name)
            shortname = path1.stem
+           if  not  bot.is_connected():
+              break
            load_module(shortname.replace(".py", ""))
-           bot.run_until_disconnected()
-       
+    
+
+
 path2 = "userbot/plugins/thunder/*.py"
 files = glob.glob(path2)
 for name in files:
@@ -139,12 +140,8 @@ for name in files:
             path1 = Path(f.name)
             shortname = path1.stem
             finnalise(shortname.replace(".py", ""))
-       
+         
  
-
-
-
-
 
 
 
@@ -154,8 +151,12 @@ for name in files:
 if len(argv) not in (1, 3, 4):
     bot.disconnect()
     logg.info(f"Disconnected From {DEFAULTUSER}")
-else:
+elif  not  bot.is_connected():
+    logg.info(f"Failed Connection To User!")
 
+
+else:
+    bot.run_until_disconnected()
     logg.info("Setup Sucessfull! ")
     import os
     logg.info("Sucessfully Connected To Telegram And Your Assistant!")
