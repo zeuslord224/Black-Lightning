@@ -56,7 +56,8 @@ async def assustnat_player(player):
     player.me = await player.get_me()
     player.uid = telethon.utils.get_peer_id(player.m)
 
-
+async def sed_k():
+    return
 
 async def lel():
     try:
@@ -108,7 +109,8 @@ else:
         logg.info("Completed")
     except Exception:
         bot.disconnect()
-
+        sed_k()
+        
     else:
         bot.start()
 
@@ -117,7 +119,7 @@ else:
 
 
    
-if bot.disconnected:
+if  not  bot.is_connected():
     lol = str(ALIVE_NAME)
     logg.info(f"Disconnected From {lol}\n\nCan't Load Plugins Loading Assistant")
 else:
@@ -128,6 +130,7 @@ else:
            path1 = Path(f.name)
            shortname = path1.stem
            load_module(shortname.replace(".py", ""))
+           bot.run_until_disconnected()
        
 path2 = "userbot/plugins/thunder/*.py"
 files = glob.glob(path2)
@@ -144,10 +147,8 @@ for name in files:
 
 
 
-try:
-    bot.run_until_disconnected()
-except Exception:
- logg.info(f"Disconnected From {DEFAULTUSER}\nTrying Connection To Assistant")
+
+
 
 
 if len(argv) not in (1, 3, 4):
@@ -155,9 +156,9 @@ if len(argv) not in (1, 3, 4):
     logg.info(f"Disconnected From {DEFAULTUSER}")
 else:
 
-  logg.info("Setup Sucessfull! ")
-  import os
-  logg.info("Sucessfully Connected To Telegram\n And Your Assistant!")
+    logg.info("Setup Sucessfull! ")
+    import os
+    logg.info("Sucessfully Connected To Telegram And Your Assistant!")
 
 
 
