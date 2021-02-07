@@ -142,8 +142,8 @@ async def ass_string(event):
     api_hash=hash_api
 )
      await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
-     contact = str(conv.get_response())
-     phone=contact.text
+     phone = int((await conv.get_response()).text)
+
      bhok = client
      await bhok.connect()
      await asyncio.sleep(0)
