@@ -12,7 +12,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-
+import asyncio
 
 import glob
 import logging
@@ -57,6 +57,7 @@ async def assustnat_player(player):
     player.uid = telethon.utils.get_peer_id(player.m)
 
 async def sed_k():
+    await asyncio.sleep(0)
     return
 
 async def lel():
