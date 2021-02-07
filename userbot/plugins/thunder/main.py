@@ -34,9 +34,10 @@ from userbot import ALIVE_NAME
 LYDIA_AP = {}
 SESSION_ID = {}
 
+
 import os
 temp = Var.TEMP_DOWNLOAD_DIRECTORY 
-
+CHAT_BOT = os.environ.get("CHAT_BOT", None)
 ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
 if ASSISTANT_PIC is None:
     PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
@@ -117,7 +118,13 @@ async def commands(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"chat_bot")))                            
 async def commands(event):
    from userbot import bot
+   os.environ['CHAT_BOT'] = 'ENABLE'
    co = await bot.get_me()
+   if CHAT_BOT == "ENABLE":
+    tgbot.send_message(event.chat_id,  
+    "Chat Bot Already Enabled",
+    buttons=[custom.Button.inline("Deactivate", data="lol_nvm")])
+    return
    username = Var.TG_BOT_USER_NAME_BF_HER
    kok = f"**What Chat Bot Do?**\n\n**Answer - Chatbot Will Activate Artificial intelligence Of Your Bot\nIn Short Bot Will Chat With The User Like a Human**"
    await tgbot.send_message(event.chat_id,  
@@ -128,16 +135,14 @@ async def commands(event):
 async def chatboot(event):
     from userbot import bot
     me = await bot.get_me()
-    if event.sender_id == me.id:
-     await tgbot.send_message(event.chat_id, "Chat Bot Activated")
-    async with tgbot.conversation(event.chat_id) as conv:
+    await tgbot.send_message("Chat Bot Activated")
 
-     
-     id = event.sender_id
-     session = Lydia.create_session()
-     session_id = session.id
-     LYDIA_AP.update({str(event.chat_id) + " " + str(id.from_id): session})
-     SESSION_ID.update(
+    kek = await event.get_reply_message()
+    id = his_userid(kek.id)
+    session = Lydia.create_session()
+    session_id = session.id
+    LYDIA_AP.update({str(event.chat_id) + " " + str(id.from_id): session})
+    SESSION_ID.update(
             {str(event.chat_id) + " " + str(id.from_id): session_id}
         )
 
@@ -145,6 +150,8 @@ async def chatboot(event):
 @tgbot.on(events.NewMessage(incoming=True))
 async def user(ai):
     ai.text
+    if CHAT_BOT == "DISABLE":
+        return
     try:
         session = LYDIA_AP[str(ai.chat_id) + " " + str(ai.from_id)]
         session_id = SESSION_ID[str(ai.chat_id) + " " + str(ai.from_id)]
@@ -162,7 +169,13 @@ async def user(ai):
 
 @tgbot.on(events.NewMessage(pattern="^Hi"))
 async def send_welcome(event):
-      await tgbot.send_message(event.chat_id, "**Hi! How Can I Help?**\n\n**Kindly Leave The Message**\n\n**You Can Chat With Me :)**")
+      ssendr = event.sender_id
+      from userbot import bot
+      
+      if ssendr == bot.uid:
+       await tgbot.send_message(event.chat_id, "**Hi! Master If You Want That I Talk!**\n\n**Kindly Enable Chatbot**\n\n**You Can Chat With Me :)**")
+      else:
+       await tgbot.send_message(event.chat_id, "**Hi! How Can I Help?**\n\n**Kindly Leave The Message**\n\n**You Can Chat With Me :)**")
 
 
 
@@ -185,11 +198,11 @@ async def get_message(event):
     chet = await event.forward_to(co.id)
     add_to_userbase(chet.id, event.sender_id, event.id)
 
-
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"users")))    
+# Thanks To Stark Gang and Friday Userbot
+@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
 async def _(event):
     from userbot import bot
-    mhg = event.sender_id
+    mhg = await event.get_reply_message()
     co = await bot.get_me()
     if mhg is None:
         return
@@ -215,3 +228,7 @@ async def _(event):
             mhg_s,
             reply_to=reply_message_id,
         )    
+
+
+
+
