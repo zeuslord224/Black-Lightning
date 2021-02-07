@@ -135,14 +135,14 @@ async def ass_string(event):
      api = int((await conv.get_response()).text)
     except Exception:
      await conv.send_message("**Invalid APP_ID Send Again**")
-     return
+     
     await conv.send_message("Now Tell You API_HASH")
     hash = await conv.get_response()
     hash_api=hash.text
     client = assitant_client(
    'client',
-   api_id=int(api),
-   api_hash=hash_api
+    api_id=int(api),
+    api_hash=hash_api
 )
     await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
     phone = str((await conv.get_response()).text)
