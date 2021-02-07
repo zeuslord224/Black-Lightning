@@ -109,9 +109,8 @@ else:
         bot.loop.run_until_complete(lel())
         logg.info("Completed")
     except Exception:
-        bot.disconnect()
-        sed_k()
-        
+      pass
+            
     else:
         bot.start()
 
