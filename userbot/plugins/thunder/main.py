@@ -15,6 +15,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 import asyncio
+
 from telethon import TelegramClient, events, custom, Button, events
 from telethon.utils import pack_bot_file_id
 from telethon.events.common import EventBuilder
@@ -135,7 +136,7 @@ async def commands(event):
 async def chatboot(event):
     from userbot import bot
     me = await bot.get_me()
-    await tgbot.send_message("Chat Bot Activated")
+    await tgbot.send_message(event.chat_id, "Chat Bot Activated")
 
     kek = await event.get_reply_message()
     id = his_userid(kek.id)
@@ -204,36 +205,6 @@ async def get_message(event):
     chet = await event.forward_to(co.id)
     add_to_userbase(chet.id, event.sender_id, event.id)
 
-# Thanks To Stark Gang and Friday Userbot
-@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
-async def _(event):
-    from userbot import bot
-    mhg = await event.get_reply_message()
-    co = await bot.get_me()
-    if mhg is None:
-        return
-    mhg.id
-    mhg_s = event.raw_text
-    user_id, reply_message_id = his_userid(mhg.id)
-    if event.sender_id == co.id:
-        return
-    elif event.raw_text.startswith("/"):
-        return
-    elif event.text is not None and event.media:
-        bot_api_file_id = pack_bot_file_id(event.media) # Thanks To Friday Userbot
-        await tgbot.send_file(
-            user_id,
-            file=bot_api_file_id,
-            caption=event.text,
-            reply_to=reply_message_id,
-        )
-    else:
-        mhg_s = event.raw_text
-        await tgbot.send_message(
-            user_id,
-            mhg_s,
-            reply_to=reply_message_id,
-        )    
 
 
 
