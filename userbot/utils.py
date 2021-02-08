@@ -193,6 +193,7 @@ def load_module(shortname):
         mod.Config = Config
         mod.borg = bot
         mod.userbot = bot
+        mod.modules = plugins
         # auto-load
         mod.lightning_cmd = lightning_cmd
         mod.sudo_cmd = sudo_cmd
