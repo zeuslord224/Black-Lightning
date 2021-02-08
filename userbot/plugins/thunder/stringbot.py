@@ -131,10 +131,9 @@ async def ass_string(event):
 
      sender = await event.get_input_sender()
      await conv.send_message('Send Your APP_ID')
-    try:
+    
      api = int((await conv.get_response()).text)
-    except Exception:
-     await conv.send_message("**Invalid APP_ID Send Again**")
+
      
     await conv.send_message("Now Tell You API_HASH")
     hash = await conv.get_response()
