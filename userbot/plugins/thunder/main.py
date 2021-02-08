@@ -1,5 +1,3 @@
-
-
 #    Copyright (C) 2021 KeinShin
 
 #    This program is free software: you can redistribute it and/or modify
@@ -15,6 +13,13 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>
 
 import asyncio
+import heroku3
+
+
+
+
+
+from math import ceil
 
 from telethon import TelegramClient, events, custom, Button, events
 from telethon.utils import pack_bot_file_id
@@ -25,7 +30,8 @@ from userbot.plugins.sql_helper.user_sql import *
 import coffeehouse
 
 from coffeehouse.lydia import LydiaAI
-
+from userbot.function.heroku_helper import HerokuHelper
+Heroku = heroku3.from_key(Var.HEROKU_API_KEY)
 
 from PIL import Image, ImageDraw, ImageFont
 from userbot import ALIVE_NAME
@@ -39,6 +45,7 @@ SESSION_ID = {}
 import os
 temp = Var.TEMP_DOWNLOAD_DIRECTORY 
 CHAT_BOT = os.environ.get("CHAT_BOT", None)
+GROUP_ASSITANT = os.environ.get("GROUP_ASSITANT", None)
 ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
 if ASSISTANT_PIC is None:
     PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
@@ -64,25 +71,29 @@ async def send_welcome(event):
       pis = PIC
       co = await bot.get_me()
       if event.sender_id == co.id:
-        owner = str(ALIVE_NAME)
-        bot = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me\n\nI'll Get users messages to you\n\n[ʙʟᴀᴄᴋ ʟɪɢʜᴛɴɪɴɢ ᴜsᴇʀʙᴏᴛ](https://github.com/KeinShin/Black-Lightning)"
-     #    pis = pic()
-        await tgbot.send_file(
-             event.chat_id,
-             pis,
-             text=bot,
-             buttons=[
-                 [custom.Button.inline("❤️Users❤️", data="users")],
-                 [
-                     custom.Button.url(
-                 "Help!", "t.me/lightningsupport")
-                 ],
-                 [custom.Button.inline("Chat Bot", data="chat_bot")],
-                 [
-                     custom.Button.inline(
-                 "Commands", data="commands")
-                 ]
-                         ])
+            owner = str(ALIVE_NAME)
+            bot = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me\n\nI'll Get users messages to you\n\n[ʙʟᴀᴄᴋ ʟɪɢʜᴛɴɪɴɢ ᴜsᴇʀʙᴏᴛ](https://github.com/KeinShin/Black-Lightning)"
+     
+     
+ #    pis = pic()
+            await tgbot.send_file(
+                 event.chat_id,
+                 pis,
+                 text=bot,
+                 buttons=[
+                     [custom.Button.inline("❤️Users❤️", data="users")],
+                     [
+                         custom.Button.url(
+                     "Help!", "t.me/lightningsupport")
+                     ],
+                     [custom.Button.inline("Chat Bot😸", data="chat_bot")],
+                     
+                     [
+                         custom.Button.inline(
+                     "Commands", data="commands")
+                     ]
+                             ])
+      
 
       else:
              user = await event.get_sender()
@@ -106,37 +117,53 @@ async def send_welcome(event):
 
 import re
 
-@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"commands")))                            
-async def commands(event):
-   from userbot import bot
-   co = await bot.get_me()
-   username = Var.TG_BOT_USER_NAME_BF_HER
-   commanss = f"Commands For {username} listed Here!\n\n/alive\n/hack\n/id\n/trans\n/yta `music link` ( will download in audio format ) \n\ytv `music link` (will downloa in video format)"
-   await tgbot.send_message(event.chat_id, commanss)
+
+
 
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"chat_bot")))                            
 async def commands(event):
    from userbot import bot
-   os.environ['CHAT_BOT'] = 'ENABLE'
+
    co = await bot.get_me()
+
    if CHAT_BOT == "ENABLE":
     tgbot.send_message(event.chat_id,  
     "Chat Bot Already Enabled",
     buttons=[custom.Button.inline("Deactivate", data="lol_nvm")])
-    return
-   username = Var.TG_BOT_USER_NAME_BF_HER
-   kok = f"**What Chat Bot Do?**\n\n**Answer - Chatbot Will Activate Artificial intelligence Of Your Bot\nIn Short Bot Will Chat With The User Like a Human**"
-   await tgbot.send_message(event.chat_id,  
-   kok,
-   buttons=[custom.Button.inline('🙎Activate🙎', data='activate')])
+   else:
+    username = Var.TG_BOT_USER_NAME_BF_HER
+    kok = f"**What Chat Bot Do?**\n\n**Answer - Chatbot Will Activate Artificial intelligence Of Your Bot\nIn Short Bot Will Chat With The User Like a Human**"
+    await tgbot.send_message(event.chat_id,  
+    kok,
+    buttons=[custom.Button.inline('🙎Activate🙎', data='activate')])
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"activate")))    
 async def chatboot(event):
     from userbot import bot
     me = await bot.get_me()
     await tgbot.send_message(event.chat_id, "Chat Bot Activated")
+    app = Heroku.app(Var.HEROKU_APP_NAME)
+    heroku_var = app.config()
+    heroku_var[CHAT_BOT] = 'ENABLE'
+    kek = await event.sender_id
+    id = his_userid(kek.id)
+    session = Lydia.create_session()
+    session_id = session.id
+    LYDIA_AP.update({str(event.chat_id) + " " + str(id.from_id): session})
+    SESSION_ID.update(
+            {str(event.chat_id) + " " + str(id.from_id): session_id}
+        )
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"lol_nvm")))    
+async def chatboot(event):
+    from userbot import bot
+    app = Heroku.app(Var.HEROKU_APP_NAME)
+    heroku_var = app.config()
+    heroku_var[CHAT_BOT] = 'DISABLE'
+    me = await bot.get_me()
+    
+    await tgbot.send_message(event.chat_id, "Chat Bot Deactivated")
 
     kek = await event.get_reply_message()
     id = his_userid(kek.id)
