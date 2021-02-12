@@ -1,7 +1,7 @@
 FROM kalilinux/kali-rolling
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TERM xterm-256color
-RUN apt-get update && apt upgrade -y && apt-get install sudo -y 
+RUN apt-get update && apt upgrade -y && apt-get install sudo -y
 
 
 RUN apt-get install -y\
@@ -54,15 +54,14 @@ RUN apt-get autoremove --purge
 RUN apt-get install imagemagick
 RUN pip3 install --upgrade pip setuptools 
 RUN pip3 install --upgrade pip
-RUN apt-get install portaudio19-dev python3-pyaudio -y
-RUN pip3 install PyAudio
+RUN wget http://www.cmake.org/files/v2.8/cmake-2.8.3.tar.gz && tar xzf cmake-2.8.3.tar.gz && cd cmake-2.8.3 && ./configure --prefix=/opt/cmake && make install
 RUN if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi 
 RUN if [ ! -e /usr/bin/python ]; then ln -sf /usr/bin/python3 /usr/bin/python; fi 
 RUN rm -r /root/.cache
 RUN axel https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && apt install -y ./google-chrome-stable_current_amd64.deb && rm google-chrome-stable_current_amd64.deb
 RUN axel https://chromedriver.storage.googleapis.com/86.0.4240.22/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && chmod +x chromedriver && mv -f chromedriver /usr/bin/ && rm chromedriver_linux64.zip
 RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/master.zip && unzip opencv.zip && mv -f opencv-master /usr/bin/ && rm opencv.zip
-RUN git clone https://github.com/KeinShin/Black-Lightning -b V2 /root/userbot
+RUN git clone https://github.com/KeinShin/Black-Lightning /root/userbot
 RUN mkdir /root/userbot/bin/
 WORKDIR /root/userbot/
 RUN chmod +x /usr/local/bin/*
