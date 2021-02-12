@@ -9,8 +9,8 @@ from telethon import events
 from userbot import CMD_LIST, LOAD_PLUG, bot
 from userbot.Config import Var
 from userbot.thunderconfig import Config
-
-login_print = logging.getLogger("PLUGINS")
+import time
+ke_log = logging.getLogger("PLUGINS")
 assistant_log = logging.getLogger("ASSISTANT")
 cmdhandler = Config.CMD_HNDLR if Config.CMD_HNDLR else "."
 bothandler = Config.BOT_HANDLER
@@ -161,7 +161,7 @@ def load_module(shortname):
         pass
     elif shortname.endswith("_"):
         import importlib
-
+        
         import userbot.utils
 
         path = Path(f"userbot/plugins/{shortname}.py")
@@ -169,7 +169,7 @@ def load_module(shortname):
         spec = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        login_print.info("Successfully (re)imported " + shortname)
+        ke_log.info("Successfully (re)imported " + shortname)
     else:
         import importlib
 
@@ -193,7 +193,6 @@ def load_module(shortname):
         mod.Config = Config
         mod.borg = bot
         mod.userbot = bot
-        mod.modules = plugins
         # auto-load
         mod.lightning_cmd = lightning_cmd
         mod.sudo_cmd = sudo_cmd
@@ -204,7 +203,7 @@ def load_module(shortname):
         spec.loader.exec_module(mod)
         # for imports
         sys.modules["userbot.plugins." + shortname] = mod
-        login_print.info("Successfully imported " + shortname)
+        ke_log.info("Successfully imported " + shortname)
         # support for other third-party plugins
         sys.modules["userbot.utils"] = userbot.utils
         sys.modules["userbot"] = userbot
@@ -611,7 +610,7 @@ def main_loader(shortname):
         load = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(load)
 
-        login_print.info("Imported" + shortname)
+        ke_log.info("Imported" + shortname)
     else:
         import importlib
         import sys
@@ -626,7 +625,7 @@ def main_loader(shortname):
         sys.modules[
             "userbot.plugins.assistant" + "Initialising Lightning" + shortname
         ] = load_plugin
-        login_print.info("Setting Up Assistant  " + shortname)
+        ke_log.info("Setting Up Assistant  " + shortname)
 
 
 def finnalise(shortname):
