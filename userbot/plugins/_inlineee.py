@@ -295,8 +295,8 @@ async def inline_handler(lightning):
             )
         await lightning.answer([result])
     elif lightning.query.user_id == bot.uid and query.startswith("**Hello Sir") and LIGHTNING_WARNING.endswith(".mp4"):
-        result = builder.video(
-            file=LIGHTNING_WARNING,
+        result = builder.document(
+            LIGHTNING_WARNING,
             text=WARNING,
             buttons=[
                 [custom.Button.inline("Wanna Spam ?😉", data="lightning_is_here_cant_spam")],
