@@ -1,4 +1,9 @@
+# You Gey Kang With Credits Or Suck My Dick  
+# by @keinshin you noob
+# keep Credits
 
+
+# Created By @keinshin
 
 import cv2
 import pytesseract
