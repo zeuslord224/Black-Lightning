@@ -84,7 +84,7 @@ def time_formatter(milliseconds: int) -> str:
     )
     return tmp[:-2]
 
-@tgbot.on(events.NewMessage(pattern="^/alive", func=lambda e: e.sender_id == bot.uid))
+@tgbot.on(events.NewMessage(pattern="^/ytdl (a|v)"))
 async def download_video(v_url):
     """ For .ytdl command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)

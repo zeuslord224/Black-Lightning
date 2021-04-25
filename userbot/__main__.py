@@ -40,17 +40,25 @@ BOTNAME = Var.TG_BOT_USER_NAME_BF_HER
 LOAD_MYBOT = Var.LOAD_MYBOT
 logg = logging.getLogger("Black Lightning")
 assistant_logg = logging.getLogger("Black Lightning")
-DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Unknown"
-
-
-# It's the user you want to add (``user_id=user_to_add``).
+DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else " "
 
 
 
-async def main_basE_ot(bot_token):
-    await bot.start(bot_token)
-    bot.me = await bot.get_me()
-    bot.uid = telethon.utils.get_peer_id(bot.me)
+async def cool_noice():
+    
+    user = await bot.get_me()
+    if not user.bot_inline_placeholder:
+     await  bot.send_message("me", f"{DEFAULTUSER} Kindly Enable Inline For Accessing All The Features Including `.help` and Many More")
+    else:
+        logg.info("Everything Loaded!\nLightning Userbot is online!")
+    
+        await bot.send_message("me", "**Black Lightning Message**\nHi Master I'm On\nDo .alive\nOr `.help` **\n© @lightningsupport")
+"Nani TwT!?"
+
+# async def main_basE_ot(bot_token):
+#     await bot.start(bot_token)
+#     bot.me = await bot.get_me()
+#     bot.uid = telethon.utils.get_peer_id(bot.me)
 
 async def assustnat_player(player):
     player.me = await player.get_me()
@@ -72,21 +80,30 @@ async def lel():
 
 
 
-async def startup_log_all_done():
-    try:
-        logg.info("Sucessfully Installed Everything")
-    except BaseException:
-        logg.warning("You Left The Group!\n\nSystem Failure")
+
 
 async def cant():
-    if bot.uid not in bot.uid:
+    user = await bot.get_me()
+    if not bot.uid == user.id:
         logg.warning("Can't Access Me\n\nDisconnecting! ")
     return
 
 
 
 
+# async def some_shits(chat):
 
+  
+#   try:
+#       with bot.takeout() as takeout:
+#           await bot.get_messages('me')  # normal call
+#           await takeout.get_messages('me')  # wrapped through takeout (less limits)
+  
+#           for message in takeout.iter_messages(chat, wait_time=0):
+#               ...  # Do something with the message
+
+#   except errors.TakeoutInitDelayError as e:
+#     print('Must wait', e.seconds, 'before takeout')
 
 
 if len(argv) not in (1, 3, 4):
@@ -156,9 +173,10 @@ elif  not  bot.is_connected():
 
 
 else:
+    bot.loop.run_until_complete(cool_noice())
     bot.run_until_disconnected()
     logg.info("Setup Sucessfull! ")
-    import os
+    # import os
     logg.info("Sucessfully Connected To Telegram And Your Assistant!")
 
 

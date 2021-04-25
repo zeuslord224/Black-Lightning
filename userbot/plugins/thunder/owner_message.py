@@ -1,4 +1,4 @@
-from userbot.plugins.sql_helper.user_sql import *
+from userbot.plugins.sql_helper.botusers_sql import *
 from telethon.utils import pack_bot_file_id
 from telethon import events
 

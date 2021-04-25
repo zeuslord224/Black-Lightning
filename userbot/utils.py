@@ -2,6 +2,7 @@ import functools
 import inspect
 import logging
 import re
+import heroku3
 from pathlib import Path
 
 from telethon import events
@@ -192,9 +193,11 @@ def load_module(shortname):
         sys.modules["uniborg.util"] = userbot.utils
         mod.Config = Config
         mod.borg = bot
-        mod.userbot = bot
+
+        # Support For Black Lightning
+        mod.userbot = userbot
         # auto-load
-        mod.lightning_cmd = lightning_cmd
+        mod.admin_cmd = lightning_cmd
         mod.sudo_cmd = sudo_cmd
         mod.edit_or_reply = edit_or_reply
         mod.eor = eor
@@ -206,6 +209,7 @@ def load_module(shortname):
         ke_log.info("Successfully imported " + shortname)
         # support for other third-party plugins
         sys.modules["userbot.utils"] = userbot.utils
+        sys.modules["userbot"] = userbot
         sys.modules["userbot"] = userbot
 
 
@@ -355,7 +359,7 @@ def admin_cmd(pattern=None, command=None, **args):
 
     return events.NewMessage(**args)
 
-""" Userbot module for managing events.
+""" userbot module for managing events.
  One of the main components of the userbot. """
 
 import asyncio
@@ -416,55 +420,32 @@ def register(**args):
 
     return decorator
 
+from userbot.plugins.heroku_h import *
+async def errors_s():
+    herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
+    logz = herokuHelper.getLog()
+    with open("logs.txt", "w") as log:
+        log.write(logz)
+    with open('logs.txt', 'r') as read:
+        a =  read.read()
+    log.close()
+    read.close()
+    return a
 
-def errors_handler(func):
-    async def wrapper(errors):
-        try:
-            await func(errors)
-        except BaseException:
+async def errors2():
+    herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
+    logz = herokuHelper.getLog()
+    with open("logs.txt", "w") as log:
+        log.write(logz)
+    return 'logs.txt'
 
-            date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-            new = {"error": str(sys.exc_info()[1]), "date": datetime.datetime.now()}
-
-            text = "**USERBOT CRASH REPORT**\n\n"
-
-            link = "[Here](https://t.me/lightningsupport)"
-            text += "If you wanna you can report it"
-            text += f"- just forward this message {link}.\n"
-            text += "Nothing is logged except the fact of error and date\n"
-
-            ftext = "\nDisclaimer:\nThis file uploaded ONLY here,"
-            ftext += "\nwe logged only fact of error and date,"
-            ftext += "\nwe respect your privacy,"
-            ftext += "\nyou may not report this error if you've"
-            ftext += "\nany confidential data here, no one will see your data\n\n"
-
-            ftext += "--------BEGIN Lightning USERBOT TRACEBACK LOG--------"
-            ftext += "\nDate: " + date
-            ftext += "\nGroup ID: " + str(errors.chat_id)
-            ftext += "\nSender ID: " + str(errors.sender_id)
-            ftext += "\n\nEvent Trigger:\n"
-            ftext += str(errors.text)
-            ftext += "\n\nTraceback info:\n"
-            ftext += str(traceback.format_exc())
-            ftext += "\n\nError text:\n"
-            ftext += str(sys.exc_info()[1])
-            ftext += "\n\n--------END USERBOT TRACEBACK LOG--------"
-
-            command = 'git log --pretty=format:"%an: %s" -5'
-
-            ftext += "\n\n\nLast 5 commits:\n"
-
-            process = await asyncio.create_subprocess_shell(
-                command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-            )
-            stdout, stderr = await process.communicate()
-            result = str(stdout.decode().strip()) + str(stderr.decode().strip())
-
-            ftext += result
-
-    return wrapper
-
+    
+async def logs():
+    herokuHelper = HerokuHelper(Var.HEROKU_APP_NAME, Var.HEROKU_API_KEY)
+    logz = herokuHelper.getLog()
+    with open("logs.txt", "r") as log:
+        wah = log.readline()
+    return  wah
 
 async def progress(current, total, event, start, type_of_ps, file_name=None):
     """Generic progress_callback for both
@@ -596,36 +577,7 @@ async def eor(event, text):
 
 
 
-def main_loader(shortname):
-    if shortname.startswith("__"):
-        pass
-    elif shortname.endswith("_"):
-        import importlib
-        import sys
-        from pathlib import Path
 
-        path = Path(f"userbot/plugins/thunder/{shortname}.py")
-        name = "userbot.plugins.thunder.{}".format(shortname)
-        spec = importlib.util.spec_from_file_location(name, path)
-        load = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(load)
-
-        ke_log.info("Imported" + shortname)
-    else:
-        import importlib
-        import sys
-        from pathlib import Path
-
-        download_path = Path(f"userbot/plugins/thunder/{shortname}.py")
-        name = "userbot.plugins.thunder.{}".format(shortname)
-        spec = importlib.util.spec_from_file_location(name, download_path)
-        load_plugin = importlib.util.module_from_spec(spec)
-        load_plugin.tgbot = bot.tgbot
-        spec.loader.exec_module(load_plugin)
-        sys.modules[
-            "userbot.plugins.assistant" + "Initialising Lightning" + shortname
-        ] = load_plugin
-        ke_log.info("Setting Up Assistant  " + shortname)
 
 
 def finnalise(shortname):

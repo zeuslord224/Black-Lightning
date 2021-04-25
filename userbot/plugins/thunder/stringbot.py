@@ -24,32 +24,15 @@ from var import Var
 from telethon import client, events, Button, custom
 import os
 from userbot import bot as hn
-from userbot.plugins.thunder import bhok
 from telethon import TelegramClient as assitant_client
 from telethon.sessions import StringSession as assistant_string
 from telethon.errors.rpcerrorlist import  *
-
+from userbot.plugins.thunder import ASSISTANT_HELP, ass_cmd_hndlr
 
 from userbot import ALIVE_NAME
 
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "вℓα¢к ℓιgнтηιηg"
 
-TEXT = """Hi, {}.
-This is Your Assitant Now As a String Session Generator Bot. I will generate String Session of your Telegram Account.
-Now send your `API_ID` same as `APP_ID` to Start Generating Session."""
-
-
-NOT_VAILD = "Do /string This Not Vaild"
-PHONE_NUMBER = (
-    "Now send your Telegram account's Phone number in Indian Format. \n"
-    "Including Country code. Example: **+91 XXXXX XXXXX**\n\n"
-    "Press /cancel to Cancel Task."
-)
-NUMBER_ERROR = (
-    f"{DEFAULTUSER} Seems This Number Is Already Registered"
-)
-
-TWO_STEPS_VERI = (" Semms That You Have Two Steps Verifcation Input Password")
 
 
 
@@ -68,14 +51,14 @@ if STRING_BOT_PIC is None:
 else:
     STRINGER_PIC = STRING_BOT_PIC
 
-@bhok.on(events.NewMessage(pattern="^/start"))
+@tgbot.on(events.NewMessage(pattern="^/string"))
 async def string(event):    
 
 
     if not await hn.is_user_authorized():
     
 
-        await bhok.send_message(
+        await tgbot.send_message(
             event.chat_id,
             STRINGER_PIC,
             message=f"Press Start For Making String ",
@@ -90,7 +73,7 @@ async def string(event):
             ],
         )
     elif event.sender_id == lol.uid:
-        await bhok.send_file(
+        await tgbot.send_file(
             event.chat_id,
             STRINGER_PIC,
             text=f"**Hi Master\n\nI'm Your Assistant Any One Can Contact Me To Get The String Session via {bgusername}**",
@@ -105,7 +88,7 @@ async def string(event):
             ],
         )
     else:     
-           await bhok.send_file(
+           await tgbot.send_file(
             event.chat_id,
             STRINGER_PIC,
             text=f"**Press Start For Making String**",
@@ -119,44 +102,39 @@ async def string(event):
                 [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
             ],
         )
-@bhok.on(events.callbackquery.CallbackQuery(data=re.compile(b"start00")))
+@tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"start00")))
 
 async def ass_string(event):   
     global assitant_client
 
     await event.delete()
-    from userbot.plugins.thunder import bhok
 
-    async with bhok.conversation(event.chat_id) as conv:
+    async with tgbot.conversation(event.chat_id) as conv:
+     
 
      sender = await event.get_input_sender()
      await conv.send_message('Send Your APP_ID')
     
-     api = int(await conv.get_response().text)
+     app_id = int(await conv.get_response().text)
 
      
     await conv.send_message("Now Tell You API_HASH")
     hash = await conv.get_response()
     hash_api=hash.text
-    client = assitant_client(
-   'client',
-    api_id=int(api),
-    api_hash=hash_api
-)
-    await conv.send_message("Now Send You Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format")
+
+    await conv.send_message("Now Send Your Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format\n\n**Note:** it is not stored!")
     phone = str((await conv.get_response()).text)
 
-    bhok = client
-    await bhok.connect()
-    await asyncio.sleep(0)
+    tgboto = assitant_client('anon', app_id, hash_api)
+    tgboto.connect()
     try:
-     await bhok.send_code_request(phone=phone, force_sms=False)
+     
+     await tgboto.send_code_request(phone=phone, force_sms=False)
+     
     except AuthRestartError:
      await conv.send_message("**Time Out!**")
-     return
     except PhoneNumberBannedError:
      await conv.send_message("**Banned Telegram Number!**")
-     return
     
 
     
@@ -167,30 +145,30 @@ async def ass_string(event):
     code_tf = None
     code = "".join(code.split(" "))
     token = Var.TG_BOT_TOKEN_BF_HER
-    client = bhok   
+    
+
     user = await client.get_me()
-    current_client = bhok
-    await current_client.connect()
+    client, current_client = tgboto
     try:
-        await client.sign_in(phone, code)
+        await tgboto.sign_in(phone, code)
     except PhoneCodeInvalidError:
-        await conv.send_message(NOT_VAILD)
-        return
+        await conv.send_message('Not Valid!')
+        
     except PhonePasswordProtectedError:
-        await conv.send_message("Looks Like You have Two Step Verification Enter Password")
+        await conv.send_message("Looks Like You have Two Step Verification, Enter Password")
         so = await conv.get_response()
         code_tf = so.message.message.strip()
         passw = await conv.get_response()
-        await client.sign_in(phone, code, password=code_tf)
+        await tgboto.sign_in(phone, code, password=code_tf)
         assitant_client = await current_client.get_me()
         loggingd.info(assitant_client.stringify())
-    session_string = current_client.session.save()
+    session_string = tgboto.session.save()
     await conv.send_message(event.chat_id, f"`{session_string}`")
-    assitant_client = await current_client.get_me()
+    assitant_client = await tgboto.get_me()
     try:    
-        await conv.send_message(f"Thanks For Creating String Session Via {bgusername}\n\nCheck You Saved Message")
-        striing=current_client.session.save()
-        await bhok.send_message("me", f'{striing}')
+        await conv.send_message(f"Thanks For Creating String Session Via {bgusername}\n\nCheck Your Saved Message")
+        striing=tgboto.session.save()
+        await tgbot.send_message("me", f'{striing}')
     except Exception:
         await conv.send_message("Number Not Vaild /string To Restart")
 
@@ -200,7 +178,10 @@ async def ass_string(event):
 
 
 
-def Api_Hash_Id(APP_IDS, API_HASHS):
-    id = len(APP_IDS)
-    indexs = random.randint(0, len(id) - 1)
-    return APP_IDS[indexs], API_HASHS[indexs]
+ASSISTANT_HELP.update({
+    "stringbot": "String Session Generator Global Command",
+    "Type": "String Session Generator",
+    "Command": f"{ass_cmd_hndlr}string\
+    \n**Usage**: Globaly Creates String for all users!\
+    \n\n**Note**: No data is stored anywhere!"
+})

@@ -29,7 +29,7 @@ users2.__table__.create(checkfirst=True)
 
 
 def add_usersid_in_db(chat_id: int):
-    id_user = Moidata(str(chat_id))
+    id_user = users2(str(chat_id))
     SESSION.add(id_user)
     SESSION.commit()
 
@@ -41,7 +41,7 @@ def users():
 
 def already_added(chat_id):
     try:
-        return SESSION.query(Moidata).filter(Moidata.chat_id == str(chat_id)).one()
+        return SESSION.query(users2).filter(users2.chat_id == str(chat_id)).one()
     except:
         return None
     finally:

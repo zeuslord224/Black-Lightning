@@ -1,1 +1,30 @@
-# sed
+# sed, nothing much 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# fuck off kanger

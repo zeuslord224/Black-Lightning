@@ -15,7 +15,7 @@ from requests import get
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 
-from userbot.thunderconfig import Config
+from shenron.thunderconfig import Config
 from var import Var
 
 from .function import thunderfunction as topfunc
@@ -102,7 +102,8 @@ if bool(ENV):
     # Chrome Driver and Headless Google Chrome Binaries
     CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
     GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
-
+    # Authorized User
+    AUTHED_USER = os.environ.get('AUTHED_USER', None)
     # OpenWeatherMap API Key
     OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
 
@@ -218,7 +219,8 @@ for binary, path in binaries.items():
     downloader.start()
     os.chmod(path, 0o755)
 
-# Global Variables
+
+
 COUNT_MSG = 0
 USERS = {}
 COUNT_PM = {}
@@ -231,25 +233,3 @@ CUSTOM_PMPERMIT_MSG = {}
 CUSTOM_BOTSTART = {}
 ISAFK = False
 AFKREASON = None
-
-######Anti Spam system ######
-link = "https://people.eecs.berkeley.edu/~rich.zhang/projects/2016_colorization/files/demo_v2/colorization_release_v2.caffemodel"
-km = "./resources/imgcolour/colorization_release_v2.caffemodel"
-pathz = "./resources/imgcolour/"
-if os.path.exists(km):
-    pass
-else:
-    try:
-        sedlyf = wget.download(link, out=pathz)
-    except:
-        sedprint.info("I Wasn't Able To Download Cafee Model. Skipping")
-
-if Config.ANTI_SPAMINC_TOKEN == None:
-    sclient = None
-    sedprint.info("[Warning] - AntispamInc is None")
-else:
-    try:
-        sclient = Connect(Config.ANTI_SPAMINC_TOKEN)
-    except Exception as e:
-        sclient = None
-        sedprint.info("[Warning] - " + e)

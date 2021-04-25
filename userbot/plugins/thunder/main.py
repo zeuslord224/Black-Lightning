@@ -14,9 +14,9 @@
 
 import asyncio
 import heroku3
+from userbot.plugins.heroku_h import *
 
-
-
+from pyrogram import *
 
 
 from math import ceil
@@ -24,19 +24,22 @@ from math import ceil
 from telethon import TelegramClient, events, custom, Button, events
 from telethon.utils import pack_bot_file_id
 from telethon.events.common import EventBuilder
-from userbot.plugins.thunder import is_owner, get_message, is_users, is_not
+from userbot.plugins.thunder import ASSISTANT_HELP
 from var import Var
-from userbot.plugins.sql_helper.user_sql import *
+from userbot.plugins.sql_helper.users_sql import *
+from userbot.plugins.thunder.admins import omk
+from userbot.plugins.sql_helper.idadder_sql import *
 import coffeehouse
 
 from coffeehouse.lydia import LydiaAI
 from userbot.function.heroku_helper import HerokuHelper
 Heroku = heroku3.from_key(Var.HEROKU_API_KEY)
-
+from userbot.plugins.thunder.admins import ADMINS
 from PIL import Image, ImageDraw, ImageFont
 from userbot import ALIVE_NAME
 
-
+how = []
+total_cmds = []
 
 LYDIA_AP = {}
 SESSION_ID = {}
@@ -46,6 +49,27 @@ import os
 temp = Var.TEMP_DOWNLOAD_DIRECTORY 
 CHAT_BOT = os.environ.get("CHAT_BOT", None)
 GROUP_ASSITANT = os.environ.get("GROUP_ASSITANT", None)
+
+ASISTANT_CMD_ROWS = os.environ.get("GROUP_ASSITANT", None)
+if ASISTANT_CMD_ROWS is None:
+   ASISTANT_CMD_ROWS = 7
+else:
+   number_of_rows_in_commands = ASISTANT_CMD_ROWS
+
+
+
+plugs = []
+
+
+
+ASISTANT_CMD_COLUMNS = os.environ.get("GROUP_ASSITANT", None)
+if ASISTANT_CMD_COLUMNS is None:
+   ASISTANT_CMD_COLUMNS = 5
+else:
+   number_of_columns_in_commands = ASISTANT_CMD_COLUMNS
+
+
+   
 ASSISTANT_PIC = os.environ.get("ASSISTANT_PIC", None)
 if ASSISTANT_PIC is None:
     PIC = "https://telegra.ph/file/b5afd12c58bfca1f1d47b.jpg"
@@ -59,7 +83,6 @@ else:
     C_API = CHAT_BOT_API
 
 
-
     lydia_ley = C_API
     client = coffeehouse.API(lydia_ley)
     Lydia = LydiaAI(client)
@@ -70,6 +93,8 @@ async def send_welcome(event):
       from userbot import bot
       pis = PIC
       co = await bot.get_me()
+
+      
       if event.sender_id == co.id:
             owner = str(ALIVE_NAME)
             bot = "Hi! I'm Your Assistant Master\n\nAny One Can Contact You Via Me\n\nI'll Get users messages to you\n\n[ʙʟᴀᴄᴋ ʟɪɢʜᴛɴɪɴɢ ᴜsᴇʀʙᴏᴛ](https://github.com/KeinShin/Black-Lightning)"
@@ -93,8 +118,24 @@ async def send_welcome(event):
                      "Commands", data="commands")
                      ]
                              ])
-      
+      elif   event.sender_id == omk:
+            text =  'Hi Admin\nYou Can use the features avaiable in Black Lightning\n\nTo See current features for admins do /admincommand'
 
+            await tgbot.send_file(
+                 event.chat_id,
+                 pis,
+                 text=text,
+                 buttons=[
+                     [custom.Button.inline("❤️Users❤️", data="users")],
+                     [
+                         custom.Button.url(
+                     "Help!", "t.me/lightningsupport")
+                     ],                     
+                     [
+                         custom.Button.inline(
+                     "Commands", data="commands")
+                     ]
+                             ])
       else:
              user = await event.get_sender()
              owner = str(ALIVE_NAME)
@@ -117,7 +158,150 @@ async def send_welcome(event):
 
 import re
 
+@tgbot.on(events.NewMessage(pattern="^/commands")) 
+async def command(event):
+    for i in ASSISTANT_HELP:
+        if i.startswith('_'):
+            return
+        plugs.append(i)
+    des = sorted(plugs)
+    
+    buttons = assitant_help(0, ASSISTANT_HELP, 'help')
+    if des in ASSISTANT_HELP:
 
+     await event.edit("Total Commands {}".format(len(des, des)), buttons=buttons)
+
+
+@tgbot.on(
+        events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+            data=re.compile(b"_total_cmds_(.*)")
+   )
+)
+async def lightning_pugins_query_hndlr(event):
+    main_thing = ASSISTANT_HELP['Command']
+    cmd = event.data_match.group(1).decode("UTF-8")
+    if cmd in ASSISTANT_HELP:
+        assistant_help_strin  = f"**🔺 COMMAND 🔺 :** `{cmd}` \n\n{main_thing}"
+        assistant_buttons = assistant_help_strin 
+        assistant_buttons += "\n\n**In Case Any Problem @lightningsupport**".format(cmd)
+    await event.edit(assistant_buttons)
+    
+
+
+@tgbot.on(
+    events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+        data=re.compile(rb"help_prev\((.+?)\)")
+    )
+)
+async def lightning_pugins_query_hndlr(lightning):
+    
+        lightning_page = int(lightning.data_match.group(1).decode("UTF-8"))
+        buttons = assitant_help(
+            lightning_page - 1, ASSISTANT_HELP, "help"  # pylint:disable=E0602
+        )
+        # https://t.me/TelethonChat/115200
+        await lightning.edit(buttons=buttons)
+
+
+
+
+@tgbot.on(
+    events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+        data=re.compile(rb"help_next\((.+?)\)")
+    )
+)   
+async def ass_pugins_query_hndlr(lightning):
+        await lightning.delete()
+        lightning_page = int(lightning.data_match.group(1).decode("UTF-8"))
+        
+        buttons = assitant_help(
+            lightning_page + 1, ASSISTANT_HELP, "help"  # pylint:disable=E0602
+        )
+        # https://t.me/TelethonsChat/115200
+        await lightning.edit("{}",buttons=buttons)
+
+async def cmd():
+    cmd = "ls userbot/plugins/thunder"
+    process = await asyncio.create_subprocess_shell(
+        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await process.communicate()
+    o = stdout.decode()
+    _o = o.split("\n")
+    o = "\n".join(_o)
+    o=o.split()
+
+    return len(o)
+
+# help taken from telebot :)
+def assitant_help(b_lac_krish, lightning_plugs, lightning_lol):
+
+ total_cmds = []
+ for p in lightning_plugs:
+     if not p.startswith("_"):
+         total_cmds.append(p)
+ total_cmds = sorted(total_cmds)
+ plugins = [
+     custom.Button.inline(
+         "{}".format( x), data="_total_cmds_{}".format(x)
+     )
+     for x in total_cmds
+ ]
+ pairs = list(zip(plugins[::number_of_columns_in_commands], plugins[1::number_of_columns_in_commands]))
+ if len(plugins) % number_of_columns_in_commands == 1:
+     pairs.append((plugins[-1],))
+ max_fix = ceil(len(pairs) / number_of_rows_in_commands)
+ total_cmds_pages = b_lac_krish % max_fix
+ 
+ if len(pairs) > number_of_rows_in_commands:
+   if cmd()>number_of_rows_in_commands: 
+   
+
+     pairs = pairs[
+         total_cmds_pages * number_of_rows_in_commands : number_of_rows_in_commands * (total_cmds_pages + 1)
+     ] + [
+         (
+             custom.Button.inline(
+                 "Previous", data="{}_prev({})".format(lightning_lol, total_cmds_pages)
+             ),
+            
+            custom.Button.inline(
+                 "Next", data="{}_next({})".format(lightning_lol, total_cmds_pages)
+             ),
+             
+         )
+     ]
+   else:
+     pairs = pairs[
+         total_cmds_pages * ASISTANT_CMD_ROWS : ASISTANT_CMD_ROWS * (total_cmds_pages + 1)
+     
+     ]
+
+ return pairs
+
+
+
+
+
+@tgbot.on(events.NewMessage(pattern="^!ask"))
+async def ask(event):
+
+    user=ALIVE_NAME
+    await tgbot.send_message(f"Hi Dear,\n\nNow you can ask your question i'll send it to {user}")
+
+@tgbot.on(events.NewMessage(pattern="^/admincommand", from_users=omk))
+async def _(event):
+    await tgbot.send_message(
+        event.chat_id,
+        ''''Admin Commands are listed below
+        /alive
+        /hack
+        /string
+        /admins
+        
+        Commands in Admins --> /promote, /demote 
+        '''
+    )
 
 
 
@@ -142,11 +326,13 @@ async def commands(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"activate")))    
 async def chatboot(event):
     from userbot import bot
+    app= Heroku.app(Var.HEROKU_APP_NAME)
+    var=app.config()
+    var[CHAT_BOT] = 'ENABLE'
     me = await bot.get_me()
     await tgbot.send_message(event.chat_id, "Chat Bot Activated")
     app = Heroku.app(Var.HEROKU_APP_NAME)
-    heroku_var = app.config()
-    heroku_var[CHAT_BOT] = 'ENABLE'
+
     kek = await event.sender_id
     id = his_userid(kek.id)
     session = Lydia.create_session()
@@ -177,9 +363,12 @@ async def chatboot(event):
 
 @tgbot.on(events.NewMessage(incoming=True))
 async def user(ai):
+
     ai.text
     if CHAT_BOT == "DISABLE":
         return
+    if ai.raw_text.startswith("!ask"):
+     return
     try:
         session = LYDIA_AP[str(ai.chat_id) + " " + str(ai.from_id)]
         session_id = SESSION_ID[str(ai.chat_id) + " " + str(ai.from_id)]
@@ -197,42 +386,34 @@ async def user(ai):
 
 @tgbot.on(events.NewMessage(pattern="^Hi"))
 async def send_welcome(event):
+      if CHAT_BOT == 'ENABLE':
+          return
       ssendr = event.sender_id
       from userbot import bot
+      ko=await bot.get_me()
       
-      if ssendr == bot.uid:
+      if ssendr == ko.id :
        await tgbot.send_message(event.chat_id, "**Hi! Master If You Want That I Talk!**\n\n**Kindly Enable Chatbot**\n\n**You Can Chat With Me :)**")
+      
       else:
-       await tgbot.send_message(event.chat_id, "**Hi! How Can I Help?**\n\n**Kindly Leave The Message**\n\n**You Can Chat With Me :)**")
+       await tgbot.send_message(event.chat_id, "**Hi! How Can I Help?**\n\n**Kindly Leave The Message**\n\n**You Can ask my master by doin !ask :)**")
 
 
 
 @tgbot.on(events.NewMessage(pattern="^Help"))
 async def send_welcome(event):
-    user =str(ALIVE_NAME)
-    ssendr = event.sender_id
+    if CHAT_BOT == 'ENABLE':
+     return
+    user =str(ALIVE_NAME) # U s k a B a s  c h a l e  t o  s a r a d a r i y a  p i i  j a y e, a a e k h u d a  t u  b o l d e   t e r e   b a d l o  k o 
+    
+    sendr = event.sender_id
     from userbot import bot
     
-    if ssendr == bot.uid:
-       await tgbot.send_message(event.chat_id, "**Hi! Master If You Want That I Talk!**\n\n**Kindly Enable Chatbot**\n\n**You Can Chat With Me :)**")
+    owner=await bot.get_me()
+      
+    if sendr == owner.id :
+       await tgbot.send_message(event.chat_id, "**Hi! Master If You Want That I Talk!**\n\n**Kindly Enable Chatbot Then, You Can Chat With Me :)**")
     else:
        await tgbot.send_message(event.chat_id, f"**Kindly Leave The Message**\n\n**I Will Pass It To {user}**")
-
-@tgbot.on(events.NewMessage(func=lambda e: e.is_private))
-async def get_message(event):
-    from userbot import bot
-    co = await bot.get_me()
-    if present_in_userbase(event.sender_id):
-        return
-    if event.sender_id == co.id:
-        return
-    if event.raw_text.startswith("/"):
-        return
-    await event.get_sender()
-    chet = await event.forward_to(co.id)
-    add_to_userbase(chet.id, event.sender_id, event.id)
-
-
-
 
 
