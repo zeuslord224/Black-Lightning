@@ -121,15 +121,16 @@ else:
         bot.tgbot = TelegramClient(
             "TG_BOT_TOKEN", api_id=Var.APP_ID, api_hash=Var.API_HASH
         ).start(bot_token=Var.TG_BOT_TOKEN_BF_HER)
+        bot.loop.run_until_complete(lel())
+        logg.info("Completed")
 
 
     try:
    
         bot.loop.run_until_complete(force_join()) # Sorry  ppl )
-        bot.loop.run_until_complete(lel())
-        logg.info("Completed")
+        
     except Exception:
-      logg.info("Error! restart if problem continues contact @lightning_support_group")
+      logg.info("Force Join Failed!")
             
     else:
         bot.start()
@@ -139,19 +140,18 @@ else:
 
 
     lol = str(ALIVE_NAME)
-    logg.info(f"Disconnected From {lol} Can't Load Plugins\nLoading Assistant")
-
-    path3 = "userbot/plugins/*.py"
-    files = glob.glob(path3)
-    for name in files:
+    try:
+      path3 = "userbot/plugins/*.py"
+      files = glob.glob(path3)
+      for name in files:
        with open(name) as f:
            path1 = Path(f.name)
            shortname = path1.stem
            if  not  bot.is_connected():
               break
            load_module(shortname.replace(".py", ""))
-    
-
+    except Exception as e:
+      logg.info("Error! {e}\nRestart and if problem continues contact @lightning_support_group")
 
 path2 = "userbot/plugins/thunder/*.py"
 files = glob.glob(path2)
