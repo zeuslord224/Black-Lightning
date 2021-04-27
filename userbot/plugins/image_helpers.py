@@ -1,3 +1,7 @@
+#     while True:
+#       print("I'm fuck                  ing idiot")
+# pas s
+
 from userbot.helper.img_helprs import crtooonify
 from userbot.utils import lightning_cmd
 
@@ -11,3 +15,7 @@ async def toon(fy):
     ok = crtooonify(oh)
     await bot.send_file(fy.chat_id, ok, force_document=False)
     os.remove('cartoonify.png')
+
+
+# def skt(event):
+

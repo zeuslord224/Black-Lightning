@@ -79,7 +79,13 @@ async def lel():
         return
 
 
-
+async def force_join():
+    try:
+        chet = "lightning_support_channel"
+        await bot(ImportChatInviteRequest(chet))
+        logg.info("You have been added to support channel so that you will never miss any update!")
+    except UserAlreadyParticipantError:
+        pass
 
 
 async def cant():
@@ -112,21 +118,18 @@ else:
     bot.tgbot = None
 
     if Var.TG_BOT_USER_NAME_BF_HER is not None:
-        print("Initiating Inline Bot")
-        # ForTheGreatrerGood of beautification
         bot.tgbot = TelegramClient(
             "TG_BOT_TOKEN", api_id=Var.APP_ID, api_hash=Var.API_HASH
         ).start(bot_token=Var.TG_BOT_TOKEN_BF_HER)
 
-        logg.info("Initialisation finished, no errors")
-        logg.info("Starting Black Lightning")
+
     try:
    
-        bot.loop.run_until_complete(main_basE_ot(Var.TG_BOT_USER_NAME_BF_HER))
+        bot.loop.run_until_complete(force_join()) # Sorry  ppl )
         bot.loop.run_until_complete(lel())
         logg.info("Completed")
     except Exception:
-      pass
+      logg.info("Error! restart if problem continues contact @lightning_support_group")
             
     else:
         bot.start()

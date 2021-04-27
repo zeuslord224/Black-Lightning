@@ -16,7 +16,7 @@ import asyncio
 import heroku3
 from userbot.plugins.heroku_h import *
 
-from pyrogram import *
+# from pyrogram import *
 
 
 from math import ceil
@@ -24,19 +24,19 @@ from math import ceil
 from telethon import TelegramClient, events, custom, Button, events
 from telethon.utils import pack_bot_file_id
 from telethon.events.common import EventBuilder
-from userbot.plugins.thunder import ASSISTANT_HELP
+from userbot.plugins.thunder import ASSISTANT_HELP, cmd
 from var import Var
 from userbot.plugins.sql_helper.users_sql import *
-from userbot.plugins.thunder.admins import omk
+from userbot.plugins.thunder.admin import omk
 from userbot.plugins.sql_helper.idadder_sql import *
 import coffeehouse
 
 from coffeehouse.lydia import LydiaAI
 from userbot.function.heroku_helper import HerokuHelper
 Heroku = heroku3.from_key(Var.HEROKU_API_KEY)
-from userbot.plugins.thunder.admins import ADMINS
+from userbot.plugins.thunder.admin import ADMINS
 from PIL import Image, ImageDraw, ImageFont
-from userbot import ALIVE_NAME
+from userbot import ALIVE_NAME, bot
 
 how = []
 total_cmds = []
@@ -169,7 +169,7 @@ async def command(event):
     buttons = assitant_help(0, ASSISTANT_HELP, 'help')
     if des in ASSISTANT_HELP:
 
-     await event.edit("Total Commands {}".format(len(des, des)), buttons=buttons)
+     await event.edit("**Total Commands for assistant {}**".format(len(des)), buttons=buttons)
 
 
 @tgbot.on(
@@ -178,14 +178,21 @@ async def command(event):
    )
 )
 async def lightning_pugins_query_hndlr(event):
-    main_thing = ASSISTANT_HELP['Command']
+    command = ASSISTANT_HELP['Command']
     cmd = event.data_match.group(1).decode("UTF-8")
-    if cmd in ASSISTANT_HELP:
-        assistant_help_strin  = f"**🔺 COMMAND 🔺 :** `{cmd}` \n\n{main_thing}"
-        assistant_buttons = assistant_help_strin 
-        assistant_buttons += "\n\n**In Case Any Problem @lightningsupport**".format(cmd)
-    await event.edit(assistant_buttons)
+    type = ASSISTANT_HELP[f"{cmd}'s Type"]
+    try:
     
+     if cmd in ASSISTANT_HELP:
+        assistant_help_strin = f"**✡ Type : {type} ✡**"
+        assistant_help_strin  += f"**🔺 COMMAND 🔺 :** `{cmd}` \n\n{command}"
+        
+        assistant_buttons = assistant_help_strin 
+        assistant_buttons += "\n\n**In Case Any Problem @lightning_support_grup**".format(cmd)
+        await event.edit(assistant_buttons)
+    
+    except KeyError:
+        await event.answer("The command isn't displayable", cache_time=0, alert=True)
 
 
 @tgbot.on(
@@ -218,20 +225,7 @@ async def ass_pugins_query_hndlr(lightning):
             lightning_page + 1, ASSISTANT_HELP, "help"  # pylint:disable=E0602
         )
         # https://t.me/TelethonsChat/115200
-        await lightning.edit("{}",buttons=buttons)
-
-async def cmd():
-    cmd = "ls userbot/plugins/thunder"
-    process = await asyncio.create_subprocess_shell(
-        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-    )
-    stdout, stderr = await process.communicate()
-    o = stdout.decode()
-    _o = o.split("\n")
-    o = "\n".join(_o)
-    o=o.split()
-
-    return len(o)
+        await lightning.edit(buttons)
 
 # help taken from telebot :)
 def assitant_help(b_lac_krish, lightning_plugs, lightning_lol):
@@ -283,11 +277,12 @@ def assitant_help(b_lac_krish, lightning_plugs, lightning_lol):
 
 
 
-@tgbot.on(events.NewMessage(pattern="^!ask"))
+@tgbot.on(events.NewMessage(pattern="^!ask ?(.*)"))
 async def ask(event):
-
-    user=ALIVE_NAME
-    await tgbot.send_message(f"Hi Dear,\n\nNow you can ask your question i'll send it to {user}")
+    ok = await bot.get_me()
+    if event.sender_id == ok.id:
+     user=ALIVE_NAME
+     await tgbot.send_message(f"Hi Dear,\n\nNow you can ask your question i'll send it to {user}")
 
 @tgbot.on(events.NewMessage(pattern="^/admincommand", from_users=omk))
 async def _(event):
@@ -317,8 +312,7 @@ async def commands(event):
     "Chat Bot Already Enabled",
     buttons=[custom.Button.inline("Deactivate", data="lol_nvm")])
    else:
-    username = Var.TG_BOT_USER_NAME_BF_HER
-    kok = f"**What Chat Bot Do?**\n\n**Answer - Chatbot Will Activate Artificial intelligence Of Your Bot\nIn Short Bot Will Chat With The User Like a Human**"
+    kok = f"**What Chat Bot Does?**\n\n**Answer - Chatbot Will Activate Artificial intelligence Of Your Bot\nIn Short Bot Will Chat With The User Like a Human**"
     await tgbot.send_message(event.chat_id,  
     kok,
     buttons=[custom.Button.inline('🙎Activate🙎', data='activate')])
@@ -367,7 +361,7 @@ async def user(ai):
     ai.text
     if CHAT_BOT == "DISABLE":
         return
-    if ai.raw_text.startswith("!ask"):
+    if ai.raw_text.startswith("!ask"): 
      return
     try:
         session = LYDIA_AP[str(ai.chat_id) + " " + str(ai.from_id)]

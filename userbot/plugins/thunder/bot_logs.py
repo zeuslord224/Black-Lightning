@@ -37,3 +37,11 @@ async def geterrors(event):
       await tgbot.send_message(event.chat_id, f'`{con}`\n\n**Everything is good, Enjoy!**')
     
       await event.delete()
+
+
+ASSISTANT_HELP.update({
+    "bot_logs": "Assistant Command.",
+    "bot_logs's Type":  "Assistant Command, Owner",
+    "Command": f"{ass_cmd_hndlr}errors | {ass_cmd_hndlr}geterrors\
+    \n**Usage**:{ass_cmd_hndlr}errors will get userbot logs as a file | {ass_cmd_hndlr}geterrors Gets where the error is."
+})

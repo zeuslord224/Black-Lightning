@@ -36,7 +36,7 @@ async def _(event):
 
 ASSISTANT_HELP.update({
     "assistant_hack": "Fun",
-    "Type":  "Owner",
+    "assistant_hack'Type":  "Owner",
     "Command": f"{ass_cmd_hndlr}hack\
     \n\n**Usage**: A fun command for all users."
 })

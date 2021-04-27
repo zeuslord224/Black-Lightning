@@ -51,9 +51,9 @@ if STRING_BOT_PIC is None:
 else:
     STRINGER_PIC = STRING_BOT_PIC
 
-@tgbot.on(events.NewMessage(pattern="^/string"))
+@tgbot.on(events.NewMessage(pattern=f"^{ass_cmd_hndlr}string"))
 async def string(event):    
-
+    lol = await lol.get_me()
 
     if not await hn.is_user_authorized():
     
@@ -72,7 +72,7 @@ async def string(event):
                 [Button.url("Api Hash Bot", "t.me/UseTGXBot")],
             ],
         )
-    elif event.sender_id == lol.uid:
+    elif event.sender_id == lol.id:
         await tgbot.send_file(
             event.chat_id,
             STRINGER_PIC,
@@ -125,16 +125,18 @@ async def ass_string(event):
     await conv.send_message("Now Send Your Phone Number\nAs +91 xxxxxxxxx if Indian Else Your Country Format\n\n**Note:** it is not stored!")
     phone = str((await conv.get_response()).text)
 
-    tgboto = assitant_client('anon', app_id, hash_api)
-    tgboto.connect()
+    tgboto = await assitant_client('strig', app_id, hash_api)
+    await tgboto.connect()
     try:
      
      await tgboto.send_code_request(phone=phone, force_sms=False)
      
     except AuthRestartError:
      await conv.send_message("**Time Out!**")
+     return
     except PhoneNumberBannedError:
      await conv.send_message("**Banned Telegram Number!**")
+     return
     
 
     
@@ -142,9 +144,9 @@ async def ass_string(event):
      
 
     code = await conv.get_response()
-    code_tf = None
+    code_tf = None 
     code = "".join(code.split(" "))
-    token = Var.TG_BOT_TOKEN_BF_HER
+    # token = Var.TG_BOT_TOKEN_BF_HER
     
 
     user = await client.get_me()
@@ -152,23 +154,23 @@ async def ass_string(event):
     try:
         await tgboto.sign_in(phone, code)
     except PhoneCodeInvalidError:
-        await conv.send_message('Not Valid!')
-        
+        await conv.send_message('Not Valid!, {retry}')
+        return
     except PhonePasswordProtectedError:
         await conv.send_message("Looks Like You have Two Step Verification, Enter Password")
         so = await conv.get_response()
         code_tf = so.message.message.strip()
         passw = await conv.get_response()
         await tgboto.sign_in(phone, code, password=code_tf)
-        assitant_client = await current_client.get_me()
-        loggingd.info(assitant_client.stringify())
+        # assitant_client = await current_client.get_me()
     session_string = tgboto.session.save()
     await conv.send_message(event.chat_id, f"`{session_string}`")
-    assitant_client = await tgboto.get_me()
+    assitant_client2 = await tgboto.get_me()
     try:    
-        await conv.send_message(f"Thanks For Creating String Session Via {bgusername}\n\nCheck Your Saved Message")
+
         striing=tgboto.session.save()
-        await tgbot.send_message("me", f'{striing}')
+
+        await conv.send_message(f"Thanks For Creating String Session Via {bgusername}\n\n{striing}")
     except Exception:
         await conv.send_message("Number Not Vaild /string To Restart")
 
@@ -180,7 +182,7 @@ async def ass_string(event):
 
 ASSISTANT_HELP.update({
     "stringbot": "String Session Generator Global Command",
-    "Type": "String Session Generator",
+    "stringbot's Type": "String Session Generator",
     "Command": f"{ass_cmd_hndlr}string\
     \n**Usage**: Globaly Creates String for all users!\
     \n\n**Note**: No data is stored anywhere!"

@@ -4,7 +4,7 @@ from telethon import events, custom, Button
 from userbot.plugins.sql_helper.admin_sql import *
 from userbot import bot
 g = Var.TG_BOT_USER_NAME_BF_HER
-from userbot.plugins.thunder.admins import omk
+from userbot.plugins.thunder.admin import omk
 
 
 import os
@@ -52,7 +52,7 @@ async def _(event):
                        
 ASSISTANT_HELP.update({
     "alive": "Users/Admin/Owner Command",
-     "Type":  "Owner",
+     "alive_bot's Type":  "Owner",
     "Command": f"{ass_cmd_hndlr}alive \
     \n**Usage**: An alive for assistant works in group/Personal Message\
     \nDisclaimer: You should add {g} in the particular group for {ass_cmd_hndlr}alive to work in group.\
