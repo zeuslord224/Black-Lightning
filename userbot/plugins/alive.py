@@ -16,20 +16,20 @@ from userbot.utils import lightning_cmd, edit_or_reply, sudo_cmd
 
 ALIVE_PIC = os.environ.get("ALIVE_PIC", None)
 if ALIVE_PIC is None:
-    PM_iMG = "https://telegra.ph/file/b3813284565903fdb56e8.jpg"
+    PM_iMG = "https://telegra.ph/file/6d4fc8af4d076e5a5368e.jpg"
 else:
     PM_iMG = ALIVE_PIC
 
 
 HELL_PIC = os.environ.get("HELL_PIC", None)
 if HELL_PIC is None:
-    HELL_IMG = "https://telegra.ph/file/b3813284565903fdb56e8.jpg"
+    HELL_IMG = "https://telegra.ph/file/6d4fc8af4d076e5a5368e.jpg"
 else:
     HELL_IMG = HELL_PIC
 
 CAT_IMGE = os.environ.get("CAT_IMGE", None)
 if CAT_IMGE is None:
-    CAT_IMG = "https://telegra.ph/file/63abc60224dc567e3d441.jpg"
+    CAT_IMG = "https://telegra.ph/file/6d4fc8af4d076e5a5368e.jpg"
 else:
     CAT_IMG = CAT_IMGE
 
@@ -111,7 +111,7 @@ async def amireallyalive(salive):
         )
         await sallive.delete()
         return
-    req = requests.get("https://telegra.ph/file/b3813284565903fdb56e8.jpg")
+    req = requests.get("https://telegra.ph/file/6d4fc8af4d076e5a5368e.jpg")
     req.raise_for_status()
     file = BytesIO(req.content)
     file.seek(0)
