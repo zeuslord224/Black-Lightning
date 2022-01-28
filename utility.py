@@ -6,8 +6,6 @@ from PIL import Image, ImageDraw
 def user_pokedex(dex_obj):
     images = [Image.open('icons/{}.png'.format(i)) for i in range(1,152)]
 
-    # Fixed width for background; length should be dependent on Pokedex entries
-        # Each icon is 30x30, use padding of 2px on all sides, rows of 5
     height_stop = True
     curr = 151
     while(height_stop and curr > -1):
@@ -24,7 +22,7 @@ def user_pokedex(dex_obj):
 
     # Print out the first 150 Pokemon (Mew separately)
     x, y = [2, 2]
-    for i in range(0, min(len(dex_obj), 150)):
+    for i in range(min(len(dex_obj), 150)):
         if dex_obj[i] > 0:
             # Also return number obtained
             draw = ImageDraw.Draw(images[i-1])

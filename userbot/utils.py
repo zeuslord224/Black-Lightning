@@ -11,9 +11,9 @@ from userbot.Config import Var
 from userbot.thunderconfig import Config
 
 sedprint = logging.getLogger("PLUGINS")
-cmdhandler = Config.CMD_HNDLR if Config.CMD_HNDLR else "."
+cmdhandler = Config.CMD_HNDLR or "."
 bothandler = Config.BOT_HANDLER
-sudo_hndlr = Config.SUDO_HNDLR if Config.SUDO_HNDLR else "!"
+sudo_hndlr = Config.SUDO_HNDLR or "!"
 
 
 def command(**args):
@@ -274,8 +274,7 @@ def lightning_cmd(pattern=None, command=None, **args):
 
     # add blacklist chats, UB should not respond in these chats
     args["blacklist_chats"] = True
-    black_list_chats = list(Config.UB_BLACK_LIST_CHAT)
-    if len(black_list_chats) > 0:
+    if black_list_chats := list(Config.UB_BLACK_LIST_CHAT):
         args["chats"] = black_list_chats
 
     # add blacklist chats, UB should not respond in these chats
@@ -338,8 +337,7 @@ def admin_cmd(pattern=None, command=None, **args):
 
     # add blacklist chats, UB should not respond in these chats
     args["blacklist_chats"] = True
-    black_list_chats = list(Config.UB_BLACK_LIST_CHAT)
-    if len(black_list_chats) > 0:
+    if black_list_chats := list(Config.UB_BLACK_LIST_CHAT):
         args["chats"] = black_list_chats
 
     # add blacklist chats, UB should not respond in these chats
@@ -421,15 +419,16 @@ def errors_handler(func):
             date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
             new = {"error": str(sys.exc_info()[1]), "date": datetime.datetime.now()}
 
-            text = "**USERBOT CRASH REPORT**\n\n"
-
             link = "[Here](https://t.me/lightningsupport)"
-            text += "If you wanna you can report it"
+            text = "**USERBOT CRASH REPORT**\n\n" + "If you wanna you can report it"
             text += f"- just forward this message {link}.\n"
             text += "Nothing is logged except the fact of error and date\n"
 
-            ftext = "\nDisclaimer:\nThis file uploaded ONLY here,"
-            ftext += "\nwe logged only fact of error and date,"
+            ftext = (
+                "\nDisclaimer:\nThis file uploaded ONLY here,"
+                + "\nwe logged only fact of error and date,"
+            )
+
             ftext += "\nwe respect your privacy,"
             ftext += "\nyou may not report this error if you've"
             ftext += "\nany confidential data here, no one will see your data\n\n"
@@ -474,9 +473,10 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         estimated_total_time = elapsed_time + time_to_completion
         progress_str = "[{0}{1}]\nProgress: {2}%\n".format(
             "".join(["█" for i in range(math.floor(percentage / 5))]),
-            "".join(["░" for i in range(20 - math.floor(percentage / 5))]),
+            "".join(["░" for _ in range(20 - math.floor(percentage / 5))]),
             round(percentage, 2),
         )
+
         tmp = progress_str + "{0} of {1}\nETA: {2}".format(
             humanbytes(current), humanbytes(total), time_formatter(estimated_total_time)
         )
@@ -631,10 +631,6 @@ def is_admin():
             kek = bot.uid
             if sed.is_admin:
                 await func(event)
-            if event.sender_id == kek:
-                pass
-            elif not user:
-                pass
             if not sed.is_admin:
                 await event.reply("Only Admins Can Use it.")
 
@@ -666,9 +662,7 @@ def only_pro():
         async def wrapper(event):
             kek = list(Config.SUDO_USERS)
             mm = bot.uid
-            if event.sender_id == mm:
-                await func(event)
-            elif event.sender_id == kek:
+            if event.sender_id in [mm, kek]:
                 await func(event)
             else:
                 await event.reply("Only Owners, Sudo Users Can Use This Command.")
@@ -685,8 +679,6 @@ def god_only():
             moms = bot.uid
             if event.sender_id == moms:
                 await func(event)
-            else:
-                pass
 
         return wrapper
 
@@ -713,8 +705,6 @@ def only_group():
         async def wrapper(event):
             if event.is_group:
                 await func(event)
-            else:
-                pass
 
         return wrapper
 
@@ -727,12 +717,8 @@ def peru_only():
         async def wrapper(event):
             kek = list(Config.SUDO_USERS)
             mm = bot.uid
-            if event.sender_id == mm:
+            if event.sender_id in [mm, kek]:
                 await func(event)
-            elif event.sender_id == kek:
-                await func(event)
-            else:
-                pass
 
         return wrapper
 
@@ -743,9 +729,7 @@ def only_pvt():
     def decorator(func):
         @functools.wraps(func)
         async def wrapper(event):
-            if event.is_group:
-                pass
-            else:
+            if not event.is_group:
                 await func(event)
 
         return wrapper

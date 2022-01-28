@@ -27,7 +27,7 @@ async def _(event):
 
     animation_interval = 2
 
-    animation_ttl = range(0, 11)
+    animation_ttl = range(11)
 
     animation_chars = [
         "`Connecting To 𝔅𝔩𝔞𝔠𝔨 𝔏𝔦𝔤𝔥𝔱𝔫𝔦𝔫𝔤 Server...`",

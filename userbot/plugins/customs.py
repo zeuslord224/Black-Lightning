@@ -24,9 +24,7 @@ async def gws(event):
     if not m:"""
     m = " Get Well Soon ! "
     a = giveVar[-1:]
-    if a == "s":
-        a = "🌹"
-    elif not a:
+    if a == "s" or not a:
         a = "🌹"
     await event.edit(f"{a}{a}{a}{a}{a}{a}{a} \n{a} {m} {a}\n{a}{a}{a}{a}{a}{a}{a}")
 

@@ -16,8 +16,7 @@ async def ok(event):
         hmmyep = await borg.get_permissions(event.chat_id, bot.uid)
         if not hmmyep.is_admin:
             return
-        user = sclient.is_banned(juser.id)
-        if user:
+        if user := sclient.is_banned(juser.id):
             await event.reply(
                 f"**Lightning-Antispam** \n**Detected Malicious User.** \n**User-ID :** `{juser.id}`  \n**Reason :** `{user.reason}`"
             )
@@ -27,5 +26,3 @@ async def ok(event):
                 )
             except:
                 pass
-        else:
-            pass

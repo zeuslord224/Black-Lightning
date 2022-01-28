@@ -20,8 +20,7 @@ if not os.path.isdir(Var.TEMP_DOWNLOAD_DIRECTORY):
 
 @borg.on(lightning_cmd(outgoing=True, pattern="pips(?: |$)(.*)"))
 async def pipcheck(pip):
-    pipmodule = pip.pattern_match.group(1)
-    if pipmodule:
+    if pipmodule := pip.pattern_match.group(1):
         await pip.edit("`Searching . . .`")
         pipc = await asyncrunapp(
             "pip3",
@@ -32,14 +31,13 @@ async def pipcheck(pip):
         )
 
         stdout, stderr = await pipc.communicate()
-        pipout = str(stdout.decode().strip()) + str(stderr.decode().strip())
-
-        if pipout:
+        if pipout := str(stdout.decode().strip()) + str(
+            stderr.decode().strip()
+        ):
             if len(pipout) > 4096:
                 await pip.edit("`Output too large, sending as file`")
-                file = open("pips.txt", "w+")
-                file.write(pipout)
-                file.close()
+                with open("pips.txt", "w+") as file:
+                    file.write(pipout)
                 await pip.client.send_file(
                     pip.chat_id,
                     "pips.txt",

@@ -56,7 +56,7 @@ async def _(event):
         downloader.start(blocking=False)
         c_time = time.time()
         while not downloader.isFinished():
-            total_length = downloader.filesize if downloader.filesize else None
+            total_length = downloader.filesize or None
             downloaded = downloader.get_dl_size()
             display_message = ""
             now = time.time()
@@ -66,9 +66,10 @@ async def _(event):
             round(diff) * 1000
             progress_str = "{0}{1}\nProgress: {2}%".format(
                 "".join(["█" for i in range(math.floor(percentage / 5))]),
-                "".join(["░" for i in range(20 - math.floor(percentage / 5))]),
+                "".join(["░" for _ in range(20 - math.floor(percentage / 5))]),
                 round(percentage, 2),
             )
+
             estimated_total_time = downloader.get_eta(human=True)
             try:
                 current_message = f"trying to download\nURL: {url}\nFile Name: {file_name}\n{progress_str}\n{humanbytes(downloaded)} of {humanbytes(total_length)}\nETA: {estimated_total_time}"

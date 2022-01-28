@@ -78,11 +78,11 @@ async def _(event):
 
 @borg.on(lightning_cmd(pattern="limits ?(.*)"))
 async def _(event):
-    bot = "@SpamBot"
     if event.fwd_from:
         return
     sysarg = event.pattern_match.group(1)
     if sysarg == "":
+        bot = "@SpamBot"
         async with borg.conversation(bot) as conv:
             try:
                 await conv.send_message("/start")

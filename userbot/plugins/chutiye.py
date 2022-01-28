@@ -13,7 +13,7 @@ async def _(event):
     if event.fwd_from:
         return
     lightning_anmation_interval = 4
-    ttl = range(0, 100)
+    ttl = range(100)
     await event.edit("Chutiye Saade Hue...")
     chars = [
             "Maderchod- MOTHERFUCKER",

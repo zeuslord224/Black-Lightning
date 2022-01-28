@@ -14,10 +14,6 @@ async def _(event):
 
         return
 
-    animation_interval = 0.3
-
-    animation_ttl = range(0, 15)
-
     input_str = event.pattern_match.group(1)
 
     if input_str == "adi":
@@ -41,6 +37,10 @@ async def _(event):
             "⬜⬜⬜\n⬜⬛⬜\n⬜⬜⬜",
             "[👉🔴👈](https://t.me/blacklightningot)",
         ]
+
+        animation_interval = 0.3
+
+        animation_ttl = range(15)
 
         for i in animation_ttl:
 

@@ -33,11 +33,10 @@ async def _(event):
                 r = await reply_message.reply(file=InputMediaDice(emoticon=emoticon))
         except BaseException:
             pass
+    elif event.sender_id == event.client.uid:
+        await event.edit(file=InputMediaDice(emoticon=emoticon))
     else:
-        if event.sender_id == event.client.uid:
-            await event.edit(file=InputMediaDice(emoticon=emoticon))
-        else:
-            await event.reply(file=InputMediaDice(emoticon=emoticon))
+        await event.reply(file=InputMediaDice(emoticon=emoticon))
 
 
 @bot.on(lightning_cmd(pattern=f"({DICE_E_MOJI}|dice)( ([1-6])|$)"))
@@ -61,11 +60,10 @@ async def _(event):
                 r = await reply_message.reply(file=InputMediaDice(emoticon=emoticon))
         except BaseException:
             pass
+    elif event.sender_id == event.client.uid:
+        await event.edit(file=InputMediaDice(emoticon=emoticon))
     else:
-        if event.sender_id == event.client.uid:
-            await event.edit(file=InputMediaDice(emoticon=emoticon))
-        else:
-            await event.reply(file=InputMediaDice(emoticon=emoticon))
+        await event.reply(file=InputMediaDice(emoticon=emoticon))
 
 
 @bot.on(lightning_cmd(pattern=f"({BALL_E_MOJI}|bb)( ([1-5])|$)"))
@@ -89,11 +87,10 @@ async def _(event):
                 r = await reply_message.reply(file=InputMediaDice(emoticon=emoticon))
         except BaseException:
             pass
+    elif event.sender_id == event.client.uid:
+        await event.edit(file=InputMediaDice(emoticon=emoticon))
     else:
-        if event.sender_id == event.client.uid:
-            await event.edit(file=InputMediaDice(emoticon=emoticon))
-        else:
-            await event.reply(file=InputMediaDice(emoticon=emoticon))
+        await event.reply(file=InputMediaDice(emoticon=emoticon))
 
 
 @bot.on(lightning_cmd(pattern=f"({FOOT_E_MOJI}|fb)( ([1-5])|$)"))
@@ -117,11 +114,10 @@ async def _(event):
                 r = await reply_message.reply(file=InputMediaDice(emoticon=emoticon))
         except BaseException:
             pass
+    elif event.sender_id == event.client.uid:
+        await event.edit(file=InputMediaDice(emoticon=emoticon))
     else:
-        if event.sender_id == event.client.uid:
-            await event.edit(file=InputMediaDice(emoticon=emoticon))
-        else:
-            await event.reply(file=InputMediaDice(emoticon=emoticon))
+        await event.reply(file=InputMediaDice(emoticon=emoticon))
 
 
 @bot.on(lightning_cmd(pattern=f"({SLOT_E_MOJI}|jp)( ([1-64])|$)"))
@@ -145,8 +141,7 @@ async def _(event):
                 r = await reply_message.reply(file=InputMediaDice(emoticon=emoticon))
         except BaseException:
             pass
+    elif event.sender_id == event.client.uid:
+        await event.edit(file=InputMediaDice(emoticon=emoticon))
     else:
-        if event.sender_id == event.client.uid:
-            await event.edit(file=InputMediaDice(emoticon=emoticon))
-        else:
-            await event.reply(file=InputMediaDice(emoticon=emoticon))
+        await event.reply(file=InputMediaDice(emoticon=emoticon))

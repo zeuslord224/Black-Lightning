@@ -39,7 +39,7 @@ async def _(event):
         #     "Successfully Changed Profile Name"
         # )
         await asyncio.sleep(DEL_TIME_OUT)
-        await event.edit(f"Auto Name has been started Master")
+        await event.edit('Auto Name has been started Master')
 
 
 CMD_HELP.update( {".autoname": "Auto Profile Updation Commands"})

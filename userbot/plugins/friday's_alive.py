@@ -23,10 +23,7 @@ def get_readable_time(seconds: int) -> str:
 
     while count < 4:
         count += 1
-        if count < 3:
-            remainder, result = divmod(seconds, 60)
-        else:
-            remainder, result = divmod(seconds, 24)
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
@@ -46,8 +43,7 @@ def get_readable_time(seconds: int) -> str:
 uptime = get_readable_time((time.time() - Lastupdate))
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else "Unknown"
 
-pm_caption = "➥ **Black Lightning IS:** `ONLINE`\n\n"
-pm_caption += "➥ **SYSTEMS STATS**\n"
+pm_caption = "➥ **Black Lightning IS:** `ONLINE`\n\n" + "➥ **SYSTEMS STATS**\n"
 pm_caption += "➥ **Telethon Version:** `1.15.0` \n"
 pm_caption += "➥ **Python:** `3.7.4` \n"
 pm_caption += f"➥ **Uptime** : `{uptime}` \n"

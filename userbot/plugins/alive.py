@@ -58,10 +58,7 @@ def get_readable_time(seconds: int) -> str:
 
     while count < 4:
         count += 1
-        if count < 3:
-            remainder, result = divmod(seconds, 60)
-        else:
-            remainder, result = divmod(seconds, 24)
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
@@ -141,13 +138,7 @@ async def amireallyalive(salive):
 # Credits to Hellboy Op
 
 
-ludosudo = Config.SUDO_USERS
-
-if ludosudo:
-    sudou = "True"
-else:
-    sudou = "False"
-
+sudou = "True" if (ludosudo := Config.SUDO_USERS) else "False"
 kraken = bot.uid
 
 
@@ -229,7 +220,7 @@ def check_data_base_heal_th():
         # to check database we will execute raw query
         SESSION.execute("SELECT 1")
     except Exception as e:
-        output = f"❌ {str(e)}"
+        output = f'❌ {e}'
         is_database_working = False
     else:
         output = "Functioning Normally"
@@ -244,18 +235,15 @@ from userbot.thunderconfig import Config
 
 CUSTOM_ALIVE = (
     Var.CUSTOM_ALIVE
-    if Var.CUSTOM_ALIVE
-    else "Hey! I'm alive. All systems online and functioning normally!"
+    or "Hey! I'm alive. All systems online and functioning normally!"
 )
 
 
-telemoji = Var.CUSTOM_ALIVE_EMOJI if Var.CUSTOM_ALIVE_EMOJI else "**✵**"
+
+telemoji = Var.CUSTOM_ALIVE_EMOJI or "**✵**"
 
 
-if Config.SUDO_USERS:
-    sudo = "Enabled"
-else:
-    sudo = "Disabled"
+sudo = "Enabled" if Config.SUDO_USERS else "Disabled"
 # ======CONSTANTS=========#
 
 
@@ -267,10 +255,7 @@ def get_readable_time(seconds: int) -> str:
 
     while count < 4:
         count += 1
-        if count < 3:
-            remainder, result = divmod(seconds, 60)
-        else:
-            remainder, result = divmod(seconds, 24)
+        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))

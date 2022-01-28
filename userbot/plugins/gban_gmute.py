@@ -14,7 +14,7 @@ from userbot.utils import lightning_cmd
 async def get_full_user(event):
     args = event.pattern_match.group(1).split(":", 1)
     extra = None
-    if event.reply_to_msg_id and not len(args) == 2:
+    if event.reply_to_msg_id and len(args) != 2:
         previous_message = await event.get_reply_message()
         user_obj = await event.client.get_entity(previous_message.from_id)
         extra = event.pattern_match.group(1)
@@ -58,12 +58,12 @@ async def gben(userbot):
     dc = userbot
     sender = await dc.get_sender()
     me = await dc.client.get_me()
-    if not sender.id == me.id:
+    if sender.id != me.id:
         dark = await dc.reply("Gbanning This User !")
     else:
         dark = await dc.edit("Wait Processing.....")
     me = await userbot.client.get_me()
-    await dark.edit(f"Trying to ban you globally..weit nd watch you nub nibba")
+    await dark.edit('Trying to ban you globally..weit nd watch you nub nibba')
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     f"@{me.username}" if me.username else my_mention
     await userbot.get_chat()
@@ -81,10 +81,10 @@ async def gben(userbot):
         if not reason:
             reason = "Private"
     except:
-        return await dark.edit(f"**Something W3NT Wrong 🤔**")
+        return await dark.edit('**Something W3NT Wrong 🤔**')
     if user:
         if user.id == 1311769691:
-            return await dark.edit(f"**You nub nibba..I can't gban my creator..**")
+            return await dark.edit("**You nub nibba..I can't gban my creator..**")
         try:
             from userbot.plugins.sql_helper.gmute_sql import gmute
         except:
@@ -106,10 +106,10 @@ async def gben(userbot):
             except:
                 b += 1
     else:
-        await dark.edit(f"**Reply to a user you dumbo !!**")
+        await dark.edit('**Reply to a user you dumbo !!**')
     try:
         if gmute(user.id) is False:
-            return await dark.edit(f"**Error! User already gbanned.**")
+            return await dark.edit('**Error! User already gbanned.**')
     except:
         pass
     return await dark.edit(
@@ -122,12 +122,12 @@ async def gunben(userbot):
     dc = userbot
     sender = await dc.get_sender()
     me = await dc.client.get_me()
-    if not sender.id == me.id:
+    if sender.id != me.id:
         dark = await dc.reply("`Wait Let Me ungban this nub nibba again😂`")
     else:
         dark = await dc.edit("Weit nd watch ! ")
     me = await userbot.client.get_me()
-    await dark.edit(f"Trying To Ungban User !")
+    await dark.edit('Trying To Ungban User !')
     my_mention = "[{}](tg://user?id={})".format(me.first_name, me.id)
     f"@{me.username}" if me.username else my_mention
     await userbot.get_chat()
@@ -185,32 +185,33 @@ async def gunben(userbot):
 
 @borg.on(ChatAction)
 async def handler(rkG):
-    if rkG.user_joined or rkG.user_added:
-        try:
-            from userbot.plugins.sql_helper.gmute_sql import is_gmuted
+    if not rkG.user_joined and not rkG.user_added:
+        return
+    try:
+        from userbot.plugins.sql_helper.gmute_sql import is_gmuted
 
-            guser = await rkG.get_user()
-            gmuted = is_gmuted(guser.id)
-        except:
-            return
-        if gmuted:
-            for i in gmuted:
-                if i.sender == str(guser.id):
-                    chat = await rkG.get_chat()
-                    admin = chat.admin_rights
-                    creator = chat.creator
-                    if admin or creator:
-                        try:
-                            await client.edit_permissions(
-                                rkG.chat_id, guser.id, view_messages=False
-                            )
-                            await rkG.reply(
-                                f"**Gbanned User(the ultimate nub nibba) Joined the chat!!** \n"
-                                f"**Victim Id**: [{guser.id}](tg://user?id={guser.id})\n"
-                                f"**Action **  : `Banned this nub nibba again...Sed`"
-                            )
-                        except:
-                            rkG.reply(
-                                "`No Permission To Ban.. @admins please ban him he is a globally banned user and a potential spammer...!`"
-                            )
-                            return
+        guser = await rkG.get_user()
+        gmuted = is_gmuted(guser.id)
+    except:
+        return
+    if gmuted:
+        for i in gmuted:
+            if i.sender == str(guser.id):
+                chat = await rkG.get_chat()
+                admin = chat.admin_rights
+                creator = chat.creator
+                if admin or creator:
+                    try:
+                        await client.edit_permissions(
+                            rkG.chat_id, guser.id, view_messages=False
+                        )
+                        await rkG.reply(
+                            f"**Gbanned User(the ultimate nub nibba) Joined the chat!!** \n"
+                            f"**Victim Id**: [{guser.id}](tg://user?id={guser.id})\n"
+                            f"**Action **  : `Banned this nub nibba again...Sed`"
+                        )
+                    except:
+                        rkG.reply(
+                            "`No Permission To Ban.. @admins please ban him he is a globally banned user and a potential spammer...!`"
+                        )
+                        return

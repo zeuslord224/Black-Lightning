@@ -16,46 +16,14 @@ hmmok = Config.LYDIA_API
 currentversion = "4.0"
 telever = "5.0"
 
-if issudousing:
-    amiusingsudo = "Active ✅"
-else:
-    amiusingsudo = "Inactive ❌"
-
-if islogokay:
-    logchat = "Connected ✅"
-else:
-    logchat = "Dis-Connected ❌"
-
-if isherokuokay:
-    riplife = "Connected ✅"
-else:
-    riplife = "Not Connected ❌"
-
-if gdriveisshit:
-    wearenoob = "Active ✅"
-else:
-    wearenoob = "Inactive ❌"
-
-if rmbg:
-    gendu = "Added ✅"
-else:
-    gendu = "Not Added ❌"
-
-if wttrapi:
-    starknoobs = "Added ✅"
-else:
-    starknoobs = "Not Added ❌"
-
-if hmmok:
-    meiko = "Added ✅"
-else:
-    meiko = "Not Added ❌"
-
-if isdbfine:
-    dbstats = "Fine ✅"
-else:
-    dbstats = "Not Fine ❌"
-
+amiusingsudo = "Active ✅" if issudousing else "Inactive ❌"
+logchat = "Connected ✅" if islogokay else "Dis-Connected ❌"
+riplife = "Connected ✅" if isherokuokay else "Not Connected ❌"
+wearenoob = "Active ✅" if gdriveisshit else "Inactive ❌"
+gendu = "Added ✅" if rmbg else "Not Added ❌"
+starknoobs = "Added ✅" if wttrapi else "Not Added ❌"
+meiko = "Added ✅" if hmmok else "Not Added ❌"
+dbstats = "Fine ✅" if isdbfine else "Not Fine ❌"
 if Config.PRIVATE_GROUP_BOT_API_ID is None:
     BOTLOG = False
     BOTLOG_CHATID = "me"

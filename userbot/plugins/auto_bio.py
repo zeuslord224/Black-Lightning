@@ -56,7 +56,7 @@ async def _(event):
 
         await asyncio.sleep(DEL_TIME_OUT)
 
-    await hell.edit(f"Auto Name has been started my Master")
+    await hell.edit('Auto Name has been started my Master')
 
 
 @bot.on(lightning_cmd(pattern="autobio"))  # pylint:disable=E0602

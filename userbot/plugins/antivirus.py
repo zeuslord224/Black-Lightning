@@ -36,13 +36,12 @@ async def _(event):
             await event.edit(
                 "```can you kindly disable your forward privacy settings for good?```"
             )
+        elif response.text.startswith("Select"):
+            await event.edit("`Please go to` @DrWebBot `and select your language.`")
         else:
-            if response.text.startswith("Select"):
-                await event.edit("`Please go to` @DrWebBot `and select your language.`")
-            else:
-                await event.edit(
-                    f"**Antivirus scan was completed. I got dem final results.**\n {response.message.message}"
-                )
+            await event.edit(
+                f"**Antivirus scan was completed. I got dem final results.**\n {response.message.message}"
+            )
 
 
 from userbot import CMD_HELP

@@ -73,8 +73,6 @@ async def _(event):
         await event.edit("Reply to a message to broadcast.")
         return
     channels = get_all_channels()
-    error_count = 0
-    sent_count = 0
     await event.edit("Sending, please weit....")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
@@ -94,6 +92,8 @@ async def _(event):
         ):  # Written by @HeisenbergTheDanger
             await event.edit("Not supported. Try .forward")
             return
+        error_count = 0
+        sent_count = 0
         if not previous_message.web_preview and previous_message.photo:
             file = await borg.download_file(previous_message.media)
             uploaded_doc = await borg.upload_file(file, file_name="img.png")

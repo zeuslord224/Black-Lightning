@@ -26,18 +26,7 @@ async def _(event):
                 await event.delete()
             except YouBlockedUserError:
                 await event.edit(f"**Bruh:** `unblock` @gif `and Then try {DEFAULTUSER} retry!")
-    elif "@" in lightn_gif:
-        async with borg.conversation(bot) as conv:
-            try:
-                await conv.send_message("/start")
-                await conv.get_response()
-                await conv.send_message("@gif " + lightn_gif)
-                audio = await conv.get_response()
-                await borg.send_message(event.chat_id, audio.text)
-                await event.delete()
-            except YouBlockedUserError:
-                await event.edit(f"**Bruh:** `unblock` @gif `and Then try {DEFAULTUSER} retry")
-    elif "" in lightn_gif:
+    elif "@" in lightn_gif or "" in lightn_gif:
         async with borg.conversation(bot) as conv:
             try:
                 await conv.send_message("/start")
