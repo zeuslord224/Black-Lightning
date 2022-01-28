@@ -122,7 +122,6 @@ async def set_group_photo(gpic):
 
 # @register(outgoing=True, pattern="^.promote(?: |$)(.*)")
 @borg.on(lightning_cmd(pattern=r"promote(?: |$)(.*)"))
-
 async def promote(promt):
     if promt.fwd_from:
         return
@@ -151,9 +150,7 @@ async def promote(promt):
     user, rank = await get_user_from_event(promt)
     if not rank:
         rank = "Black Lightning"  # Just in case.
-    if user:
-        pass
-    else:
+    if not user:
         return
 
     # Try to promote if current user is admin or creator
@@ -179,7 +176,6 @@ async def promote(promt):
 
 # @register(outgoing=True, pattern="^.demote(?: |$)(.*)")
 @borg.on(lightning_cmd(pattern=r"demote(?: |$)(.*)"))
-
 async def demote(dmod):
     if dmod.fwd_from:
         return
@@ -198,9 +194,7 @@ async def demote(dmod):
     rank = "admeme"  # dummy rank, lol.
     user = await get_user_from_event(dmod)
     user = user[0]
-    if user:
-        pass
-    else:
+    if not user:
         return
 
     # New rights after demotion
@@ -235,7 +229,6 @@ async def demote(dmod):
 
 # @register(outgoing=True, pattern="^.ban(?: |$)(.*)")
 @borg.on(lightning_cmd(pattern=r"ban(?: |$)(.*)"))
-
 async def ban(bon):
     if bon.fwd_from:
         return
@@ -251,9 +244,7 @@ async def ban(bon):
         return
 
     user, reason = await get_user_from_event(bon)
-    if user:
-        pass
-    else:
+    if not user:
         return
 
     # Announce that we're going to whack the pest
@@ -276,9 +267,9 @@ async def ban(bon):
     # is done gracefully
     # Shout out the ID, so that fedadmins can fban later
     if reason:
-        await bon.edit(f"Loser `{str(user.id)}` was banned !!\nReason: {reason}")
+        await bon.edit(f'Loser `{user.id}` was banned !!\nReason: {reason}')
     else:
-        await bon.edit(f"Bitch `{str(user.id)}` was banned !!")
+        await bon.edit(f'Bitch `{user.id}` was banned !!')
     # Announce to the logging group if we have banned the person
     # successfully!
     if BOTLOG:
@@ -292,7 +283,6 @@ async def ban(bon):
 
 # @register(outgoing=True, pattern="^.unban(?: |$)(.*)")
 @borg.on(lightning_cmd(pattern=r"unban(?: |$)(.*)"))
-
 async def nothanos(unbon):
     if unbon.fwd_from:
         return
@@ -312,9 +302,7 @@ async def nothanos(unbon):
 
     user = await get_user_from_event(unbon)
     user = user[0]
-    if user:
-        pass
-    else:
+    if not user:
         return
 
     try:
@@ -334,7 +322,6 @@ async def nothanos(unbon):
 
 # @register(outgoing=True, pattern="^.mute(?: |$)(.*)")
 @borg.on(lightning_cmd(pattern=r"mute(?: |$)(.*)"))
-
 async def spider(spdr):
     if spdr.fwd_from:
         return
@@ -359,9 +346,7 @@ async def spider(spdr):
         return
 
     user, reason = await get_user_from_event(spdr)
-    if user:
-        pass
-    else:
+    if not user:
         return
 
     self_user = await spdr.client.get_me()
@@ -374,31 +359,29 @@ async def spider(spdr):
     await spdr.edit("`Gets a tape!`")
     if mute(spdr.chat_id, user.id) is False:
         return await spdr.edit("`Error! User probably already muted.`")
-    else:
-        try:
-            await spdr.client(EditBannedRequest(spdr.chat_id, user.id, MUTE_RIGHTS))
+    try:
+        await spdr.client(EditBannedRequest(spdr.chat_id, user.id, MUTE_RIGHTS))
 
-            # Announce that the function is done
-            if reason:
-                await spdr.edit(f"`Safely taped !!`\nReason: {reason}")
-            else:
-                await spdr.edit("`Safely taped !!`")
+        # Announce that the function is done
+        if reason:
+            await spdr.edit(f"`Safely taped !!`\nReason: {reason}")
+        else:
+            await spdr.edit("`Safely taped !!`")
 
-            # Announce to logging group
-            if BOTLOG:
-                await spdr.client.send_message(
-                    BOTLOG_CHATID,
-                    "#MUTE\n"
-                    f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-                    f"CHAT: {spdr.chat.title}(`{spdr.chat_id}`)",
-                )
-        except UserIdInvalidError:
-            return await spdr.edit("`Uh oh my mute logic broke!`")
+        # Announce to logging group
+        if BOTLOG:
+            await spdr.client.send_message(
+                BOTLOG_CHATID,
+                "#MUTE\n"
+                f"USER: [{user.first_name}](tg://user?id={user.id})\n"
+                f"CHAT: {spdr.chat.title}(`{spdr.chat_id}`)",
+            )
+    except UserIdInvalidError:
+        return await spdr.edit("`Uh oh my mute logic broke!`")
 
 
 # @register(outgoing=True, pattern="^.unmute(?: |$)(.*)")
 @borg.on(lightning_cmd(pattern=r"unmute(?: |$)(.*)"))
-
 async def unmoot(unmot):
     if unmot.fwd_from:
          return
@@ -424,29 +407,25 @@ async def unmoot(unmot):
     await unmot.edit("```Unmuting...```")
     user = await get_user_from_event(unmot)
     user = user[0]
-    if user:
-        pass
-    else:
+    if not user:
         return
 
     if unmute(unmot.chat_id, user.id) is False:
         return await unmot.edit("`Error! User probably already unmuted.`")
-    else:
+    try:
+        await unmot.client(EditBannedRequest(unmot.chat_id, user.id, UNBAN_RIGHTS))
+        await unmot.edit("```Unmuted Successfully```")
+    except UserIdInvalidError:
+        await unmot.edit("`Uh oh my unmute logic broke!`")
+        return
 
-        try:
-            await unmot.client(EditBannedRequest(unmot.chat_id, user.id, UNBAN_RIGHTS))
-            await unmot.edit("```Unmuted Successfully```")
-        except UserIdInvalidError:
-            await unmot.edit("`Uh oh my unmute logic broke!`")
-            return
-
-        if BOTLOG:
-            await unmot.client.send_message(
-                BOTLOG_CHATID,
-                "#UNMUTE\n"
-                f"USER: [{user.first_name}](tg://user?id={user.id})\n"
-                f"CHAT: {unmot.chat.title}(`{unmot.chat_id}`)",
-            )
+    if BOTLOG:
+        await unmot.client.send_message(
+            BOTLOG_CHATID,
+            "#UNMUTE\n"
+            f"USER: [{user.first_name}](tg://user?id={user.id})\n"
+            f"CHAT: {unmot.chat.title}(`{unmot.chat_id}`)",
+        )
 
 
 @register(incoming=True)
@@ -486,7 +465,6 @@ async def muter(moot):
 
 # @register(outgoing=True, pattern="^.ungmute(?: |$)(.*)")
 @borg.on(lightning_cmd(pattern=r"ungmute(?: |$)(.*)"))
-
 async def ungmoot(un_gmute):
     if un_gmute.fwd_from:
         return
@@ -510,9 +488,7 @@ async def ungmoot(un_gmute):
 
     user = await get_user_from_event(un_gmute)
     user = user[0]
-    if user:
-        pass
-    else:
+    if not user:
         return
 
     # If pass, inform and start ungmuting
@@ -535,7 +511,6 @@ async def ungmoot(un_gmute):
 
 # @register(outgoing=True, pattern="^.gmute(?: |$)(.*)")
 @borg.on(lightning_cmd(pattern=r"gmute(?: |$)(.*)"))
-
 async def gspider(gspdr):
     if gspdr.fwd_from:
         return
@@ -558,9 +533,7 @@ async def gspider(gspdr):
         return
 
     user, reason = await get_user_from_event(gspdr)
-    if user:
-        pass
-    else:
+    if not user:
         return
 
     # If pass, inform and start gmuting
@@ -664,7 +637,7 @@ async def rm_deletedacc(show):
 async def get_admin(show):
     """ For .admins command, list all of the admins of the chat. """
     info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "this chat"
+    title = info.title or "this chat"
     mentions = f"<b>Admins in {title}:</b> \n"
     try:
         async for user in show.client.iter_participants(
@@ -704,11 +677,7 @@ async def pin(msg):
 
     options = msg.pattern_match.group(1)
 
-    is_silent = True
-
-    if options.lower() == "loud":
-        is_silent = False
-
+    is_silent = options.lower() != "loud"
     try:
         await msg.client(UpdatePinnedMessageRequest(msg.to_id, to_pin, is_silent))
     except BadRequestError:
@@ -755,7 +724,7 @@ async def kick(usr):
         await usr.client.kick_participant(usr.chat_id, user.id)
         await sleep(0.5)
     except Exception as e:
-        await usr.edit(NO_PERM + f"\n{str(e)}")
+        await usr.edit(NO_PERM + f'\n{e}')
         return
 
     if reason:
@@ -783,7 +752,7 @@ async def get_users(show):
          return
     """ For .users command, list all of the users in a chat. """
     info = await show.client.get_entity(show.chat_id)
-    title = info.title if info.title else "this chat"
+    title = info.title or "this chat"
     mentions = "Users in {}: \n".format(title)
     try:
         if not show.pattern_match.group(1):
@@ -811,9 +780,8 @@ async def get_users(show):
         await show.edit(mentions)
     except MessageTooLongError:
         await show.edit("Damn, this is a huge group. Uploading users lists as file.")
-        file = open("userslist.txt", "w+")
-        file.write(mentions)
-        file.close()
+        with open("userslist.txt", "w+") as file:
+            file.write(mentions)
         await show.client.send_file(
             show.chat_id,
             "userslist.txt",

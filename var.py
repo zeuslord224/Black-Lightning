@@ -1,7 +1,6 @@
 import os
 
-ENV = bool(os.environ.get("ENV", False))
-if ENV:
+if ENV := bool(os.environ.get("ENV", False)):
     from heroku_config import Var as config
 else:
     from localconfig import config

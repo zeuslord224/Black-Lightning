@@ -26,9 +26,7 @@ async def _(event):
             )
     except Exception as e:
         caption_str = str(e)
-    reply_msg_id = event.message.id
-    if event.reply_to_msg_id:
-        reply_msg_id = event.reply_to_msg_id
+    reply_msg_id = event.reply_to_msg_id or event.message.id
     try:
         await borg.send_file(
             event.chat_id,

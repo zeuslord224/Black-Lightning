@@ -93,7 +93,7 @@ async def load(lightning):
         await lightning.edit(f"Successfully loaded {krish_blac}")
     except Exception as e:
         await lightning.edit(
-            f"Sorry,{krish_blac} can not be loaded\nbecause of the following error.\n{str(e)}"
+            f'Sorry,{krish_blac} can not be loaded\nbecause of the following error.\n{e}'
         )
 
  # created by @cyper666
@@ -225,11 +225,12 @@ async def inline_handler(lightning):
         rev_text = query[::-1]
         buttons = lightnings_menu_for_help(0, CMD_LIST, "helpme")
         result = builder.article(
-            f"Help Menu",
+            'Help Menu',
             text="\n{}\n`Plugins`: {}".format(query, len(CMD_LIST)),
             buttons=buttons,
             link_preview=False,
         )
+
         await lightning.answer([result])
     elif lightning.query.user_id == bot.uid and query == "**Cool":
         result = builder.article(
@@ -241,7 +242,7 @@ async def inline_handler(lightning):
                 [Button.url("Help Article 🤓", "https://app.gitbook.com/@poxsisofficial/s/help/")],
                 [
                     Button.url(
-                
+
                     "Want To Learn CMDS😅",
                     "https://t.me/lightningsupport" ,
                     )
@@ -266,9 +267,9 @@ async def inline_handler(lightning):
                     custom.Button.inline(
                         "Lemme In :)", 
                         data="lol_u_think_so",
-                        
+
                     )
-                        
+
                 ],
 
             ],
@@ -303,19 +304,19 @@ async def lightning_pugins_query_hndlr(lightning):
    )
 ) # Thanks To Friday Userbot
 async def lightning_pugins_query_hndlr(lightning):
-    if not lightning.query.user_id == bot.uid:
+    if lightning.query.user_id != bot.uid:
         how = "Get Your own Lightning Userbot \n Don't Touch mine( ͡❛ ͜ʖ ͡❛)"
         await lightning.answer(how, cache_time=0, alert=True)
         return
     light_pulu_name = lightning.data_match.group(1).decode("UTF-8")
-   
+
     try:
         if light_pulu_name in CMD_HELP:
-           
+
            lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n{CMD_HELP[light_pulu_name]}"
            lightning_is_best = lightning_help_strin 
            lightning_is_best += "\n\n**In Case Any Problem @Lightning_support_group** ".format(light_pulu_name)
-        
+
         else:
             lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
             for i in CMD_HELP:
@@ -326,21 +327,21 @@ async def lightning_pugins_query_hndlr(lightning):
                     lightning_help_strin += "\n"
     except BaseException:
          pass
-   
+
     if light_pulu_name in CMD_LIST:
                 lightning_help_strin = "Commands found in {}:\n".format(light_pulu_name)
                 for i in CMD_LIST[light_pulu_name]:
                     lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n `{CMD_LIST[light_pulu_name]}\n`**Details**- Not Yet😅😅\n\n**Ask at @Lightning_support_Group"
                     lightning_help_strin += "\n    " + i
                     lightning_help_strin += "\n"
-                
+
     else:
            lightning_help_strin  = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n**Details** - Not Yet😅😅\n\n**Ask at @Lightning_support_Group"
            lightning_is_best = lightning_help_strin 
            lightning_is_best += "\n\n**In Case Any Problem @Lightning_support_Group** ".format(light_pulu_name)
     lightning_help_strin = f"**🔺 NAME 🔺 :** `{light_pulu_name}` \n\n`{CMD_LIST[light_pulu_name]}`\n**Details** - Not Yet😅😅\n\n**Ask at @Lightning_support_Group"
-    lightning_is_best = lightning_help_strin 
-    lightning_is_best += "\n\n**In Case Any Problem @Lightning_support_Groups** ".format(light_pulu_name)    
+    lightning_is_best = lightning_help_strin
+    lightning_is_best += "\n\n**In Case Any Problem @Lightning_support_Groups** ".format(light_pulu_name)
     if len(lightning_is_best) >= 4096:
           keinshin = "`Wait.( ͡🔥 ͜ʖ ͡🔥)`"
           await lightning.answer(keinshin, cache_time=0, alert=True)
@@ -418,7 +419,7 @@ async def lightning_is_better(lightning):
         return
     await lightning.get_chat()
     lightning_id = lightning.query.user_id
-    text1 = f"LOL You Think So You Can😂😂\nGo and wait😂😂"
+    text1 = 'LOL You Think So You Can😂😂\nGo and wait😂😂'
     await lightning.edit("Off Course Go To Hell Dude🖕")
     await bot.send_message(lightning.query.user_id, text1)
     await bot(functions.contacts.BlockRequest(lightning.query.user_id))
@@ -602,10 +603,7 @@ In Case Any Problem @lightning_support_group \nTottal Plugs( ͡🔥 ͜ʖ ͡�
 def lightnings_menu_for_help(b_lac_krish, lightning_plugs, lightning_lol):
     lightning_no_rows = 10
     lightning_no_coulmns = 3
-    lightning_plugins = []
-    for p in lightning_plugs:
-        if not p.startswith("_"):
-            lightning_plugins.append(p)
+    lightning_plugins = [p for p in lightning_plugs if not p.startswith("_")]
     lightning_plugins = sorted(lightning_plugins)
     plugins = [
         custom.Button.inline(
@@ -632,7 +630,7 @@ def lightnings_menu_for_help(b_lac_krish, lightning_plugs, lightning_lol):
                custom.Button.inline(
                     "ℓєfт ρℓυgιи ", data="{}_next({})".format(lightning_lol, lightning_plugins_pages)
                 ),
-                
+
             )
         ]
     return pairs

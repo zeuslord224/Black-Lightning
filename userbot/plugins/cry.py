@@ -14,7 +14,7 @@ async def _(event):
 
     animation_interval = 1
 
-    animation_ttl = range(0, 103)
+    animation_ttl = range(103)
 
     await event.edit("crying")
 

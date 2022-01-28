@@ -5,7 +5,9 @@ from telethon.tl.types import ChatBannedRights
 ENV = bool(os.environ.get("ENV", False))
 
 
-class Var(object):
+
+
+class Var((object)):
     APP_ID = int(os.environ.get("APP_ID", 6))
     # 6 is a placeholder
     API_HASH = os.environ.get("API_HASH", "eb06d4abfb49dc3eeb1aeb98ae0f581e")
@@ -20,19 +22,26 @@ class Var(object):
     GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
     GIT_REPO_NAME = os.environ.get("GIT_REPO_NAME", None)
     # Here for later purposes
-    SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "1311769691").split())
-    WHITELIST_USERS = set(
+    SUDO_USERS = {
+        int(x) for x in os.environ.get("SUDO_USERS", "1311769691").split()
+    }
+
+    WHITELIST_USERS = {
         int(x) for x in os.environ.get("WHITELIST_USERS", "1311769691").split()
-    )
+    }
+
     MAX_ANTI_FLOOD_MESSAGES = 10
     # warn mode for anti flood
     ANTI_FLOOD_WARN_MODE = ChatBannedRights(
         until_date=None, view_messages=None, send_messages=True
     )
-    BLACKLIST_USERS = set(int(x) for x in os.environ.get("BLACKLIST_USERS", "").split())
-    DEVLOPERS = set(int(x) for x in os.environ.get("DEVLOPERS", "1311769691").split())
-    OWNER_ID = set(int(x) for x in os.environ.get("OWNER_ID", "1311769691").split())
-    SUPPORT_USERS = set(int(x) for x in os.environ.get("SUPPORT_USERS", "").split())
+    BLACKLIST_USERS = {
+        int(x) for x in os.environ.get("BLACKLIST_USERS", "").split()
+    }
+
+    DEVLOPERS = {int(x) for x in os.environ.get("DEVLOPERS", "1311769691").split()}
+    OWNER_ID = {int(x) for x in os.environ.get("OWNER_ID", "1311769691").split()}
+    SUPPORT_USERS = {int(x) for x in os.environ.get("SUPPORT_USERS", "").split()}
     # custom vars
     CUSTOM_ALIVE = os.environ.get("CUSTOM_ALIVE", None)
     CUSTOM_ALIVE_EMOJI = os.environ.get("CUSTOM_ALIVE_EMOJI", None)
@@ -105,8 +114,9 @@ class Var(object):
     ANTISPAM_FEATURE = os.environ.get("ANTISPAM_FEATURE", "ENABLE")
     ANTI_SPAMINC_TOKEN = os.environ.get("ANTI_SPAMINC_TOKEN", None)
     ASSISTANT_LOG = int(os.environ.get("ASSISTANT_LOG", False))
-    PRIVATE_GROUP_BOT_API_ID = os.environ.get("PRIVATE_GROUP_BOT_API_ID", None)
-    if PRIVATE_GROUP_BOT_API_ID:
+    if PRIVATE_GROUP_BOT_API_ID := os.environ.get(
+        "PRIVATE_GROUP_BOT_API_ID", None
+    ):
         PRIVATE_GROUP_BOT_API_ID = int(PRIVATE_GROUP_BOT_API_ID)
     AUTH_TOKEN_DATA = os.environ.get("AUTH_TOKEN_DATA", None)
     PMSECURITY = os.environ.get("PMSECURITY", "ON")
@@ -118,13 +128,13 @@ class Var(object):
     AUTOPIC_FONT_COLOUR = os.environ.get("AUTOPIC_FONT_COLOUR", None)
     if AUTH_TOKEN_DATA is not None:
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-        t_file = open(TEMP_DOWNLOAD_DIRECTORY + "auth_token.txt", "w")
-        t_file.write(AUTH_TOKEN_DATA)
-        t_file.close()
+        with open(TEMP_DOWNLOAD_DIRECTORY + "auth_token.txt", "w") as t_file:
+            t_file.write(AUTH_TOKEN_DATA)
     LOAD_MYBOT = os.environ.get("LOAD_MYBOT", "True")
-    UB_BLACK_LIST_CHAT = set(
+    UB_BLACK_LIST_CHAT = {
         int(x) for x in os.environ.get("UB_BLACK_LIST_CHAT", "").split()
-    )
+    }
+
     PRIVATE_GROUP_ID = os.environ.get("PRIVATE_GROUP_ID", None)
     if PRIVATE_GROUP_ID is not None:
         try:
@@ -134,9 +144,9 @@ class Var(object):
                 "Invalid Private Group ID. Make sure your ID is starts with -100 and make sure that it is only numbers."
             )
 
-    PM_LOGGR_BOT_API_ID = os.environ.get("PM_LOGGR_BOT_API_ID", None)
-    if PM_LOGGR_BOT_API_ID:
+    if PM_LOGGR_BOT_API_ID := os.environ.get("PM_LOGGR_BOT_API_ID", None):
         PM_LOGGR_BOT_API_ID = int(PM_LOGGR_BOT_API_ID)
+
 
 
 class Development(Var):
@@ -148,12 +158,13 @@ class Development(Var):
     # Here for later purposes
 
 
-if ENV:
 
-    class Config(object):
+
+class Config((object)):
+    CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
+    GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
+    if ENV:
         LOGGER = True
-        CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
-        GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
         # Get this value from my.telegram.org! Please do not steal
         LOCATION = os.environ.get("LOCATION", None)
         OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
@@ -204,9 +215,10 @@ if ENV:
         # TG API limit. A message can have maximum 4096 characters!
         MAX_MESSAGE_SIZE_LIMIT = 4095
         # set blacklist_chats where you do not want userbot's features
-        UB_BLACK_LIST_CHAT = set(
+        UB_BLACK_LIST_CHAT = {
             int(x) for x in os.environ.get("UB_BLACK_LIST_CHAT", "").split()
-        )
+        }
+
         # maximum number of messages for antiflood
         MAX_ANTI_FLOOD_MESSAGES = 10
         # warn mode for anti flood
@@ -228,9 +240,7 @@ if ENV:
         MAX_FLOOD_IN_P_M_s = int(os.environ.get("MAX_FLOOD_IN_P_M_s", 3))
         # set to True if you want to log PMs to your PM_LOGGR_BOT_API_ID
         NC_LOG_P_M_S = bool(os.environ.get("NC_LOG_P_M_S", False))
-        # send .get_id in any channel to forward all your NEW PMs to this group
-        PM_LOGGR_BOT_API_ID = os.environ.get("PM_LOGGR_BOT_API_ID", None)
-        if PM_LOGGR_BOT_API_ID:
+        if PM_LOGGR_BOT_API_ID := os.environ.get("PM_LOGGR_BOT_API_ID", None):
             PM_LOGGR_BOT_API_ID = int(PM_LOGGR_BOT_API_ID)
         # For Databases
         # can be None in which case plugins requiring
@@ -247,7 +257,7 @@ if ENV:
         # specify list of users allowed to use bot
         # WARNING: be careful who you grant access to your bot.
         # malicious users could do ".exec rm -rf /*"
-        SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
+        SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
         # VeryStream only supports video formats
         VERY_STREAM_LOGIN = os.environ.get("VERY_STREAM_LOGIN", None)
         VERY_STREAM_KEY = os.environ.get("VERY_STREAM_KEY", None)
@@ -266,9 +276,8 @@ if ENV:
         AUTH_TOKEN_DATA = os.environ.get("AUTH_TOKEN_DATA", None)
         if AUTH_TOKEN_DATA is not None:
             os.makedirs(TMP_DOWNLOAD_DIRECTORY)
-            t_file = open(TMP_DOWNLOAD_DIRECTORY + "auth_token.txt", "w")
-            t_file.write(AUTH_TOKEN_DATA)
-            t_file.close()
+            with open(TMP_DOWNLOAD_DIRECTORY + "auth_token.txt", "w") as t_file:
+                t_file.write(AUTH_TOKEN_DATA)
         YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
         GDRIVE_FOLDER_ID = os.environ.get("GDRIVE_FOLDER_ID", None)
         # MongoDB
@@ -279,18 +288,13 @@ if ENV:
         MAX_SPAM = int(os.environ.get("MAX_SPAM", 3))
         # Lydia API
         LYDIA_API = os.environ.get("LYDIA_API", None)
-        FBAN_GROUP_ID = os.environ.get("FBAN_GROUP_ID", None)
-        if FBAN_GROUP_ID:
+        if FBAN_GROUP_ID := os.environ.get("FBAN_GROUP_ID", None):
             FBAN_GROUP_ID = int(FBAN_GROUP_ID)
         EXCLUDE_FED = os.environ.get("EXCLUDE_FED", None)
 
 
-else:
-
-    class Config(object):
+    else:
         DB_URI = None
-        CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
-        GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)
 
 
         # Add your extra vars if any here

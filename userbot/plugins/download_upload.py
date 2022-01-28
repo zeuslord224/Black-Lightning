@@ -41,9 +41,10 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         estimated_total_time = elapsed_time + time_to_completion
         progress_str = "[{0}{1}] {2}%\n".format(
             "".join(["▰" for i in range(math.floor(percentage / 10))]),
-            "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+            "".join(["▱" for _ in range(10 - math.floor(percentage / 10))]),
             round(percentage, 2),
         )
+
         tmp = progress_str + "{0} of {1}\nETA: {2}".format(
             humanbytes(current), humanbytes(total), time_formatter(estimated_total_time)
         )
@@ -131,7 +132,7 @@ async def _(event):
         downloader.start(blocking=False)
         c_time = time.time()
         while not downloader.isFinished():
-            total_length = downloader.filesize if downloader.filesize else None
+            total_length = downloader.filesize or None
             downloaded = downloader.get_dl_size()
             display_message = ""
             now = time.time()
@@ -141,9 +142,10 @@ async def _(event):
             round(diff) * 1000
             progress_str = "{0}{1}\nProgress: {2}%".format(
                 "".join(["█" for i in range(math.floor(percentage / 5))]),
-                "".join(["░" for i in range(20 - math.floor(percentage / 5))]),
+                "".join(["░" for _ in range(20 - math.floor(percentage / 5))]),
                 round(percentage, 2),
             )
+
             estimated_total_time = downloader.get_eta(human=True)
             try:
                 current_message = f"trying to download\nURL: {url}\nFile Name: {file_name}\n{progress_str}\n{humanbytes(downloaded)} of {humanbytes(total_length)}\nETA: {estimated_total_time}"
@@ -165,7 +167,6 @@ async def _(event):
 
 
 @register(pattern=r".uploadir (.*)", outgoing=True)
-# @borg.on(lightning_cmd(pattern="uploadir (.*)", allow_sudo=True))
 async def uploadir(udir_event):
     """
     #For .uploadir command, allows you to upload everything from a folder in the server"""
@@ -208,15 +209,9 @@ async def uploadir(udir_event):
                     thumb_image = os.path.join(input_str, "thumb.jpg")
                     c_time = time.time()
                     metadata = extractMetadata(createParser(single_file))
-                    duration = 0
-                    width = 0
-                    height = 0
-                    if metadata.has("duration"):
-                        duration = metadata.get("duration").seconds
-                    if metadata.has("width"):
-                        width = metadata.get("width")
-                    if metadata.has("height"):
-                        height = metadata.get("height")
+                    duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+                    width = metadata.get("width") if metadata.has("width") else 0
+                    height = metadata.get("height") if metadata.has("height") else 0
                     await udir_event.client.send_file(
                         udir_event.chat_id,
                         single_file,
@@ -241,7 +236,7 @@ async def uploadir(udir_event):
                         ),
                     )
                 os.remove(single_file)
-                uploaded = uploaded + 1
+                uploaded += 1
         await udir_event.edit("Uploaded {} files successfully !!".format(uploaded))
     else:
         await udir_event.edit("404: Directory Not Found")
@@ -255,9 +250,7 @@ async def _(event):
         return
     mone = await event.reply("Processing ...")
     input_str = event.pattern_match.group(1)
-    thumb = None
-    if os.path.exists(thumb_image_path):
-        thumb = thumb_image_path
+    thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
     if os.path.exists(input_str):
         start = datetime.now()
         c_time = time.time()
@@ -342,12 +335,12 @@ async def uploadas(uas_event):
     supports_streaming = False
     round_message = False
     spam_big_messages = False
-    if type_of_upload == "stream":
-        supports_streaming = True
-    if type_of_upload == "vn":
-        round_message = True
     if type_of_upload == "all":
         spam_big_messages = True
+    elif type_of_upload == "stream":
+        supports_streaming = True
+    elif type_of_upload == "vn":
+        round_message = True
     input_str = uas_event.pattern_match.group(2)
     thumb = None
     file_name = None
@@ -361,15 +354,9 @@ async def uploadas(uas_event):
         thumb = get_video_thumb(file_name, output=thumb_path)
     if os.path.exists(file_name):
         metadata = extractMetadata(createParser(file_name))
-        duration = 0
-        width = 0
-        height = 0
-        if metadata.has("duration"):
-            duration = metadata.get("duration").seconds
-        if metadata.has("width"):
-            width = metadata.get("width")
-        if metadata.has("height"):
-            height = metadata.get("height")
+        duration = metadata.get("duration").seconds if metadata.has("duration") else 0
+        width = metadata.get("width") if metadata.has("width") else 0
+        height = metadata.get("height") if metadata.has("height") else 0
         try:
             if supports_streaming:
                 c_time = time.time()

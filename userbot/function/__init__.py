@@ -69,9 +69,10 @@ async def progress(current, total, event, start, type_of_ps, file_name=None):
         estimated_total_time = elapsed_time + time_to_completion
         progress_str = "[{0}{1}] {2}%\n".format(
             "".join(["▰" for i in range(math.floor(percentage / 10))]),
-            "".join(["▱" for i in range(10 - math.floor(percentage / 10))]),
+            "".join(["▱" for _ in range(10 - math.floor(percentage / 10))]),
             round(percentage, 2),
         )
+
         tmp = progress_str + "{0} of {1}\nETA: {2}".format(
             humanbytes(current), humanbytes(total), time_formatter(estimated_total_time)
         )
@@ -310,8 +311,7 @@ async def fetch_feds(event, borg):
 async def get_yiffy(imdb_id, event, borg):
     url = f"https://yts-subs.com/movie-imdb{imdb_id}"
     page = BeautifulSoup(requests.get(url).content, "html.parser")
-    content = page.find("div", {"class": "table-responsive"})
-    if content:
+    if content := page.find("div", {"class": "table-responsive"}):
         await event.edit("Fetching all languages and its ratings...")
         lang = "English"
         movies = [
@@ -335,7 +335,7 @@ async def get_yiffy(imdb_id, event, borg):
         dwn_url = html.find("a", {"class": "btn-icon download-subtitle"})["href"]
         dwn_dir = sedpath + file_name.replace("/", " ") + ".zip"
         await event.edit(f"Found {file_name}")
-        await event.edit(f"Downloading to my local. Please Wait")
+        await event.edit('Downloading to my local. Please Wait')
         with open(dwn_dir, "wb") as f:
             f.write(requests.get(dwn_url).content)
     else:

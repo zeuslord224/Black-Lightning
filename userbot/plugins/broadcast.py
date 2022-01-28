@@ -17,8 +17,6 @@ loggy_grp = Var.PRIVATE_GROUP_ID
 @borg.on(lightning_cmd(pattern="badd ?(.*)"))
 async def _(event):
     input_chnnl = event.pattern_match.group(1)
-    sed = 0
-    oks = 0
     if input_chnnl == "all":
         addall = [
             d.entity
@@ -26,15 +24,16 @@ async def _(event):
             if (d.is_group or d.is_channel)
         ]
         await event.edit("`Adding All Channel TO DB.")
+        sed = 0
+        oks = 0
         for i in addall:
             try:
-                if i.broadcast:
-                    if i.creator or i.admin_rights:
-                        if already_added(i.id):
-                            oks += 1
-                        else:
-                            add_chnnl_in_db(i.id)
-                            sed += 1
+                if i.broadcast and (i.creator or i.admin_rights):
+                    if already_added(i.id):
+                        oks += 1
+                    else:
+                        add_chnnl_in_db(i.id)
+                        sed += 1
             except BaseException:
                 pass
         await event.edit(

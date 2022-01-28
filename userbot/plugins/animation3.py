@@ -29,7 +29,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@borg.on(lightning_cmd(pattern=f"rain$", outgoing=True))
+@borg.on(lightning_cmd(pattern='rain$', outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -67,7 +67,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 3
-    animation_ttl = range(0, 12)
+    animation_ttl = range(12)
     await event.edit("Deploying...")
     animation_chars = [
         "**Heroku Connecting To Latest Github Build **",
@@ -99,11 +99,7 @@ async def _(message):
         inp = "🥞 🎂 🍫"
     u, t, g, o, s, n = inp.split(), "🗑", "<(^_^ <)", "(> ^_^)>", "⠀ ", "\n"
     h = [(u[0], u[1], u[2]), (u[0], u[1], ""), (u[0], "", "")]
-    for something in reversed(
-        [
-            y
-            for y in (
-                [
+    for something in reversed([[
                     "".join(x)
                     for x in (
                         f + (s, g, s + s * f.count(""), t),
@@ -114,11 +110,7 @@ async def _(message):
                         f[:i] + (s * 3 + s * f.count(""), o, t),
                         f[:i] + (s * 3 + s * f.count(""), g, t),
                     )
-                ]
-                for i, f in enumerate(reversed(h))
-            )
-        ]
-    ):
+                ] for i, f in enumerate(reversed(h))]):
         for something_else in something:
             await asyncio.sleep(0.3)
             try:
@@ -130,7 +122,7 @@ async def _(message):
 @borg.on(lightning_cmd(pattern="fleaveme$"))
 async def _(event):
     animation_interval = 1
-    animation_ttl = range(0, 10)
+    animation_ttl = range(10)
     animation_chars = [
         "⬛⬛⬛\n⬛⬛⬛\n⬛⬛⬛",
         "⬛⬛⬛\n⬛🔄⬛\n⬛⬛⬛",
@@ -157,7 +149,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.5
-    animation_ttl = range(0, 70)
+    animation_ttl = range(70)
     await event.edit("loveu")
     animation_chars = [
         "😀",
@@ -201,7 +193,7 @@ async def _(event):
         await event.edit(animation_chars[i % 35])
 
 
-@borg.on(lightning_cmd(pattern=f"plane", outgoing=True))
+@borg.on(lightning_cmd(pattern='plane', outgoing=True))
 async def _(event):
     if event.fwd_from:
         retun
@@ -228,7 +220,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.3
-    animation_ttl = range(0, 12)
+    animation_ttl = range(12)
     await event.edit("Police")
     animation_chars = [
         "🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵\n🔴🔴🔴⬜⬜⬜🔵🔵🔵",
@@ -249,12 +241,12 @@ async def _(event):
         await event.edit(animation_chars[i % 12])
 
 
-@borg.on(lightning_cmd(pattern=f"jio$", outgoing=True))
+@borg.on(lightning_cmd(pattern='jio$', outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 1
-    animation_ttl = range(0, 19)
+    animation_ttl = range(19)
     await event.edit("jio network boosting...")
     animation_chars = [
         "`Connecting To JIO NETWORK ....`",
@@ -282,12 +274,12 @@ async def _(event):
         await event.edit(animation_chars[i % 19])
 
 
-@borg.on(lightning_cmd(pattern=f"solarsystem", outgoing=True))
+@borg.on(lightning_cmd(pattern='solarsystem', outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.1
-    animation_ttl = range(0, 80)
+    animation_ttl = range(80)
     await event.edit("solarsystem")
     animation_chars = [
         "`◼️◼️◼️◼️◼️\n◼️◼️◼️◼️☀\n◼️◼️🌎◼️◼️\n🌕◼️◼️◼️◼️\n◼️◼️◼️◼️◼️`",

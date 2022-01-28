@@ -179,7 +179,7 @@ async def set_default_city(city):
     request = requests.get(url)
     result = json.loads(request.text)
     if request.status_code != 200:
-        await city.edit(f"`Invalid country.`")
+        await city.edit('`Invalid country.`')
         return
     DEFCITY = CITY
     cityname = result["name"]
@@ -194,9 +194,7 @@ async def _(event):
     if event.fwd_from:
         return
     global DEFCITY
-    reply_to_id = None
-    if event.reply_to_msg_id:
-        reply_to_id = event.reply_to_msg_id
+    reply_to_id = event.reply_to_msg_id or None
     input_str = event.pattern_match.group(1)
     if not input_str:
         input_str = DEFCITY

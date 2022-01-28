@@ -13,7 +13,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 6
-    animation_ttl = range(0, 17)
+    animation_ttl = range(17)
     await event.edit("Starting...")
     animation_chars = [
         "**Hello!👋**",

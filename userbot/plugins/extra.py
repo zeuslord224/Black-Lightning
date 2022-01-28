@@ -20,28 +20,25 @@ async def leave(e):
 
 
 @borg.on(lightning_cmd(";__;$"))
-# @register(outgoing=True, pattern="^;__;$")
 async def fun(e):
     t = ";__;"
-    for j in range(10):
+    for _ in range(10):
         t = t[:-1] + "_;"
         await e.edit(t)
 
 
 @borg.on(lightning_cmd("yo$"))
-# @register(outgoing=True, pattern="^yo$")
 async def Ooo(e):
     t = "yo"
-    for j in range(15):
+    for _ in range(15):
         t = t[:-1] + "oo"
         await e.edit(t)
 
 
 @borg.on(lightning_cmd("Oof$"))
-# @register(outgoing=True, pattern="^Oof$")
 async def Oof(e):
     t = "Oof"
-    for j in range(15):
+    for _ in range(15):
         t = t[:-1] + "of"
         await e.edit(t)
 

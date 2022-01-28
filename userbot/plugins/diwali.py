@@ -14,7 +14,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 1.5
-    animation_ttl = range(0, 10)
+    animation_ttl = range(10)
     await event.edit("Happy Diwali Dosto🤗")
     animation_chars = [
         """-----💜happy💜diwali💜
@@ -1273,7 +1273,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 1
-    animation_ttl = range(0, 20)
+    animation_ttl = range(20)
     await event.edit("❤Happy Diwali Dosto❤")
     animation_chars = [
         "💖happy💖diwali💖",
@@ -1294,7 +1294,7 @@ async def _(event):
     if event.fwd_from:
         return
     animation_interval = 1
-    animation_ttl = range(0, 22)
+    animation_ttl = range(22)
     await event.edit("❤Dosto❤")
     animation_chars = [
         """💜💜                        💜💜

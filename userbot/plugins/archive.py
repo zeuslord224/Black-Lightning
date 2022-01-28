@@ -203,8 +203,7 @@ async def _(event):
             await event.edit("Finish downloading to my local")
             to_upload_file = directory_name
             output = await create_archive(to_upload_file)
-            is_zip = False
-            if is_zip:
+            if is_zip := False:
                 check_if_file = await create_archive(to_upload_file)
                 if check_if_file is not None:
                     to_upload_file = check_if_file
@@ -309,11 +308,9 @@ async def _(event):
                 document_attributes = []
                 if single_file.endswith((".mp4", ".mp3", ".flac", ".webm")):
                     metadata = extractMetadata(createParser(single_file))
-                    duration = 0
                     width = 0
                     height = 0
-                    if metadata.has("duration"):
-                        duration = metadata.get("duration").seconds
+                    duration = metadata.get("duration").seconds if metadata.has("duration") else 0
                     if os.path.exists(thumb_image_path):
                         metadata = extractMetadata(createParser(thumb_image_path))
                         if metadata.has("width"):
@@ -400,11 +397,9 @@ async def _(event):
                 document_attributes = []
                 if single_file.endswith((".mp4", ".mp3", ".flac", ".webm")):
                     metadata = extractMetadata(createParser(single_file))
-                    duration = 0
                     width = 0
                     height = 0
-                    if metadata.has("duration"):
-                        duration = metadata.get("duration").seconds
+                    duration = metadata.get("duration").seconds if metadata.has("duration") else 0
                     if os.path.exists(thumb_image_path):
                         metadata = extractMetadata(createParser(thumb_image_path))
                         if metadata.has("width"):
@@ -501,11 +496,9 @@ async def _(event):
                 document_attributes = []
                 if single_file.endswith((".mp4", ".mp3", ".flac", ".webm")):
                     metadata = extractMetadata(createParser(single_file))
-                    duration = 0
                     width = 0
                     height = 0
-                    if metadata.has("duration"):
-                        duration = metadata.get("duration").seconds
+                    duration = metadata.get("duration").seconds if metadata.has("duration") else 0
                     if os.path.exists(thumb_image_path):
                         metadata = extractMetadata(createParser(thumb_image_path))
                         if metadata.has("width"):

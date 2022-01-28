@@ -40,7 +40,8 @@ async def nope(doit):
     await sticcers[0].click(
         doit.chat_id,
         reply_to=doit.reply_to_msg_id,
-        silent=True if doit.is_reply else False,
+        silent=bool(doit.is_reply),
         hide_via=True,
     )
+
     await doit.delete()

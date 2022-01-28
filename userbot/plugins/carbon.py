@@ -28,102 +28,104 @@ LANG = "en"
 @register(outgoing=True, pattern="^.carbon")
 async def carbon_api(e):
 
-    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+    if e.text[0].isalpha() or e.text[0] in ("/", "#", "@", "!"):
 
-        """ A Wrapper for carbon.now.sh """
+        return
 
-        await e.edit("`Processing..`")
+    """ A Wrapper for carbon.now.sh """
 
-        CARBON = "https://carbon.now.sh/?l={lang}&code={code}"
+    await e.edit("`Processing..`")
 
-        global CARBONLANG
+    CARBON = "https://carbon.now.sh/?l={lang}&code={code}"
 
-        textx = await e.get_reply_message()
+    global CARBONLANG
 
-        pcode = e.text
+    textx = await e.get_reply_message()
 
-        if pcode[8:]:
+    pcode = e.text
 
-            pcode = str(pcode[8:])
+    if pcode[8:]:
 
-        elif textx:
+        pcode = str(pcode[8:])
 
-            pcode = str(textx.message)  # Importing message to module
+    elif textx:
 
-        code = quote_plus(pcode)  # Converting to urlencoded
+        pcode = str(textx.message)  # Importing message to module
 
-        await e.edit("`Meking Carbon...\n25%`")
+    code = quote_plus(pcode)  # Converting to urlencoded
 
-        url = CARBON.format(code=code, lang=CARBONLANG)
+    await e.edit("`Meking Carbon...\n25%`")
 
-        chrome_options = Options()
+    url = CARBON.format(code=code, lang=CARBONLANG)
 
-        chrome_options.add_argument("--headless")
+    chrome_options = Options()
 
-        chrome_options.binary_location = GOOGLE_CHROME_BIN
+    chrome_options.add_argument("--headless")
 
-        chrome_options.add_argument("--window-size=1920x1080")
+    chrome_options.binary_location = GOOGLE_CHROME_BIN
 
-        chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--window-size=1920x1080")
 
-        chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
 
-        chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
 
-        prefs = {"download.default_directory": "./"}
+    chrome_options.add_argument("--disable-gpu")
 
-        chrome_options.add_experimental_option("prefs", prefs)
+    prefs = {"download.default_directory": "./"}
 
-        driver = webdriver.Chrome(executable_path=CHROME_DRIVER, options=chrome_options)
+    chrome_options.add_experimental_option("prefs", prefs)
 
-        driver.get(url)
+    driver = webdriver.Chrome(executable_path=CHROME_DRIVER, options=chrome_options)
 
-        await e.edit("`Be Patient...\n50%`")
+    driver.get(url)
 
-        download_path = "./"
+    await e.edit("`Be Patient...\n50%`")
 
-        driver.command_executor._commands["send_command"] = (
-            "POST",
-            "/session/$sessionId/chromium/send_command",
-        )
+    download_path = "./"
 
-        params = {
-            "cmd": "Page.setDownloadBehavior",
-            "params": {"behavior": "allow", "downloadPath": download_path},
-        }
+    driver.command_executor._commands["send_command"] = (
+        "POST",
+        "/session/$sessionId/chromium/send_command",
+    )
 
-        driver.execute("send_command", params)
+    params = {
+        "cmd": "Page.setDownloadBehavior",
+        "params": {"behavior": "allow", "downloadPath": download_path},
+    }
 
-        driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
+    driver.execute("send_command", params)
 
-        # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
+    driver.find_element_by_xpath("//button[contains(text(),'Export')]").click()
 
-        # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
+    # driver.find_element_by_xpath("//button[contains(text(),'4x')]").click()
 
-        await e.edit("`Processing..\n75%`")
+    # driver.find_element_by_xpath("//button[contains(text(),'PNG')]").click()
 
-        # Waiting for downloading
+    await e.edit("`Processing..\n75%`")
 
-        sleep(2.5)
+    # Waiting for downloading
 
-        await e.edit("`Done Dana Done...\n100%`")
+    sleep(2.5)
 
-        file = "./carbon.png"
+    await e.edit("`Done Dana Done...\n100%`")
 
-        await e.edit("`Uploading..`")
+    file = "./carbon.png"
 
-        await e.client.send_file(
-            e.chat_id,
-            file,
-            caption="<< Here's your carbon, \n Carbonised by [Black Lightning](https://www.github.com/hellboi-atul/hellboi-atul)>> ",
-            force_document=True,
-            reply_to=e.message.reply_to_msg_id,
-        )
+    await e.edit("`Uploading..`")
 
-        os.remove("./FRIDAY.png")
+    await e.client.send_file(
+        e.chat_id,
+        file,
+        caption="<< Here's your carbon, \n Carbonised by [Black Lightning](https://www.github.com/hellboi-atul/hellboi-atul)>> ",
+        force_document=True,
+        reply_to=e.message.reply_to_msg_id,
+    )
 
-        driver.quit()
+    os.remove("./FRIDAY.png")
 
-        # Removing carbon.png after uploading
+    driver.quit()
 
-        await e.delete()  # Deleting msg
+    # Removing carbon.png after uploading
+
+    await e.delete()  # Deleting msg

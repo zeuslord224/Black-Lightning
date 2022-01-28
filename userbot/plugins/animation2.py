@@ -73,7 +73,7 @@ async def _(event):
         deq.rotate(1)
 
 
-@borg.on(lightning_cmd(pattern=f"earth$", outgoing=True))
+@borg.on(lightning_cmd(pattern='earth$', outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
@@ -106,12 +106,12 @@ async def _(event):
         deq.rotate(1)
 
 
-@borg.on(lightning_cmd(pattern=f"smoon$", outgoing=True))
+@borg.on(lightning_cmd(pattern='smoon$', outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.1
-    animation_ttl = range(0, 101)
+    animation_ttl = range(101)
     await event.edit("smoon..")
     animation_chars = [
         "🌗🌗🌗🌗🌗\n🌓🌓🌓🌓🌓\n🌗🌗🌗🌗🌗\n🌓🌓🌓🌓🌓\n🌗🌗🌗🌗🌗",
@@ -128,12 +128,12 @@ async def _(event):
         await event.edit(animation_chars[i % 8])
 
 
-@borg.on(lightning_cmd(pattern=f"tmoon$", outgoing=True))
+@borg.on(lightning_cmd(pattern='tmoon$', outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.1
-    animation_ttl = range(0, 117)
+    animation_ttl = range(117)
     await event.edit("tmoon")
     animation_chars = [
         "🌗",
@@ -174,12 +174,12 @@ async def _(event):
         await event.edit(animation_chars[i % 32])
 
 
-@borg.on(lightning_cmd(pattern=f"clown$", outgoing=True))
+@borg.on(lightning_cmd(pattern='clown$', outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
     animation_interval = 0.50
-    animation_ttl = range(0, 16)
+    animation_ttl = range(16)
     animation_chars = [
         "COMMAND CREATE BY @Sur_vivor",
         "🤡️",
@@ -261,7 +261,7 @@ async def _(event):
         await event.edit(animation_chars[i % 11])
 
 
-@borg.on(lightning_cmd(pattern=f"squ$", outgoing=True))
+@borg.on(lightning_cmd(pattern='squ$', outgoing=True))
 @borg.on(sudo_cmd(pattern="squ$", allow_sudo=True))
 async def _(event):
     if event.fwd_from:
