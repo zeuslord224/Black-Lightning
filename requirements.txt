@@ -117,7 +117,7 @@ regex==2020.11.13
 requests==2.25.0
 rfc3986==1.4.0
 rsa==4.6
-scipy==1.5.4
+scipy==1.11.1
 search-engine-parser==0.4.2
 selenium==3.5.0
 semver==2.13.0
