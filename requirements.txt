@@ -137,7 +137,7 @@ sqlparse==0.4.1
 telegraph==1.4.1
 telethon
 tornado==6.1
-tqdm==4.53.0
+tqdm==4.66.3
 tswift==0.7.0
 typer==0.3.2
 typing-extensions==3.7.4.3
