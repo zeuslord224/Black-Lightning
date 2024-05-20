@@ -114,7 +114,7 @@ qrcode==6.1
 rapidfuzz==0.13.3
 redis==3.5.3
 regex==2020.11.13
-requests==2.25.0
+requests==2.32.0
 rfc3986==1.4.0
 rsa==4.6
 scipy==1.5.4
